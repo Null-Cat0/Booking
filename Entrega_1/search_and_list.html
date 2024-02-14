@@ -1,40 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <title>Búsqueda</title>
-    <link rel="icon" type="image/png" href="/img/booking_icono.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link href="css/search_and_list.css" rel="stylesheet" type="text/css">
+  <title>Búsqueda</title>
+  <link rel="icon" type="image/png" href="/img/booking_icono.png">
 </head>
+
 <body>
-    <!-- Image and text -->
-    <nav class="navbar navbar-light bg-light">
-        <a class="navbar-brand" href="#">
-            <img src="img/booking_logo.png"  alt="booking_logo">
-        </a>
-   </nav>
-   <div>
-        <h1>Encuentra tu próxima estancia</h1>
-        <h2>Busca ofertas en hoteles, casas y mucho más...</h2>
-   </div>
-   <div>
-        <form>
-            <div>
-                <input type="text" id="search" name="search" placeholder="¿Adónde vas?"><br>
-            </div>
-            <div>
-                <input type="date" id="checkin" name="checkin"><br>
-            </div>
-            <div>
-                <input type="date" id="checkout" name="checkout"><br>
-            </div>
-            <div>
-                <input type="submit" value="Buscar">
-            </div>
-        </form>
-        <h3>Ofertas</h3>
-        <h3>Busca por tipo de alojamiento</h3>
-   </div>
+  <!-- Image and text -->
+  <nav class="navbar navbar-light bookingcolor">
+    <a class="navbar-brand ms-3" href="#">
+      <img src="img/booking-logo.png" class="nav-logo" alt="booking_logo">
+    </a>
+  </nav>
+
+  <div class="container">
+
+    <div class="row">
+      <h1>Encuentra tu próxima estancia</h1>
+      <h2>Busca ofertas en hoteles, casas y mucho más...</h2>
+    </div>
+
+    <div class="d-flex flex-row bd-highlight mb-3" >
+      <form class="d-flex flex-row" action="search_results.html">
+        <div class="p-2 bd-highlight">
+          <input class="form-control" type="text" id="search" name="search" placeholder="¿Adónde vas?">
+        </div>
+        <div class="p-2 bd-highlight">
+          <input class="form-control" type="date" id="checkin" name="checkin">
+        </div>
+        <div class="p-2 bd-highlight">
+          <input class="form-control" type="date" id="checkout" name="checkout">
+        </div>
+        <div class="p-2 bd-highlight">
+          <input  class="form-control" type="submit" value="Buscar">
+        </div>
+      </form>
+    </div>
+
+    <div class="row">
+      <h3>Ofertas</h3>
+      <h4>Promociones,descuentos y ofertas especiales para ti</h4>
+      <div class="d-flex flex-row overflow-auto">
+        <div class="card m-2" style="width: 18rem;">
+          <img src="ruta/a/imagen1.jpg" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Título de la Tarjeta 1</h5>
+            <p class="card-text">Contenido de la tarjeta 1 aquí.</p>
+          </div>
+        </div>
+        <div class="card m-2" style="width: 18rem;">
+          <img src="ruta/a/imagen2.jpg" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Título de la Tarjeta 2</h5>
+            <p class="card-text">Contenido de la tarjeta 2 aquí.</p>
+          </div>
+        </div>
+        <!-- Agrega más tarjetas -->
+      </div>
+      
+    </div>
+
+    <div class="row">
+      <h3>Busca por tipo de alojamiento</h3>
+      <div class="d-flex flex-row overflow-auto">
+        <div class="card m-2" style="width: 18rem;">
+          <img src="ruta/a/imagen1.jpg" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Título de la Tarjeta 1</h5>
+            <p class="card-text">Contenido de la tarjeta 1 aquí.</p>
+          </div>
+        </div>
+        <div class="card m-2" style="width: 18rem;">
+          <img src="ruta/a/imagen2.jpg" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Título de la Tarjeta 2</h5>
+            <p class="card-text">Contenido de la tarjeta 2 aquí.</p>
+          </div>
+        </div>
+        <div class="card m-2" style="width: 18rem;">
+          <img src="ruta/a/imagen2.jpg" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Título de la Tarjeta 3</h5>
+            <p class="card-text">Contenido de la tarjeta 3 aquí.</p>
+          </div>
+        </div>
+        <div class="card m-2" style="width: 18rem;">
+          <img src="ruta/a/imagen2.jpg" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Título de la Tarjeta 4</h5>
+            <p class="card-text">Contenido de la tarjeta 4 aquí.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </body>
+
 </html>

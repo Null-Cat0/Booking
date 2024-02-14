@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/search_results.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+  <title>Resultados de la búsqueda</title>
+  <link rel="icon" type="image/png" href="/img/booking_icono.png">
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light h-100 bg-primary-subtle"> <!-- bookingcolor-->
+    <a class="navbar-brand  col-3 mr-3 p-5" href="#">
+      <img src="img/booking-logo.png" class="nav-logo" alt="booking_logo">
+    </a>
+    <div class="d-flex flex-row bd-highlight bg-warning mt-5 align-items-center">
+      <a class="text-white p-2" href="#">Alojamiento</a>
+      <a class="text-white p-2" href="#">Vuelos</a>
+      <a class="text-white p-2" href="#">Vuelo + hoteles</a>
+      <a class="text-white p-2" href="#">Alquiler de coches</a>
+      <a class="text-white p-2" href="#">Atracciones Turísticas</a>
+      <a class="text-white p-2" href="#">Taxis al aeropuerto</a>
+    </div>
+  </nav>
+  
+  
+
+  </nav>
+  <div class="container">
+    <div class="d-flex flex-row bd-highlight mb-3">
+      <form class="d-flex flex-row" action="search_results.html">
+        <div class="p-2 bd-highlight">
+          <input class="form-control" type="text" id="search" name="search" placeholder="¿Adónde vas?">
+        </div>
+        <div class="p-2 bd-highlight">
+          <input class="form-control" type="date" id="checkin" name="checkin">
+        </div>
+        <div class="p-2 bd-highlight">
+          <input class="form-control" type="date" id="checkout" name="checkout">
+        </div>
+        <div class="p-2 bd-highlight">
+          <input class="form-control" type="submit" value="Buscar">
+        </div>
+      </form>
+    </div>
+</body>
+
+</html>
