@@ -17,16 +17,21 @@
     <a class="navbar-brand ms-3" href="#">
       <img src="img/booking-logo.png" class="nav-logo" alt="booking_logo">
     </a>
+    <form class="d-flex">
+      <a class="nav-link" href="login.html">Iniciar sesión</a>
+      <a class="nav-link" href="register.html">Registrarse</a>
   </nav>
 
-  <div class="container">
-
+  <div class="container-fluid extendedColor">
     <div class="row">
-      <h1>Encuentra tu próxima estancia</h1>
-      <h2>Busca ofertas en hoteles, casas y mucho más...</h2>
+      <div class="col-7 offset-1 p-4">
+        <h1>Encuentra tu próxima estancia</h1>
+        <h2>Busca ofertas en hoteles, casas y mucho más...</h2>
+      </div>
     </div>
-
-    <div class="d-flex flex-row bd-highlight mb-3" >
+  </div>
+  <div class="container p-5 pt-0">
+    <div class="d-flex flex-row bg-warning busquedaAlojamiento">
       <form class="d-flex flex-row" action="search_results.html">
         <div class="p-2 bd-highlight">
           <input class="form-control" type="text" id="search" name="search" placeholder="¿Adónde vas?">
@@ -38,7 +43,7 @@
           <input class="form-control" type="date" id="checkout" name="checkout">
         </div>
         <div class="p-2 bd-highlight">
-          <input  class="form-control" type="submit" value="Buscar">
+          <input class="form-control" type="submit" value="Buscar">
         </div>
       </form>
     </div>
@@ -46,6 +51,8 @@
     <div class="row">
       <h3>Ofertas</h3>
       <h4>Promociones,descuentos y ofertas especiales para ti</h4>
+    </div>
+    <div class="row">
       <div class="d-flex flex-row overflow-auto">
         <div class="card m-2" style="width: 18rem;">
           <img src="ruta/a/imagen1.jpg" class="card-img-top" alt="...">
@@ -54,7 +61,7 @@
             <p class="card-text">Contenido de la tarjeta 1 aquí.</p>
           </div>
         </div>
-        <div class="card m-2" style="width: 18rem;">
+        <div class="card m-2">
           <img src="ruta/a/imagen2.jpg" class="card-img-top" alt="...">
           <div class="card-body">
             <h5 class="card-title">Título de la Tarjeta 2</h5>
@@ -63,7 +70,7 @@
         </div>
         <!-- Agrega más tarjetas -->
       </div>
-      
+
     </div>
 
     <div class="row">

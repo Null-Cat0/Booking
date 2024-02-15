@@ -1,7 +1,7 @@
 .bookingcolor
 {
     background-color: rgb(0, 59, 149);
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+   /* box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2); */
 }
 .nav-logo
 {
@@ -17,4 +17,14 @@
     background-color: rgb(0, 59, 149) !important;
     color: #fff !important; /* Color del texto */
     border-color: rgb(0, 59, 149) !important;
+}
+.extendedColor
+{
+    background-color: rgb(0, 59, 149);
+    color: #fff;
+}
+.busquedaAlojamiento
+{
+    position: relative;
+    top: -1em;
 }
