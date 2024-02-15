@@ -7,6 +7,8 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   <link href="css/search_and_list.css" rel="stylesheet" type="text/css">
+  <!-- Option 1: Include in HTML -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
   <title>Búsqueda</title>
   <link rel="icon" type="image/png" href="/img/booking_icono.png">
 </head>
@@ -14,22 +16,24 @@
 <body>
   <!-- Image and text -->
   <nav class="navbar navbar-light bookingcolor">
-    <a class="navbar-brand ms-3" href="#">
+    
+      <a class="navbar-brand ms-3" href="#">
       <img src="img/booking-logo.png" class="nav-logo" alt="booking_logo">
-    </a>
-    <form class="d-flex">
-      <a class="nav-link" href="login.html">Iniciar sesión</a>
-      <a class="nav-link" href="register.html">Registrarse</a>
+      </a>
+    
+      <a class="offset-7" href="login.html">Iniciar sesión</a>
+      <a class="pe-5" href="register.html">Registrarse</a>
   </nav>
 
   <div class="container-fluid extendedColor">
     <div class="row">
-      <div class="col-7 offset-1 p-4">
+      <div class="col-7 offset-2 p-4">
         <h1>Encuentra tu próxima estancia</h1>
         <h2>Busca ofertas en hoteles, casas y mucho más...</h2>
       </div>
     </div>
   </div>
+
   <div class="container p-5 pt-0">
     <div class="d-flex flex-row bg-warning busquedaAlojamiento">
       <form class="d-flex flex-row" action="search_results.html">
@@ -41,6 +45,15 @@
         </div>
         <div class="p-2 bd-highlight">
           <input class="form-control" type="date" id="checkout" name="checkout">
+        </div>
+        <div class="p-2 bd-highlight">
+          <input class="form-control text-truncate" type="number" id="adults" name="Número de adultos" placeholder="Nº adultos">
+        </div>
+        <div class="p-2 bd-highlight">
+          <input class="form-control" type="number" id="children" name="Número de niños" placeholder="Nº monstruitos">
+        </div>
+        <div class="p-2 bd-highlight">
+          <input class="form-control" type="number" id="rooms" name="Número de habitaciones" placeholder="Nº habitaciones">
         </div>
         <div class="p-2 bd-highlight">
           <input class="form-control" type="submit" value="Buscar">
@@ -55,17 +68,17 @@
     <div class="row">
       <div class="d-flex flex-row overflow-auto">
         <div class="card m-2" style="width: 18rem;">
-          <img src="ruta/a/imagen1.jpg" class="card-img-top" alt="...">
+          <img src="img/hotel.jpeg" class="card-img-top" alt="...">
           <div class="card-body">
-            <h5 class="card-title">Título de la Tarjeta 1</h5>
-            <p class="card-text">Contenido de la tarjeta 1 aquí.</p>
+            <h5 class="card-title">Disfruta de tus vacaciones más largas</h5>
+            <p class="card-text">Busca alojamientos que ofrezcan estancias largas, hay muchas con tarifa mensual reducida</p>
           </div>
         </div>
         <div class="card m-2">
-          <img src="ruta/a/imagen2.jpg" class="card-img-top" alt="...">
+          <img src="img/avion.png" class="card-img-top" alt="...">
           <div class="card-body">
-            <h5 class="card-title">Título de la Tarjeta 2</h5>
-            <p class="card-text">Contenido de la tarjeta 2 aquí.</p>
+            <h5 class="card-title">Vuela al destino de tus sueños</h5>
+            <p class="card-text">Inspírate, compara y reserva vuelos con más flexibilidad.</p>
           </div>
         </div>
         <!-- Agrega más tarjetas -->
@@ -77,31 +90,27 @@
       <h3>Busca por tipo de alojamiento</h3>
       <div class="d-flex flex-row overflow-auto">
         <div class="card m-2" style="width: 18rem;">
-          <img src="ruta/a/imagen1.jpg" class="card-img-top" alt="...">
+          <img src="img/hotel.jpeg" class="card-img-top" alt="...">
           <div class="card-body">
-            <h5 class="card-title">Título de la Tarjeta 1</h5>
-            <p class="card-text">Contenido de la tarjeta 1 aquí.</p>
+            <h5 class="card-title">Hoteles</h5>
           </div>
         </div>
         <div class="card m-2" style="width: 18rem;">
-          <img src="ruta/a/imagen2.jpg" class="card-img-top" alt="...">
+          <img src="img/apartamentos.jpeg" class="card-img-top" alt="...">
           <div class="card-body">
-            <h5 class="card-title">Título de la Tarjeta 2</h5>
-            <p class="card-text">Contenido de la tarjeta 2 aquí.</p>
+            <h5 class="card-title">Apartamentos</h5>
           </div>
         </div>
         <div class="card m-2" style="width: 18rem;">
-          <img src="ruta/a/imagen2.jpg" class="card-img-top" alt="...">
+          <img src="img/resort.jpeg" class="card-img-top" alt="...">
           <div class="card-body">
-            <h5 class="card-title">Título de la Tarjeta 3</h5>
-            <p class="card-text">Contenido de la tarjeta 3 aquí.</p>
+            <h5 class="card-title">Resort</h5>
           </div>
         </div>
         <div class="card m-2" style="width: 18rem;">
-          <img src="ruta/a/imagen2.jpg" class="card-img-top" alt="...">
+          <img src="img/villa.jpeg" class="card-img-top" alt="...">
           <div class="card-body">
-            <h5 class="card-title">Título de la Tarjeta 4</h5>
-            <p class="card-text">Contenido de la tarjeta 4 aquí.</p>
+            <h5 class="card-title">Villas</h5>
           </div>
         </div>
       </div>

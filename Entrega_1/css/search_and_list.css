@@ -28,3 +28,8 @@
     position: relative;
     top: -1em;
 }
+h1,h3,h5
+{
+    /*Texto en negrita*/
+    font-weight: bold;
+}
