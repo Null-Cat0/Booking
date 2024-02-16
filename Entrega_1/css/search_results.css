@@ -22,7 +22,6 @@
 .float-right {
     float: right;
 }
-
 .bold
 {
     font-weight: bold;
@@ -33,16 +32,13 @@
     object-fit: cover;
     padding: 20px;
     border-radius: 13% ;
-
 }
 .linkResultado
 {
-
     color:rgb(0, 108, 228);
     text-decoration: none;
 }
 .ecofriendly
 {
     color: rgb(0, 130, 52);
-
 }

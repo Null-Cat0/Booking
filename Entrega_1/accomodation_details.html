@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/accomodation_details.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <title>Detalles del alojamiento</title>
+  <link rel="icon" type="image/png" href="img/booking_icono.png">
+</head>
+
+<body>
+  <nav class="navbar navbar-light mb-3 bookingcolor">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <img src="img/booking-logo.png" class="nav-logo" alt="booking_logo">
+      </a>
+      <div class="container d-flex justify-content-end">
+        <a href="create_account.html"><button type="button" class="btn btn-custom me-2">Hazte una cuenta</button></a>
+        <a href="login.html"> <button type="button" class="btn btn-custom">Iniciar sesión</button></a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="row">
+      <h1 class="text-center">Hotel NH Collection Cáceres Palacio de Oquendo</h1>
+    </div>
+
+    <div class="row">
+
+      <div class="col-3 bg-warning rounded">
+        <form id="filterForm">
+          <h5 class="bold mt-3">Buscar</h5>
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1"><i class="fa fa-search"></i></span>
+            <input type="text" class="form-control" placeholder="Cáceres" aria-label="Username"
+              aria-describedby="basic-addon1">
+          </div>
+          <label class="form-label" for="hotelCheckbox">Fecha de entrada</label>
+          <input class="form-control" type="date" name="accomodationEntryDate" id="accomodationEntryDate">
+          <label class="form-label" for="hotelCheckbox">Fecha de salida</label>
+          <input class="form-control" type="date" name="accomodationOutDate" id="accomodationOutDate">
+          <label class="form-label" for="hotelCheckbox">Número de adultos</label>
+          <input class="form-control" type="number" name="accomodationAdults" id="accomodationAdults">
+          <label class="form-label" for="hotelCheckbox">Número de niños</label>
+          <input class="form-control" type="number" name="accomodationChildren" id="accomodationChildren">
+          <label class="form-label" for="hotelCheckbox">Número de habitaciones</label>
+          <input class="form-control" type="number" name="accomodationRooms" id="accomodationRooms">
+          <div class="mt-3">
+            <input type="checkbox" class="form-check-input" id="hotelCheckbox">
+            <label class="form-check-label" for="hotelCheckbox">Casas y apartamentos enteros</label><br>
+            <input type="checkbox" class="form-check-input" id="apartmentCheckbox">
+            <label class="form-check-label" for="apartmentCheckbox">Viajo por trabajo</label>
+          </div>
+          <br>
+          <div class="text-center mb-3">
+            <button type="submit" class="btn btn-primary mt-5">Aplicar filtros</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="col">
+        <div class="wrapper">
+          <div class="one"><img src="img/NH_1.jpg" alt=""></div>
+          <div class="two"><img src="img/NH_2.jpg" alt=""></div>
+          <div class="three"><img src="img/NH_3.jpg" alt=""></div>
+          <div class="four"><img src="img/NH_4.jpg" alt=""></div>
+          <div class="five"><img src="img/NH_5.jpg" alt=""></div>
+          <div class="six"><img src="img/NH_6.jpg" alt=""></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  
+  <h3>Descripción</h3>
+  <p>El NH Collection Cáceres Palacio de Oquendo es un hotel de 4 estrellas situado en el centro de Cáceres,
+    declarado Patrimonio de la Humanidad por la UNESCO. El hotel se encuentra en un palacio del siglo XVI
+    restaurado y ofrece una piscina en la azotea con vistas a la ciudad y conexión Wi-Fi gratuita en todas las
+    instalaciones.</p>
+
+  <h3>Instalaciones</h3>
+  <ul>
+    <li>Admite mascotas</li>
+    <li>Conexión Wi-Fi gratuita</li>
+    <li>Traslado aeropuerto</li>
+    <li>Adaptado personas de movilidad reducida</li>
+    <li>Recepción 24 horas</li>
+    <li>Bar</li>
+    <li>Desayuno en la habitación</li>
+    <li>Restaurante</li>
+    <li>Ascensor</li>
+    <li>Caja fuerte</li>
+    <li>Alquiler de coches</li>
+    <li>Información turística</li>
+    <li>Guardaequipaje</li>
+    <li>Consigna de equipaje</li>
+    <li>Registro de entrada y salida exprés</li>
+    <li>Salas de reuniones / banquetes</li>
+    <li>Centro de negocios</li>
+    <li>Salas de reuniones / banquetes</li>
+    <li>Centro de negocios</li>
+    <li>Salas de reuniones / banquetes</li>
+  </ul>
+
+
+</body>
+
+</html>
