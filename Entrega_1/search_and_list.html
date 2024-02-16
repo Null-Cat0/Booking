@@ -10,104 +10,121 @@
   <!-- Option 1: Include in HTML -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
   <title>Búsqueda</title>
-  <link rel="icon" type="image/png" href="/img/booking_icono.png">
+  <link rel="icon" type="image/png" href="img/booking_icono.png">
 </head>
 
 <body>
   <!-- Image and text -->
   <nav class="navbar navbar-light bookingcolor">
-    
-      <a class="navbar-brand ms-3" href="#">
-      <img src="img/booking-logo.png" class="nav-logo" alt="booking_logo">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <img src="img/booking-logo.png" class="nav-logo" alt="booking_logo">
       </a>
-    
-      <a class="offset-7" href="login.html">Iniciar sesión</a>
-      <a class="pe-5" href="register.html">Registrarse</a>
+      <div class="container d-flex justify-content-end">
+        <a href="create_account.html"><button type="button" class="btn btn-custom me-2">Hazte una cuenta</button></a>
+        <a href="login.html"> <button type="button" class="btn btn-custom">Iniciar sesión</button></a>
+      </div>
+    </div>
   </nav>
 
-  <div class="container-fluid extendedColor">
-    <div class="row">
-      <div class="col-7 offset-2 p-4">
-        <h1>Encuentra tu próxima estancia</h1>
-        <h2>Busca ofertas en hoteles, casas y mucho más...</h2>
-      </div>
+
+
+  <div class="container-fluid extColor">
+    <div class="container p-5">
+      <h1>Encuentra tu próxima estancia</h1>
+      <h2>Busca ofertas en hoteles, casas y mucho más...</h2>
     </div>
   </div>
 
   <div class="container p-5 pt-0">
-    <div class="d-flex flex-row bg-warning busquedaAlojamiento">
+    <div class="d-flex flex-row bg-warning busquedaAlojamiento rounded">
       <form class="d-flex flex-row" action="search_results.html">
-        <div class="p-2 bd-highlight">
+        <div class="p-2 bd-highlight col-2">
           <input class="form-control" type="text" id="search" name="search" placeholder="¿Adónde vas?">
         </div>
-        <div class="p-2 bd-highlight">
+        <div class="p-2 bd-highlight col-2">
           <input class="form-control" type="date" id="checkin" name="checkin">
         </div>
-        <div class="p-2 bd-highlight">
+        <div class="p-2 bd-highlight col-2">
           <input class="form-control" type="date" id="checkout" name="checkout">
         </div>
-        <div class="p-2 bd-highlight">
-          <input class="form-control text-truncate" type="number" id="adults" name="Número de adultos" placeholder="Nº adultos">
+        <div class="p-2 bd-highlight col-2">
+          <input class="form-control text-truncate" type="number" id="adults" name="Número de adultos"
+            placeholder="Nº adultos">
         </div>
-        <div class="p-2 bd-highlight">
+        <div class="p-2 bd-highlight col-2">
           <input class="form-control" type="number" id="children" name="Número de niños" placeholder="Nº monstruitos">
         </div>
-        <div class="p-2 bd-highlight">
-          <input class="form-control" type="number" id="rooms" name="Número de habitaciones" placeholder="Nº habitaciones">
+        <div class="p-2 bd-highlight col-2">
+          <input class="form-control" type="number" id="rooms" name="Número de habitaciones"
+            placeholder="Nº habitaciones">
         </div>
-        <div class="p-2 bd-highlight">
+        <div class="p-2 bd-highlight col">
           <input class="form-control" type="submit" value="Buscar">
         </div>
       </form>
     </div>
 
+
     <div class="row">
       <h3>Ofertas</h3>
       <h4>Promociones,descuentos y ofertas especiales para ti</h4>
     </div>
-    <div class="row">
-      <div class="d-flex flex-row overflow-auto">
-        <div class="card m-2" style="width: 18rem;">
-          <img src="img/hotel.jpeg" class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Disfruta de tus vacaciones más largas</h5>
-            <p class="card-text">Busca alojamientos que ofrezcan estancias largas, hay muchas con tarifa mensual reducida</p>
-          </div>
-        </div>
-        <div class="card m-2">
-          <img src="img/avion.png" class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Vuela al destino de tus sueños</h5>
-            <p class="card-text">Inspírate, compara y reserva vuelos con más flexibilidad.</p>
-          </div>
-        </div>
-        <!-- Agrega más tarjetas -->
-      </div>
 
+    <div class="row ">
+      <div class="col m-3 card  shadow rounded">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <img src="img/family.jpeg" class="img-fluid rounded-start imagenOfertas" alt="...">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title">Disfruta de tus vacaciones más largas</h5>
+              <p class="card-text">Busca alojamientos que ofrezcan estancias largas, hay muchas con tarifa mensual
+                reducida.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col m-3 card shadow rounded">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <img src="img/avion.png" class="img-fluid rounded-start" alt="...">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title">Vuela al destino de tus sueños</h5>
+              <p class="card-text">Inspírate, compara y reserva vuelos con más flexibilidad.</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+
+
 
     <div class="row">
       <h3>Busca por tipo de alojamiento</h3>
       <div class="d-flex flex-row overflow-auto">
-        <div class="card m-2" style="width: 18rem;">
+        <div class="card m-1" style="width: 18rem;">
           <img src="img/hotel.jpeg" class="card-img-top" alt="...">
           <div class="card-body">
             <h5 class="card-title">Hoteles</h5>
           </div>
         </div>
-        <div class="card m-2" style="width: 18rem;">
+        <div class="card m-1" style="width: 18rem;">
           <img src="img/apartamentos.jpeg" class="card-img-top" alt="...">
           <div class="card-body">
             <h5 class="card-title">Apartamentos</h5>
           </div>
         </div>
-        <div class="card m-2" style="width: 18rem;">
+        <div class="card m-1" style="width: 18rem;">
           <img src="img/resort.jpeg" class="card-img-top" alt="...">
           <div class="card-body">
             <h5 class="card-title">Resort</h5>
           </div>
         </div>
-        <div class="card m-2" style="width: 18rem;">
+        <div class="card m-1" style="width: 18rem;">
           <img src="img/villa.jpeg" class="card-img-top" alt="...">
           <div class="card-body">
             <h5 class="card-title">Villas</h5>
