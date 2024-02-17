@@ -1,0 +1,27 @@
+.bookingcolor
+{
+    background-color: rgb(0, 59, 149);
+    /* box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2); */
+}
+.nav-logo
+{
+    width: 200px;
+}
+.btn-custom {
+    background-color: #007bff !important;
+    color: white !important;
+}
+ul{
+    /* Eliminar circulo en la lista*/
+    list-style-type: none;
+}
+
+footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #f1f1f1;
+    color: white;
+    text-align: center;
+}

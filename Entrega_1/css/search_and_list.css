@@ -50,3 +50,12 @@ h5 {
     background-color: #007bff !important;
     color: white !important;
 }
+footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #f1f1f1;
+    color: white;
+    text-align: center;
+}

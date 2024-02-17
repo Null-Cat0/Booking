@@ -80,3 +80,22 @@ img{
     width: 100%;
     height: 100%;
 }
+.btn-reserva{
+    background-color:rgb(48, 111, 188) !important;
+    color: white !important;
+    padding: 10px 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.bold
+{
+    font-weight: bold;
+}
+th{
+    background-color: #5575ad;
+    height: 5rem;
+}
+th, td {
+    border: 1px solid #5575ad!important;
+    padding: 10px !important;
+}

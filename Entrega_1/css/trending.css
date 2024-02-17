@@ -16,3 +16,9 @@
 	width: 90%;
 	box-shadow: black 0px 0px 10px;
 }
+.botonesCategorias{
+	background-color: #f2f7fe !important;
+	color: #6897ec !important;
+	border: 100px !important;
+	border-color: #6897ec !important;
+}
