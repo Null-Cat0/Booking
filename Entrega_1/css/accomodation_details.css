@@ -99,3 +99,20 @@ th, td {
     border: 1px solid #5575ad!important;
     padding: 10px !important;
 }
+.borderYellow{
+    border: 1px solid #f4be41;
+}
+.normal-text {
+    font-family: Arial, sans-serif; /* Define la fuente por defecto */
+}
+
+.check
+{
+    /* Quitar el punto de ul*/
+    list-style: none;
+}
+
+.ecofriendly
+{
+    color: rgb(0, 130, 52);
+}
