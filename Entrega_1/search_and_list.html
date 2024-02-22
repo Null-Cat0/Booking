@@ -20,13 +20,16 @@
 </head>
 
 <body>
-  <!-- Image and text -->
+  <!-- Barra de navegación -->
   <nav class="navbar navbar-light bookingcolor">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">
-        <img src="img/booking-logo.png" class="nav-logo" alt="booking_logo">
+     <a href="search_and_list.html">  <img src="img/booking-logo.png" class="nav-logo" alt="booking_logo"></a> 
       </a>
       <div class="container d-flex justify-content-end">
+        <!-- <a href="edit_accomodation.html"> <button type="button" class="btn btn-custom me-2">Editar alojamiento</button></a> -->
+      
+        <a href="my_reservations.html"><button type="button" class="btn btn-custom me-2">Mis reservas</button></a>
         <a href="create_account.html"><button type="button" class="btn btn-custom me-2">Hazte una cuenta</button></a>
         <a href="login.html"> <button type="button" class="btn btn-custom">Iniciar sesión</button></a>
       </div>
@@ -35,6 +38,7 @@
 
 
 
+  <!-- Extensión del color de la barra de navegación e indicador de la pagina en la que se encuentra -->
   <div class="container-fluid extColor">
     <div class="container p-5">
       <h1>Encuentra tu próxima estancia</h1>
@@ -42,6 +46,7 @@
     </div>
   </div>
 
+  <!-- Formulario de busqueda -->
   <div class="container p-5 pt-0">
     <div class="d-flex flex-row bg-warning busquedaAlojamiento rounded">
       <form class="d-flex flex-row" action="search_results.html">
@@ -71,6 +76,7 @@
       </form>
     </div>
 
+    <!-- Sección de ofertas -->
     <div class="row">
       <h3>Ofertas</h3>
       <h4>Promociones,descuentos y ofertas especiales para ti</h4>
@@ -91,10 +97,13 @@
           </div>
         </div>
       </div>
+      
       <div class="col m-3 card shadow rounded">
         <div class="row g-0">
           <div class="col-md-4">
+            <a href="trending.html">
             <img src="img/avion.png" class="img-fluid rounded-start" alt="...">
+          </a>
           </div>
           <div class="col-md-8">
             <div class="card-body">
@@ -104,10 +113,12 @@
           </div>
         </div>
       </div>
+    
     </div>
 
 
 
+    <!-- Seccion de alojamientos -->
     <div class="row">
       <h3>Busca por tipo de alojamiento</h3>
       <div class="d-flex flex-row overflow-auto">
@@ -139,36 +150,19 @@
     </div>
   </div>
 
-	<footer class="text-center text-white mt-5" style="background-color: #f1f1f1;">
-		<div class="container pt-4">
-			<section class="mb-4">
-				<a class="btn btn-link btn-floating btn-lg text-dark m-1" href="#!" role="button"
-					data-mdb-ripple-color="dark"><i class="fab fa-facebook-f"></i></a>
-
-				<a class="btn btn-link btn-floating btn-lg text-dark m-1" href="#!" role="button"
-					data-mdb-ripple-color="dark"><i class="fab fa-twitter"></i></a>
-
-
-				<a class="btn btn-link btn-floating btn-lg text-dark m-1" href="#!" role="button"
-					data-mdb-ripple-color="dark"><i class="fab fa-google"></i></a>
-
-				<a class="btn btn-link btn-floating btn-lg text-dark m-1" href="#!" role="button"
-					data-mdb-ripple-color="dark"><i class="fab fa-instagram"></i></a>
-
-				<a class="btn btn-link btn-floating btn-lg text-dark m-1" href="" role="button" data-mdb-ripple-color="dark"><i
-						class="fab fa-linkedin"></i></a>
-				<a class="btn btn-link btn-floating btn-lg text-dark m-1" href="https://github.com/Null-Cat0" role="button"
-					data-mdb-ripple-color="dark"><i class="fa-brands fa-github"></i>
-				</a>
-			</section>
-		</div>
-
-		<div class="text-center text-dark p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-			© 2024 Asier Serrano Martín - Programación en Internet - Universidad de Extremadura
-		</div>
-
-	</footer>
-
+  <!-- Footer -->
+  <footer class="text-center text-white mt-5" style="background-color: #f1f1f1;">
+    <div class="container pt-4">
+      <section class="mb-4">
+        <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="https://github.com/Null-Cat0" role="button"
+          data-mdb-ripple-color="dark"><i class="fa-brands fa-github"></i>
+        </a>
+      </section>
+    </div>
+    <div class="text-center text-dark p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+      © 2024 Asier Serrano Martín - Programación en Internet - Universidad de Extremadura
+    </div>
+  </footer>
 
 
 </body>

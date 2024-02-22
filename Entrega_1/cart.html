@@ -17,21 +17,22 @@
 </head>
 
 <body>
-	<nav class="navbar navbar-light mb-3 bookingcolor">
-		<div class="container-fluid">
-			<a class="navbar-brand" href="#">
-				<img src="img/booking-logo.png" class="nav-logo" alt="booking_logo">
-			</a>
-			<div class="container d-flex justify-content-end">
-				<a href="create_account.html"><button type="button" class="btn btn-custom me-2">Hazte una cuenta</button></a>
-				<a href="login.html"> <button type="button" class="btn btn-custom">Iniciar sesión</button></a>
-			</div>
+ <!-- Barra de navegación -->
+ <nav class="navbar navbar-light bookingcolor">
+	<div class="container-fluid">
+		<a class="navbar-brand" href="#">
+	 <a href="search_and_list.html">  <img src="img/booking-logo.png" class="nav-logo" alt="booking_logo"></a> 
+		</a>
+		<div class="container d-flex justify-content-end">
+			<!-- <a href="edit_accomodation.html"> <button type="button" class="btn btn-custom me-2">Editar alojamiento</button></a> -->
+			<a href="my_reservations.html"><button type="button" class="btn btn-custom me-2">Mis reservas</button></a>
+			<a href="create_account.html"><button type="button" class="btn btn-custom me-2">Hazte una cuenta</button></a>
+			<a href="login.html"> <button type="button" class="btn btn-custom">Iniciar sesión</button></a>
 		</div>
-	</nav>
+	</div>
+</nav>
 
-
-
-
+	<!-- Container con la información de la reserva -->
 	<div class="container">
 
 		<div class="row">
@@ -114,7 +115,7 @@
 		</div>
 		<div class="row justify-content-center">
 			<div class="col-4 offset-2">
-				<button class="btn btn-primary mt-3">Continuar con la reserva</button>
+				<a href="search_and_list.html"> <button class="btn btn-primary mt-3">Continuar con la reserva</button></a>
 			</div>
 		</div>
 
@@ -123,17 +124,20 @@
 </body>
 
 
+<!-- Footer -->
+<footer class="text-center text-white mt-5" style="background-color: #f1f1f1;">
+	<div class="container pt-4">
+		<section class="mb-4">
+			<a class="btn btn-link btn-floating btn-lg text-dark m-1" href="https://github.com/Null-Cat0" role="button"
+				data-mdb-ripple-color="dark"><i class="fa-brands fa-github"></i>
+			</a>
+		</section>
+	</div>
 
-<!-- 
-					<div class="col-md-4 card-body text-end">
-						<p class="card-text">Fabuloso 8,7 • 4.559 comentarios</p>
-						<p class="card-text linkResultado bold">Ubicación 9,6</p>
-						<h6>2 noches, 2 adultos</h6>
-						<h3>€285</h3>
-						<p>Incluye impuestos y cargos</p>
-						<button class="btn btn-primary">Ver disponibilidad</button>
-					</div>
+	<div class="text-center text-dark p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+		© 2024 Asier Serrano Martín - Programación en Internet - Universidad de Extremadura
+	</div>
 
- -->
+</footer>
 
 </html>
