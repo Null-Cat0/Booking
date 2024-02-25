@@ -43,7 +43,7 @@
           <input class="form-control" type="password" id="password" name="password" placeholder="Indica tu contraseña"
             minlength="8"><br>
           <label class="form-label" for="password">Confirma tu contraseña:</label><br>
-          <input class="form-control" type="password" id="password" name="password" placeholder="Indica tu contraseña"
+          <input class="form-control" type="password" id="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\w).{8,}"  name="password" placeholder="Indica tu contraseña"
             minlength="8"><br><br>
           <input class="form-control custom-submit" type="submit" value="Crear cuenta">
         </form>
