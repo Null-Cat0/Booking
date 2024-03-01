@@ -17,20 +17,22 @@
 </head>
 
 <body>
-	<!-- Barra de navegación -->
-	<nav class="navbar navbar-light bookingcolor">
-		<div class="container-fluid">
-			<a class="navbar-brand" href="#">
-				<a href="search_and_list.html"> <img src="img/booking-logo.png" class="nav-logo" alt="booking_logo"></a>
-			</a>
-			<div class="container d-flex justify-content-end">
-				<!-- <a href="edit_accomodation.html"> <button type="button" class="btn btn-custom me-2">Editar alojamiento</button></a> -->
-				<a href="my_reservations.html"><button type="button" class="btn btn-custom me-2">Mis reservas</button></a>
-				<a href="create_account.html"><button type="button" class="btn btn-custom me-2">Hazte una cuenta</button></a>
-				<a href="login.html"> <button type="button" class="btn btn-custom">Iniciar sesión</button></a>
-			</div>
-		</div>
-	</nav>
+  <!-- Barra de navegación -->
+  <nav class="navbar navbar-light bookingcolor">
+    <div class="container-fluid">
+        <a href="search_and_list.html"> <img src="img/booking-logo.png" class="nav-logo" alt="booking_logo"></a>
+      <div class="container d-flex justify-content-end">
+        
+        <!-- <a href="edit_accomodation.html" class="btn btn-custom me-2">Editar alojamiento</a> -->
+        <a href="my_reservations.html" class="btn btn-custom me-2">Mis reservas</a>
+        <a href="cart.html" class="btn btn-custom me-2">Cesta</a>
+
+        <a href="create_account.html" class="btn btn-custom me-2">Hazte una cuenta</a>
+        <a href="login.html" class="btn btn-custom me-2">Iniciar sesión</a>
+
+      </div>
+    </div>
+  </nav>
 
 	<!-- Container con la información de la reserva -->
 	<div class="container">
@@ -52,7 +54,7 @@
 									</a>
 									<i class="fa-solid fa-star"></i> <i class="fa-solid fa-star"></i> <i class="fa-solid fa-star"></i>
 								</div>
-								<h7> Cáceres a 200m del centro</h7>
+								<h6> Cáceres a 200m del centro</h6>
 								<h6 class="ecofriendly "> 🍃 🍃 Travel Sustainable Nivel 2</h6>
 								<p class="card-text bold"> Habitación Doble Superior - 1 o 2 camas <br>
 									Camas: 1 doble o 2 individuales </p>
@@ -116,35 +118,35 @@
 			</div>
 			<div class="col">
 				<!-- Formulario con metodos de pago y datos -->
-				<form action="" class="form-control">
+				<form action="my_reservations.html" class="form-control">
 					<div class="row">
 						<h4>Información de pago</h4>
 						<div class="col">
-							<label for="form-label">Nombre</label>
+							<label class="form-label" id="nombre">Nombre</label>
 							<input type="text" class="form-control">
 						</div>
 						<div class="col">
-							<label for="form-label">Apellido</label>
+							<label class="form-label">Apellido</label>
 							<input type="text" class="form-control" >
 						</div>
 
 					</div>
 					<div class="row mt-3">
 						<div class="col">
-							<label for="form-label">Email</label>
+							<label class="form-label">Email</label>
 							<input type="email" class="form-control" placeholder="Asegúrate de que no haya errores">
 						</div>
 
 					</div>
 					<div class="row mt-3">
 						<div class="col">
-							<label for="form-label">País</label>
+							<label class="form-label">País</label>
 							<input type="text" class="form-control" placeholder="País">
 						</div>
 					</div>
 					<div class="row mt-3">
 						<div class="col">
-							<label for="form-label">Teléfono</label>
+							<label class="form-label">Teléfono</label>
 							<input type="tel" class="form-control" placeholder="Teléfono">
 							<span class="ms-2">El alojamiento necesita validar tu reserva</span>
 						</div>
@@ -166,7 +168,7 @@
 							<div class="col">
 								<h5>Viajas por trabajo?</h5>
 								<div class="form-check">
-									<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+									<input class="form-check-input" type="checkbox" value="" id="trabajo">
 									<label class="form-check-label" for="flexCheckDefault">
 										Sí, estoy viajando por trabajo
 									</label>
@@ -178,14 +180,18 @@
 				<!-- -->
 			</div>
 			<div class="row text-center">
-				<a href="search_and_list.html"> <button class="btn btn-primary mt-3">Continuar con la reserva</button></a>
+				<div class="col">
+				<a href="search_and_list.html" class="btn btn-primary mt-3" >Continuar con la reserva</a>
+			</div>
 			</div>
 		</div>
 	</div>
-</body>
 
 
-<!-- Footer -->
+
+
+
+	<!-- Footer -->
 <footer class="text-center text-white mt-5" style="background-color: #f1f1f1;">
 	<div class="container pt-4">
 		<section class="mb-4">
@@ -200,5 +206,9 @@
 	</div>
 
 </footer>
+</body>
+
+
+
 
 </html>
