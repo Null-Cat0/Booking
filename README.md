@@ -148,7 +148,14 @@ aparecer al menos el nombre del alojamiento.
 localidad o escribiendo las palabras relativas al título o su descripción.
 
 
-
+8.- Completo/disponible: un usuario puede cambiar el estado de sus alojamientos en
+función de su grado de ocupación para indicar que el mismo no acepta más reservas
+y no se encuentra disponible. La aplicación debe permitir a los usuarios filtrar los
+alojamientos para mostrar solo aquellos que aceptan reservas (es decir, ocultar los
+que no aceptan reservas). De este modo la aplicación contará con tres apartados:
+- Todos: donde aparecen todos los alojamientos.
+- Con disponibilidad: solo los alojamientos que aceptan reservas.
+- Sin disponibilidad: solo los alojamientos que no aceptan reservas.
 
 
 
