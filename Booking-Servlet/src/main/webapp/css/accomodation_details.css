@@ -1,0 +1,118 @@
+.bookingcolor {
+    background-color: rgb(0, 59, 149);
+    /* box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2); */
+}
+
+.nav-logo {
+    width: 200px;
+}
+
+.btn-custom {
+    background-color: #007bff !important;
+    color: white !important;
+}
+
+
+.input-group-text {
+    background-color: white;
+}
+
+.form-control {
+    border-left: 0;
+    border-right: 0;
+}
+
+.btnBusqueda {
+    background-color: #007bff !important;
+    color: white !important;
+    padding: 10px 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.colorBusqueda {
+    background-color: rgb(244, 190, 65);
+    color: white !important;
+}
+
+.modGridImagen {
+    position: relative;
+    padding-top: -100em;
+}
+
+.wrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
+    grid-auto-rows: minmax(100px, auto);
+}
+
+.one {
+    grid-column: 1 ;
+    grid-row: 1;
+}
+
+.two {
+    grid-column: 2 / 4;
+    grid-row: 1 / 3;
+}
+
+.three {
+    grid-column: 1;
+    grid-row: 2 ;
+}
+
+.four {
+    grid-column: 1;
+    grid-row: 3;
+}
+
+.five {
+    grid-column: 2;
+    grid-row: 3;
+}
+
+.six {
+    grid-column: 3;
+    grid-row: 3;
+}
+img{
+    width: 100%;
+    height: 100%;
+}
+.btn-reserva{
+    background-color:rgb(48, 111, 188) !important;
+    color: white !important;
+    padding: 10px 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.bold
+{
+    font-weight: bold;
+}
+th{
+    background-color: #5575ad;
+    height: 5rem;
+}
+th, td {
+    border: 1px solid #5575ad!important;
+    padding: 10px !important;
+}
+.borderYellow{
+    border: 1px solid #f4be41;
+}
+.normal-text {
+    font-family: Arial, sans-serif; /* Define la fuente por defecto */
+}
+
+.check
+{
+    /* Quitar el punto de ul*/
+    list-style: none;
+}
+
+.ecofriendly
+{
+    color: rgb(0, 130, 52);
+}
