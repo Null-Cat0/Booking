@@ -1,4 +1,5 @@
-# Booking_Uex
+![imagen](https://github.com/Null-Cat0/Xmonad_Dotfiles/assets/91385511/d9e85853-ae4e-43ab-bb15-1c0a01f8ce89)
+# Booking
 Proyecto de la asignatura de Programación en Internet
 ## Entrega 1
 REQUISITOS MÍNIMOS
