@@ -2,28 +2,8 @@
 # Booking
 Proyecto de la asignatura de Programación en Internet
 ## Entrega 1
-REQUISITOS MÍNIMOS
-Cada uno de los requisitos mínimos funcionales tendrá una puntuación que podrá ser
-obtenida con la implementación del mismo. La puntuación de cada requisito será asignada
-atendiendo a criterios de los detalles implementados, aspecto visual, validez del código, etc.
 
-Los requisitos mínimos se dividen en funcionales y no funcionales.
-
-Requisitos no funcionales:
-
-HTML y CSS son válidos. Para ello, se deben utilizar los validadores oficiales de la
-W3C.
-Buenas prácticas : el código de la aplicación web sigue todas las buenas prácticas y
-patrones que se han enseñado en la asignatura.
 Requisitos funcionales:
-
-En esta primera actividad, se debe presentar un primer diseño, al menos, de las páginas que
-serán implementadas para las siguientes funcionalidades del proyecto. Estas páginas sólo
-pretenden mostrar el diseño que se seguirá en estas funcionalidades, pero no es necesario
-que las funcionalidades estén implementadas aún. Como ejemplo, cuando se mencione la
-opción de filtrado por Tipo de alojamiento o Instalaciones, se hace referencia a los botones u
-opciones que permitirían realizar dicho filtrado pero no es necesario que los botones realicen
-aún ningún tipo de filtrado (es decir, ninguna acción).
 
 1.- Inicio de sesión o creación de una cuenta (1,25 puntos). El proyecto debe incluir una
 página desde la que un usuario existente en el sistema pueda iniciar sesión en la aplicación.
@@ -103,9 +83,69 @@ populares, número de habitaciones ofrecidas en total en el sistema, etc. Se dej
 estudiante el diseño y elección de esta página para que pueda añadir otras funcionalidades
 que considere.
 
+## Entrega 2
+
+Requisitos funcionales:
+
+1.- Registro y acceso de usuarios: Cualquier persona puede registrarse como usuario
+de la aplicación web a través de un correo electrónico y una contraseña robusta (que
+al menos contendrá 8 dígitos entre los que se incluye un número, una mayúscula, una
+minúscula y un carácter especial). Adicionalmente se podrán añadir otros datos como
+nombre, apellidos y otros datos que se consideren necesarios. Tras realizar el alta,
+cada usuario podrá editar su información y eliminar su cuenta en cualquier momento.
+Para cumplir satisfactoriamente con este requisito el usuario debe ver la información
+previamente cargada de su perfil cuando lo está editando, de modo que no sea
+necesario volver a rellenar un campo que ya contenga información.
+
+2.- Gestión de alojamientos: Cualquier usuario puede crear, ver, editar y eliminar un
+alojamiento que contenga, al menos (se deben respetar los tipos de campos):
+
+- Nombre alojamiento. text
+- Dirección: text
+- Teléfono: telephone
+- Distancia al centro: number.
+- Valoración media: number (float)
+- Descripción: text
+- Servicios o instalaciones ofrecidos: checkbox.
+- Permite mascotas: radio button
+
+Se pueden añadir otros campos que se consideren necesarios.
+Para cumplir satisfactoriamente con este requisito cuando el usuario propietario del
+alojamiento esté editando el mismo debe ver la información previamente
+cargada y almacenada en el sistema cuando el alojamiento se introdujo. Además, el 
+usuario propietario del alojamiento tendrá la opción de eliminar el mismo de la
+aplicación cuando lo estime oportuno.
 
 
+3.- Gestión de habitaciones ofrecidas por un alojamiento: el usuario dueño de un
+alojamiento podrá gestionar la lista de habitaciones que ese alojamiento ofrece a los
+clientes. Por cada habitación, al menos, se dispondrá de la siguiente información:
+- Nombre de la habitación.
+- Descripción.
+- Precio/noche.
+- Número de habitaciones disponibles.
 
+4.- Gestión de reservas: Cualquier usuario puede realizar una reserva de alguna
+habitación de un alojamiento. Como resultado de esta acción, el usuario dispondrá de
+un registro/histórico de las reservas realizadas. Cabe destacar que un usuario podrá
+realizar reservas de cualquier alojamiento, incluidos aquellos de los que es propietario.
+
+5.- Valoración: Cada alojamiento podrá recoger una valoración por parte de los usuarios
+que hace referencia al grado de satisfacción del cliente con el mismo. Esta valoración
+tendrá un rango de 1 a 5. La valoración podrá ir acompañada de un comentario. En
+las valoraciones de un alojamiento cada valoración debe mostrar el usuario que la ha
+realizado. Los usuarios solo pueden hacer una valoración por alojamiento y siempre
+que no sea el propietario del mismo. El sistema debe proporcionar una opción para
+mostrar los alojamientos ordenados por su valoración media.
+
+6.- Alojamientos favoritos: los usuarios podrán tener un conjunto de alojamientos
+favoritos. En este caso, en su perfil aparecerá el listado de alojamientos favoritos. Un
+mismo usuario no puede añadir dos veces el mismo alojamiento a su lista de favoritos.
+Sí podrá quitar un alojamiento de sus favoritos. En el listado de favoritos debe
+aparecer al menos el nombre del alojamiento.
+
+7.- Buscar alojamiento: un usuario puede buscar un alojamiento concreto por su
+localidad o escribiendo las palabras relativas al título o su descripción.
 
 
 
