@@ -34,4 +34,14 @@
     <servlet-name>ListPropertiesServlet</servlet-name>
     <url-pattern>/ListPropertiesServlet.do</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ListUserDataServlet</display-name>
+    <servlet-name>ListUserDataServlet</servlet-name>
+    <servlet-class>es.unex.pi.controller.ListUserDataServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ListUserDataServlet</servlet-name>
+    <url-pattern>/ListUserDataServlet.do</url-pattern>
+  </servlet-mapping>
 </web-app>

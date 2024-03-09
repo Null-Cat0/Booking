@@ -77,20 +77,26 @@ public class LoginServlet extends HttpServlet {
 				request.getSession().setAttribute("user", user);
 				
 				//Redirigir a la página principal
-				RequestDispatcher view = request.getRequestDispatcher("WEB-INF/Search_and_list.jsp");
+				RequestDispatcher view = request.getRequestDispatcher("WEB-INF/SearchAndList.jsp");
 				view.forward(request, response);
 				
 			} else {
 				messages.put("password", "Contraseña incorrecta");
 				session.setAttribute("messages", messages);
+				
 				logger.info("Contraseña incorrecta");
+				
+				request.setAttribute("email", email);
+				
 				RequestDispatcher view = request.getRequestDispatcher("WEB-INF/Login.jsp");
 				view.forward(request, response);
 			}
 		} else {
 			messages.put("email", "Usuario no encontrado, registrese para poder acceder al sistema.");
 			session.setAttribute("messages", messages);
+			
 			logger.info("Usuario no encontrado");
+			
 			RequestDispatcher view = request.getRequestDispatcher("WEB-INF/Login.jsp");
 			view.forward(request, response);
 		}

@@ -44,6 +44,12 @@
 						una cuenta</a>
 					<a href="login.html" class="btn btn-custom me-2">Iniciar sesión</a>
 				</c:if>
+				<c:if test="${sessionScope.user != null}">
+				<form action="ListUserDataServlet.do" method="post">
+					<input class="btn btn-custom me-2"  type="submit" value="Perfil">
+				</form>
+					<a href="logout" class="btn btn-custom me-2">Cerrar sesión</a>
+				</c:if>
 			</div>
 		</div>
 	</nav>

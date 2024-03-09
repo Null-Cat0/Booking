@@ -36,12 +36,11 @@
 		<div class="row justify-content-center">
 			<div class="col-4 m-5">
 				<h1 class="text-center">Inicia sesión</h1>
-				<h4 class="text-danger">${messages.password}</h4>
-				<h4 class="text-danger">${messages.email}</h4>
+				<h6 class="	text-danger">${messages.password}</h6>
+				<h6 class="text-danger">${messages.email}</h6> <br>
 				<form action="LoginServlet.do" method="get">
-					<label class="form-label" for="email">E-mail:</label><br> <input
-						class="form-control" type="text" id="email" name="email"
-						placeholder="Indica tu dirección de email" required><br>
+					<label class="form-label" for="email">E-mail:</label><br>
+					<input  class="form-control" type="email" id="email" name="email" value="<%= request.getAttribute("email") != null ? request.getAttribute("email") : "" %>" required><br>
 					<label class="form-label" for="password">Contraseña:</label><br>
 					<input class="form-control" type="password" id="password"
 						name="password" placeholder="Indica tu contraseña" required><br>
