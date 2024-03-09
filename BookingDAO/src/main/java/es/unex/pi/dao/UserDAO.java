@@ -35,6 +35,16 @@ public interface UserDAO {
 	 * @return User object with that name.
 	 */
 	public User get(String name);
+	/**
+	 * Gets an user from the DB using name.
+	 * 
+	 * @param name
+	 *            Name of the user.
+	 * 
+	 * @return User object with that name.
+	 */
+	public User getUserByEmail(String email);
+
 
 	/**
 	 * Gets all the users from the database.

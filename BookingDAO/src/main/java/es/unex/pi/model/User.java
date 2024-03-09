@@ -8,6 +8,16 @@ public class User {
 	private String email;
 	private String password;
 	
+	public User(String name2, String surname2, String email2, String password2) {
+		// TODO Auto-generated constructor stub
+		this.name=name2;
+		this.surname=surname2;
+		this.email=email2;
+		this.password=password2;
+	}
+	public User() {
+		// TODO Auto-generated constructor stub
+	}
 	public long getId() {
 		return id;
 	}
