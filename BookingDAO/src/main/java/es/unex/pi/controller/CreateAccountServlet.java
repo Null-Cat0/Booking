@@ -92,8 +92,8 @@ public class CreateAccountServlet extends HttpServlet {
 					//Añadir el usuario a la sesión
 					request.getSession().setAttribute("user", user);					
 					
-					RequestDispatcher rd = request.getRequestDispatcher("search_and_list.html");
-					rd.forward(request, response);
+					RequestDispatcher view = request.getRequestDispatcher("WEB-INF/SearchAndList.jsp");
+					view.forward(request, response);
 				} else {
 					System.out.println("La contraseña no cumple con los criterios requeridos");
 				}

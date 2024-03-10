@@ -44,4 +44,14 @@
     <servlet-name>ListUserDataServlet</servlet-name>
     <url-pattern>/ListUserDataServlet.do</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ListResultsServlet</display-name>
+    <servlet-name>ListResultsServlet</servlet-name>
+    <servlet-class>es.unex.pi.controller.ListResultsServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ListResultsServlet</servlet-name>
+    <url-pattern>/ListResultsServlet.do</url-pattern>
+  </servlet-mapping>
 </web-app>

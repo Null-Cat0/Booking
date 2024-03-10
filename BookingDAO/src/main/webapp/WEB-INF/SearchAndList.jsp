@@ -67,9 +67,9 @@
 	<!-- Formulario de busqueda -->
 	<div class="container p-5 pt-0">
 		<div class="d-flex flex-row bg-warning busquedaAlojamiento rounded">
-			<form class="d-flex flex-row" action="search_results.html">
+			<form class="d-flex flex-row" action="ListResultsServlet.do">
 				<div class="p-2 form-group">
-					<input class="form-control" type="text" id="search" name="search"
+					<input class="form-control" type="text" id="search" name="city"
 						placeholder="¿Adónde vas?">
 				</div>
 				<div class="p-2 form-group">
@@ -89,7 +89,7 @@
 				</div>
 				<div class="p-2 form-group">
 					<input class="form-control" type="number" id="rooms"
-						name="Número de habitaciones" placeholder="Nº habitaciones">
+						name="rooms" placeholder="Nº habitaciones">
 				</div>
 				<div class="p-2 form-group">
 					<input class="form-control" type="submit" value="Buscar">
