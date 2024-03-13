@@ -42,7 +42,16 @@ public interface PropertyDAO {
 	 * @return List of all the properties from the database that contain a text either in the name.
 	 */	
 	public List<Property> getAllBySearchName(String search);
-
+	
+	/**
+	 * Gets all the properties from the database that contain a text in the city.
+	 * 
+	 * @param search
+	 *            Search string .
+	 * 
+	 * @return List of all the properties from the database that contain a text either in the city.
+	 */	
+	public List<Property> getAllBySearchCity(String city);
 
 	/**
 	 * Gets all the properties from the database that belong to a user.

@@ -88,7 +88,36 @@ public class JDBCPropertyDAOImpl implements PropertyDAO {
 		return properties;
 	}
 	
+	public List<Property> getAllBySearchCity(String city) {
+		city = city.toUpperCase();
+		if (conn == null)
+			return null;
 
+		ArrayList<Property> properties = new ArrayList<Property>();
+		try {
+			Statement stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM properties WHERE UPPER(city) LIKE '%" + city + "%'");
+
+			while (rs.next()) {
+				Property property = new Property();
+				fromRsToPropertyObject(rs,property);
+				properties.add(property);
+				
+				logger.info("fetching property: "+property.getId());
+				
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return properties;
+	}
+	
+	
+	
+	
 	
 	public List<Property> getAllByUser(long idu) {
 		

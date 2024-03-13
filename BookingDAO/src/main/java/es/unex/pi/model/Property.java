@@ -14,7 +14,24 @@ public class Property {
 	private int available;
 	private int idu;
 
-	
+	public Property() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public Property(String name, String address, String telephone, double gradesAverage, String city,
+			double centerDistance, String description, int petFriendly, int available, int idu) {
+		this.name = name;
+		this.address = address;
+		this.telephone = telephone;
+		this.gradesAverage = gradesAverage;
+		this.city = city;
+		this.centerDistance = centerDistance;
+		this.description = description;
+		this.petFriendly = petFriendly;
+		this.available = available;
+		this.idu = idu;
+
+	}
 	public String getName() {
 		return name;
 	}
@@ -44,8 +61,7 @@ public class Property {
 	}
 	public void setId(long id) {
 		this.id = id;
-	}
-	
+	}	
 	
 	public String getTelephone() {
 		return telephone;
@@ -84,6 +100,13 @@ public class Property {
 		this.petFriendly = petFriendly;
 	}
 
+	@Override
+	public String toString() {
+		return "Property [id=" + id + ", name=" + name + ", address=" + address + ", telephone=" + telephone
+				+ ", gradesAverage=" + gradesAverage + ", city=" + city + ", centerDistance=" + centerDistance
+				+ ", description=" + description + ", petFriendly=" + petFriendly + ", available=" + available
+				+ ", idu=" + idu + "]";
+	}
 
 	
 	

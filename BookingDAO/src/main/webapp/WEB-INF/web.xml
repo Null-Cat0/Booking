@@ -54,4 +54,14 @@
     <servlet-name>ListResultsServlet</servlet-name>
     <url-pattern>/ListResultsServlet.do</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>NewPropertyServlet</display-name>
+    <servlet-name>NewPropertyServlet</servlet-name>
+    <servlet-class>es.unex.pi.controller.NewPropertyServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>NewPropertyServlet</servlet-name>
+    <url-pattern>/NewPropertyServlet.do</url-pattern>
+  </servlet-mapping>
 </web-app>
