@@ -31,18 +31,27 @@
 			<a href="search_and_list.html"> <img src="img/booking-logo.png"
 				class="nav-logo" alt="booking_logo"></a>
 			<div class="container d-flex justify-content-end">
-				<!-- <a href="edit_accomodation.html"> <button type="button" class="btn btn-custom me-2">Editar alojamiento</button></a> -->
 
 				<a href="my_reservations.html" class="btn btn-custom me-2">Mis
 					reservas</a> <a href="cart.html" class="btn btn-custom me-2">Cesta</a>
 
-				<a href="create_account.html" class="btn btn-custom me-2">Hazte
-					una cuenta</a> <a href="login.html" class="btn btn-custom me-2">Iniciar
-					sesión</a>
-
+				<c:if test="${sessionScope.user == null}">
+					<a href="create_account.html" class="btn btn-custom me-2">Hazte
+						una cuenta</a>
+					<a href="login.html" class="btn btn-custom me-2">Iniciar sesión</a>
+				</c:if>
+				<c:if test="${sessionScope.user != null}">
+					<form action="ListUserDataServlet.do" method="post">
+						<input class="btn btn-custom me-2" type="submit" value="Perfil">
+					</form>
+					<a href="logout" class="btn btn-custom me-2">Cerrar sesión</a>
+					<a href="NewPropertyServlet.do" class="btn btn-custom me-2">Añadir
+						alojamiento</a>
+				</c:if>
 			</div>
 		</div>
 	</nav>
+
 
 	<!-- Extensión del color de booking -->
 	<div class="container-fluid extColor">
@@ -177,7 +186,7 @@
 											</a> <i class="fa-solid fa-star"></i> <i class="fa-solid fa-star"></i>
 											<i class="fa-solid fa-star"></i>
 										</div>
-										<h6>${property.city} a ${property.centerDistance}m del
+										<h6>${property.city}a ${property.centerDistance}m del
 											centro</h6>
 										<h6>${property.address}</h6>
 										<h6 class="ecofriendly bold">

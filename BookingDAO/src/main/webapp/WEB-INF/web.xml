@@ -36,13 +36,13 @@
   </servlet-mapping>
   <servlet>
     <description></description>
-    <display-name>ListUserDataServlet</display-name>
-    <servlet-name>ListUserDataServlet</servlet-name>
-    <servlet-class>es.unex.pi.controller.ListUserDataServlet</servlet-class>
+    <display-name>EditUserServlet</display-name>
+    <servlet-name>EditUserServlet</servlet-name>
+    <servlet-class>es.unex.pi.controller.EditUserServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>ListUserDataServlet</servlet-name>
-    <url-pattern>/ListUserDataServlet.do</url-pattern>
+    <servlet-name>EditUserServlet</servlet-name>
+    <url-pattern>/EditUserServlet.do</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
@@ -63,5 +63,15 @@
   <servlet-mapping>
     <servlet-name>NewPropertyServlet</servlet-name>
     <url-pattern>/NewPropertyServlet.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ListCategoriesServlet</display-name>
+    <servlet-name>ListCategoriesServlet</servlet-name>
+    <servlet-class>es.unex.pi.controller.ListCategoriesServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ListCategoriesServlet</servlet-name>
+    <url-pattern>/ListCategoriesServlet.do</url-pattern>
   </servlet-mapping>
 </web-app>

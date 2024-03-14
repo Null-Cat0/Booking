@@ -35,12 +35,12 @@
 							reservas</a> <a href="cart.html" class="btn btn-custom me-2">Cesta</a>
 
 						<c:if test="${sessionScope.user == null}">
-							<a href="create_account.html" class="btn btn-custom me-2">Hazte
+							<a href="CreateAccountServlet.do" class="btn btn-custom me-2">Hazte
 								una cuenta</a>
 							<a href="login.html" class="btn btn-custom me-2">Iniciar sesión</a>
 						</c:if>
 						<c:if test="${sessionScope.user != null}">
-							<form action="ListUserDataServlet.do" method="post">
+							<form action="EditUserServlet.do" method="Get">
 								<input class="btn btn-custom me-2" type="submit" value="Perfil">
 							</form>
 							<a href="logout" class="btn btn-custom me-2">Cerrar sesión</a>

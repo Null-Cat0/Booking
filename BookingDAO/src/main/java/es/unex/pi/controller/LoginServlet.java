@@ -77,8 +77,7 @@ public class LoginServlet extends HttpServlet {
 				request.getSession().setAttribute("user", user);
 				
 				//Redirigir a la página principal
-				RequestDispatcher view = request.getRequestDispatcher("WEB-INF/SearchAndList.jsp");
-				view.forward(request, response);
+				response.sendRedirect("ListCategoriesServlet.do");
 				
 			} else {
 				messages.put("password", "Contraseña incorrecta");

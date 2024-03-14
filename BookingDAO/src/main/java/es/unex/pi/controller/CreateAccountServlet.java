@@ -37,8 +37,13 @@ public class CreateAccountServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+	    // Redirigir a la página de registro
+		request.setAttribute("tipoInformacion", "Crear");
+		
+		RequestDispatcher view = request.getRequestDispatcher("WEB-INF/CreateAccount.jsp");
+		view.forward(request, response);
+				
+
 	}
 
 	/**
@@ -92,13 +97,12 @@ public class CreateAccountServlet extends HttpServlet {
 					//Añadir el usuario a la sesión
 					request.getSession().setAttribute("user", user);					
 					
-					RequestDispatcher view = request.getRequestDispatcher("WEB-INF/SearchAndList.jsp");
-					view.forward(request, response);
+					response.sendRedirect("ListCategoriesServlet.do");
 				} else {
-					System.out.println("La contraseña no cumple con los criterios requeridos");
+					logger.info("Contraseña no válida");
 				}
 			} else {
-				System.out.println("Las contraseñas no coinciden");
+				logger.info("Las contraseñas no coinciden");
 				// TODO controlar que las contraseñas no coinciden (mensaje de error + redirigir
 				// a la página de registro con los campos rellenos)
 			}

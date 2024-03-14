@@ -165,7 +165,7 @@ public class JDBCUserDAOImpl implements UserDAO {
 									+"', name='"+user.getName()
 									+"', surname='"+user.getSurname()
 									+"' WHERE id = "+user.getId());
-				logger.info("updating User: "+user.getId()+" "+user.getName()+" "+user.getEmail()+" "+user.getPassword());
+				logger.info("updating User: "+user.getId()+" "+user.getName()+" "+user.getEmail()+" "+user.getPassword()+" "+user.getSurname());
 				done= true;
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
