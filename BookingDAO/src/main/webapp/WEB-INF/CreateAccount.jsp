@@ -34,18 +34,21 @@
 			<div class="col-4 m-5">
 				<h1 class="text-center">${tipoInformacion} Cuenta </h1>
 				<form action="?" method="post">
-					<label class="form-label" for="name">Nombre:</label><br> <input
+					<label class="form-label" for="name">Nombre:</label><br> 
+					<input
 						class="form-control" type="text" id="name" name="name"
 						placeholder="Indica tu nombre"
-						value="${empty user ? '' : user.name}"><br> <label
+						value="${empty user ? '' : user.name}"  ><br> <label
 						class="form-label" for="name">Apellidos:</label><br> <input
 						class="form-control" type="text" id="secondname" name="secondname"
 						placeholder="Indica tus apellidos"
 						value="${empty user ? '' : user.surname}"><br> <label
-						class="form-label" for="email">E-mail:</label><br> <input
+						class="form-label" for="email">E-mail:</label> <br> <input
 						class="form-control" type="text" id="email" name="email"
 						placeholder="Indica tu dirección de email"
-						value="${empty user ? '' : user.email}"><br> <label
+						value="${empty user ? '' : user.email}"<c:if test="${sessionScope.user != null}"> readonly </c:if> ><br>  
+						
+						<label
 						class="form-label" for="password">Contraseña:</label><br> <input
 						class="form-control" type="password" id="password" name="password"
 						placeholder="Indica tu contraseña" minlength="8" value="${empty user ? '' : user.password}"><br>

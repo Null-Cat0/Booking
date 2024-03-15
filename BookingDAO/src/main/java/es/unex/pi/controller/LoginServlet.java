@@ -42,6 +42,20 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
+		RequestDispatcher view = request.getRequestDispatcher("WEB-INF/Login.jsp");
+		view.forward(request, response);
+		
+
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		/*
 		 * TODO Comprobar los datos del usuario y en caso de que no sean correctos, indicarselo al usuario.
 		 */
@@ -64,7 +78,7 @@ public class LoginServlet extends HttpServlet {
 		//Errores
 		Map<String, String> messages = new HashMap<String, String>();
 		
-		
+		System.out.print(email);
 		logger.info("Email: " + email);
 		logger.info("Password: " + password);
 
@@ -99,16 +113,5 @@ public class LoginServlet extends HttpServlet {
 			RequestDispatcher view = request.getRequestDispatcher("WEB-INF/Login.jsp");
 			view.forward(request, response);
 		}
-
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-
-		doGet(request, response);
 	}
 }
