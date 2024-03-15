@@ -1,11 +1,14 @@
 package es.unex.pi.controller;
 
 import java.io.IOException;
+import es.unex.pi.dao.*;
 import java.sql.Connection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import es.unex.pi.model.PropertiesServices;
 import es.unex.pi.model.Property;
+import es.unex.pi.model.Service;
 import es.unex.pi.model.User;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -70,20 +73,44 @@ public class NewPropertyServlet extends HttpServlet {
 			double gradesAverage = Double.parseDouble(request.getParameter("valoracionMedia"));
 			String description = request.getParameter("descripcion");
 
+			
+			//Leer servicios
+			String[] services = request.getParameterValues("servicios");
+
+			Connection conn = (Connection) getServletContext().getAttribute("dbConn");
+
+						
 			// Obtener usuario de la sesión.
 			HttpSession session = request.getSession();
-
 			User user = (User) session.getAttribute("user");
 
-
 			// Crear una nueva propiedad
-			Connection conn = (Connection) getServletContext().getAttribute("dbConn");
 			PropertyDAO propertyDAO = new JDBCPropertyDAOImpl();
 			propertyDAO.setConnection(conn);
 			Property property = new Property(title, address, tel, gradesAverage, "Cáceres", distance, description, 1, 1, (int)user.getId());
-			propertyDAO.add(property);
+			long id = propertyDAO.add(property);
+			property.setId(id);
 			logger.info("Property added: " + property.toString());
+
+			//Relacion servicios con la propiedad
+			PropertiesServicesDAO propertyServiceDAO = new JDBCPropertiesServicesDAOImpl();
+			propertyServiceDAO.setConnection(conn);
 			
+			ServicesDAO serviceDAO = new JDBCServicesDAOImpl();
+			serviceDAO.setConnection(conn);
+
+			 if (services != null && services.length > 0) {
+		            // Iterar sobre los servicios seleccionados
+		            for (String servicio : services) {
+		      			logger.info("Service: " + servicio);
+						Service s = serviceDAO.get(servicio);
+						logger.info("Service: " + s.getName() +  " " + s.getId() + " "+id);
+						PropertiesServices propertyService = new PropertiesServices(id, s.getId() );
+						propertyServiceDAO.add(propertyService);
+		            }
+		        }
+			
+					
 			RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/SearchAndList.jsp");
 			rd.forward(request, response);
 		

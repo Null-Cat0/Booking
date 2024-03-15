@@ -186,7 +186,7 @@
 											</a> <i class="fa-solid fa-star"></i> <i class="fa-solid fa-star"></i>
 											<i class="fa-solid fa-star"></i>
 										</div>
-										<h6>${property.city}a ${property.centerDistance}m del
+										<h6>${property.city} a ${property.centerDistance * 1000} m del
 											centro</h6>
 										<h6>${property.address}</h6>
 										<h6 class="ecofriendly bold">
@@ -204,7 +204,7 @@
 									<h6>2 noches, 2 adultos</h6>
 									<h3>€285</h3>
 									<p>Incluye impuestos y cargos</p>
-									<a href="accomodation_details.html" class="btn btn-primary">
+									<a href="ListPropertyData.do?id=${property.id}" class="btn btn-primary">
 										Ver disponibilidad</a>
 								</div>
 							</div>

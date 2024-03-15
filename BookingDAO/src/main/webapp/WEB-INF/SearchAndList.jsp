@@ -43,7 +43,7 @@
 							<form action="EditUserServlet.do" method="Get">
 								<input class="btn btn-custom me-2" type="submit" value="Perfil">
 							</form>
-							<a href="logout" class="btn btn-custom me-2">Cerrar sesión</a>
+							<a href="LogOutServlet.do" class="btn btn-custom me-2">Cerrar sesión</a>
 							<a href="NewPropertyServlet.do" class="btn btn-custom me-2">Añadir alojamiento</a>
 						</c:if>
 					</div>
