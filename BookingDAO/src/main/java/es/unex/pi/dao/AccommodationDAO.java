@@ -35,6 +35,19 @@ public interface AccommodationDAO {
 	 * @return Accommodation object with that name.
 	 */
 	public Accommodation get(String name);
+	
+	
+	/**
+	 * Gets an accommodation from the DB using name.
+	 * 
+	 * @param name
+	 *            Accommodation name.
+	 * 
+	 * @return Accommodation object with that name.
+	 */
+	public List<Accommodation> getAccommodationProperty( long idp);
+	
+	
 
 	
 	/**

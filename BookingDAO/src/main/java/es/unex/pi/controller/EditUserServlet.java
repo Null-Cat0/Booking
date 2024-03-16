@@ -47,6 +47,7 @@ public class EditUserServlet extends HttpServlet {
 		User user = (User) session.getAttribute("user");
 		request.setAttribute("user", user);
 		request.setAttribute("tipoInformacion", "Editar");
+	
 		RequestDispatcher view = request.getRequestDispatcher("WEB-INF/CreateAccount.jsp");
 		view.forward(request, response);
 	}

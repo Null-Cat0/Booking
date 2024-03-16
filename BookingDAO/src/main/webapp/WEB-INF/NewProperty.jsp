@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -56,45 +57,48 @@
 	<div class="container">
 		<h1 class="d-flex justify-content-center">Edición de alojamiento</h1>
 		<div class="d-flex justify-content-center">
-			<form action="NewPropertyServlet.do" method="POST" class="col-6">
+			<form action="?" method="POST" class="col-6">
 				<label for="nombre" class="form-label"> Nombre del
 					alojamiento</label> <input type="text" class="form-control"
 					placeholder="Hotel Ritz Madrid" name="nombreAlojamiento"
-					id="nombre"> <label for="direccion" class="form-label">
-					Dirección</label> <input type="text" class="form-control"
+					id="nombre" value='${property.name}'> <label
+					for="direccion" class="form-label"> Dirección</label> <input
+					type="text" class="form-control"
 					placeholder="Plaza de la Lealtad, 5" name="direccion"
-					id="direccion"> <label for="tel" class="form-label">
-					Teléfono</label> <input type="text" class="form-control"
-					placeholder="915 21 87 00" id="tel" name="tel"> <label
-					for="distancia" class="form-label"> Distancia al centro (en
-					kilometros)</label> <input type="text" class="form-control"
-					placeholder="1000" id="distancia" name="distanciaCentro"> <label
-					for="valoracion" class="form-label"> Valoración media</label> <input
-					type="text" class="form-control" placeholder="8.9" id="valoracion"
-					name="valoracionMedia"> <label for="descripcion"
-					class="form-label"> Descripción</label>
-				<textarea class="form-control" id="descripcion" name="descripcion"
-					placeholder="El Hotel Ritz Madrid es un hotel de 5 estrellas que se encuentra en el centro de Madrid."></textarea>
+					id="direccion" value='${property.address}'> <label
+					for="tel" class="form-label"> Teléfono</label> <input type="text"
+					class="form-control" placeholder="915 21 87 00" id="tel" name="tel"
+					value='${property.telephone}'> <label for="distancia"
+					class="form-label"> Distancia al centro (en kilometros)</label> <input
+					type="text" class="form-control" placeholder="1000" id="distancia"
+					name="distanciaCentro" value='${property.centerDistance}'>
+				<label for="valoracion" class="form-label"> Valoración media</label>
+				<input type="text" class="form-control" placeholder="8.9"
+					id="valoracion" name="valoracionMedia"
+					value='${property.gradesAverage}'> <label for="descripcion"
+					class="form-label"> Descripción</label> <input type="text"
+					class="form-control" id="descripcion" name="descripcion"
+					value='${property.description}'>
 				<p>Sevicios ofrecidos</p>
 
 				<!-- Checkbox de servicios -->
+
 				<ul>
-					<li><input type="checkbox" id="wifi" name="servicios"
-						value="wifi"> <label for="wifi">Wifi</label></li>
-					<li><input type="checkbox" id="parking" name="servicios"
-						value="parking"> <label for="parking">Parking</label></li>
-					<li><input type="checkbox" id="piscina" name="servicios"
-						value="piscina"> <label for="piscina">Piscina</label></li>
-					<li><input type="checkbox" id="gimnasio" name="servicios"
-						value="gimnasio"> <label for="gimnasio">Gimnasio</label></li>
-					<li><input type="checkbox" id="spa" name="servicios"
-						value="spa"> <label for="spa">Spa</label></li>
-					<li><input type="checkbox" id="restaurante" name="servicios"
-						value="restaurante"> <label for="restaurante">Restaurante</label></li>
-					<li><input type="checkbox" id="bar" name="servicios"
-						value="bar"> <label for="bar">Bar</label></li>
+					<c:forEach var="servicio" items="${listServices}">
+
+						<li><input type="checkbox" id="${servicio.name}"
+							name="servicios" value="${servicio.name}" checked> <label
+							for="${servicio.name}">${servicio.name}</label></li>
+					</c:forEach>
+					<c:forEach var="servicio" items="${listServicesNotIn}">
+
+						<li><input type="checkbox" id="${servicio.name}"
+							name="servicios" value="${servicio.name}"> <label
+							for="${servicio.name}">${servicio.name}</label></li>
+					</c:forEach>
+
 				</ul>
-				</ul>
+
 				<label for="mascotas"> Permite mascotas? (Marque solamente
 					si las permite)</label> <input type="radio" name="Permiten mascotas"
 					id="mascotas">

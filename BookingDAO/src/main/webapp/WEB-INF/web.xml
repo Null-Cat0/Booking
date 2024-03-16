@@ -104,4 +104,14 @@
     <servlet-name>ListPropertyData</servlet-name>
     <url-pattern>/ListPropertyData.do</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>EditPropertyServlet</display-name>
+    <servlet-name>EditPropertyServlet</servlet-name>
+    <servlet-class>es.unex.pi.controller.EditPropertyServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EditPropertyServlet</servlet-name>
+    <url-pattern>/EditPropertyServlet.do</url-pattern>
+  </servlet-mapping>
 </web-app>

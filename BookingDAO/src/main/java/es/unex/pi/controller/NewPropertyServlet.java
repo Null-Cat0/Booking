@@ -3,6 +3,8 @@ package es.unex.pi.controller;
 import java.io.IOException;
 import es.unex.pi.dao.*;
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -39,11 +41,28 @@ public class NewPropertyServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		/*
-		 * TODO [ ] Cargar la página de creación de una nueva propiedad
-		 */
-		RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/NewProperty.jsp");
-		rd.forward(request, response);
+		// TODO Auto-generated method stub
+		Connection conn = (Connection) getServletContext().getAttribute("dbConn");
+
+		try {
+
+			List<Service> listaServicios = new ArrayList<Service>();
+            ServicesDAO serviceDAO = new JDBCServicesDAOImpl();
+            serviceDAO.setConnection(conn);
+            listaServicios = serviceDAO.getAll();
+            request.setAttribute("listServicesNotIn", listaServicios);
+            
+            RequestDispatcher view = request.getRequestDispatcher("WEB-INF/NewProperty.jsp");
+            view.forward(request, response);
+            
+            
+		} catch (NumberFormatException e) {
+			logger.info("parameter id is not a number");
+
+			// TODO: Redirect to ListOrderServlet.
+			response.sendRedirect("LisCategoriesServlet.do");
+
+		}
 
 	}
 

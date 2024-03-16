@@ -49,6 +49,28 @@ public class JDBCServicesDAOImpl implements ServicesDAO {
 		return service;
 	}
 	
+	public List<Service> getAllNotInProperty(long idp){
+		if (conn == null) return null;
+		
+		ArrayList<Service> services = new ArrayList<Service>();
+		try {
+			Statement stmt;
+			ResultSet rs;
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery("SELECT * FROM services WHERE id NOT IN (SELECT ids FROM PropertiesServices WHERE idp="+idp+")");
+			while ( rs.next() ) {
+				Service service = new Service();
+				fromRsToServiceObject(rs,service);
+				services.add(service);
+				logger.info("fetching Categories: "+service.getId()+" "+service.getName());
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return services;
+		
+	}
 	
 	public List<Service> getAll() {
 
