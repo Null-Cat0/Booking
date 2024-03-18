@@ -6,6 +6,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -24,6 +26,7 @@ import es.unex.pi.model.Accommodation;
 import es.unex.pi.model.PropertiesServices;
 import es.unex.pi.model.Property;
 import es.unex.pi.model.Service;
+import es.unex.pi.model.User;
 
 /**
  * Servlet implementation class EditPropertyServlet
@@ -113,7 +116,49 @@ public class EditPropertyServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		logger.info("EditPropertyServlet: Request received");
+		Connection conn = (Connection) getServletContext().getAttribute("dbConn");
+		PropertyDAO propertyDao = new JDBCPropertyDAOImpl();
+		propertyDao.setConnection(conn);
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
+		
+		try {
+			long id = Long.parseLong(request.getParameter("id"));
+			String name = request.getParameter("nombreAlojamiento");
+			String address = request.getParameter("direccion");
+			String tel = request.getParameter("tel");
+			String city = request.getParameter("ciudad");
+			double dist = Double.parseDouble(request.getParameter("distanciaCentro"));
+			double grades = Double.parseDouble(request.getParameter("valoracionMedia"));
+			String description = request.getParameter("descripcion");
+			int petFriendly =request.getParameter("permitenMascotas")=="Si"?1:0;
+			
+			
+			Property property = new Property(id,name,address,tel,grades,city,dist,description,petFriendly,1,(int)user.getId());
+			propertyDao.update(property);
+			
+			
+			// Servicios del hotel
+			PropertiesServicesDAO propertyServiceDao = new JDBCPropertiesServicesDAOImpl();
+			propertyServiceDao.setConnection(conn);
+			List<PropertiesServices> serviciosPropiedad = propertyServiceDao.getAllByProperty(id);
+			List<Service> listaServiciosModificados = new ArrayList<Service>();
+			listaServiciosModificados = (List<Service>) request.getAttribute("listServices");
+			
+			
+			
+		
+			
+		}
+		catch (Exception e) {
+			
+		}
+		
+		
+		
+		
+		
 	}
 
 }

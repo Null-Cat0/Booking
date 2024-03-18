@@ -32,6 +32,21 @@ public class Property {
 		this.idu = idu;
 
 	}
+	public Property(long id2,String name, String address, String telephone, double gradesAverage, String city,
+			double centerDistance, String description, int petFriendly, int available, int idu) {
+		this.id=id2;
+		this.name = name;
+		this.address = address;
+		this.telephone = telephone;
+		this.gradesAverage = gradesAverage;
+		this.city = city;
+		this.centerDistance = centerDistance;
+		this.description = description;
+		this.petFriendly = petFriendly;
+		this.available = available;
+		this.idu = idu;
+
+	}
 	public String getName() {
 		return name;
 	}

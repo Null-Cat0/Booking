@@ -66,19 +66,22 @@
 					type="text" class="form-control"
 					placeholder="Plaza de la Lealtad, 5" name="direccion"
 					id="direccion" value='${property.address}'> <label
-					for="tel" class="form-label"> Teléfono</label> <input type="text"
+					for="tel" class="form-label"> Teléfono</label> <input type="tel"
 					class="form-control" placeholder="915 21 87 00" id="tel" name="tel"
-					value='${property.telephone}'> <label for="distancia"
-					class="form-label"> Distancia al centro (en kilometros)</label> <input
-					type="text" class="form-control" placeholder="1000" id="distancia"
-					name="distanciaCentro" value='${property.centerDistance}'>
-				<label for="valoracion" class="form-label"> Valoración media</label>
-				<input type="text" class="form-control" placeholder="8.9"
-					id="valoracion" name="valoracionMedia"
-					value='${property.gradesAverage}'> <label for="descripcion"
-					class="form-label"> Descripción</label> <input type="text"
-					class="form-control" id="descripcion" name="descripcion"
-					value='${property.description}'>
+					value='${property.telephone}'> <label for="city"
+					class="form-label"> Ciudad</label> <input type="text"
+					class="form-control" placeholder="Caceres" id="ciudad"
+					name="ciudad" value='${property.telephone}'> <label
+					for="distancia" class="form-label"> Distancia al centro (en
+					kilometros)</label> <input type="text" class="form-control"
+					placeholder="1000" id="distancia" name="distanciaCentro"
+					value='${property.centerDistance}'> <label for="valoracion"
+					class="form-label"> Valoración media</label> <input type="text"
+					class="form-control" placeholder="8.9" id="valoracion"
+					name="valoracionMedia" value='${property.gradesAverage}'> <label
+					for="descripcion" class="form-label"> Descripción</label> <input
+					type="text" class="form-control" id="descripcion"
+					name="descripcion" value='${property.description}'>
 				<p>Sevicios ofrecidos</p>
 
 				<!-- Checkbox de servicios -->
@@ -99,19 +102,24 @@
 
 				</ul>
 
-				<label for="mascotas"> Permite mascotas? (Marque solamente
-					si las permite)</label> <input type="radio" name="Permiten mascotas"
-					id="mascotas">
+				<label for="mascotas"> Permite mascotas?</label> <input type="radio"
+					name="permitenMascotas" id="mascotas" value="No"> <label
+					for="mascotas">No</label> <input type="radio"
+					name="permitenMascotas" id="mascotas" value="Si"> <label
+					for="mascotas">Si</label>
 				<div class="justify-content-center mt-5">
 					<input class="form-control btn-custom" type="submit"
 						value="Guardar cambios">
 				</div>
+
 			</form>
-
-
-
 		</div>
+
+
+
+
 	</div>
+
 
 	<!-- Footer -->
 	<footer class="text-center text-white mt-5"
