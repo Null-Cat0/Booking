@@ -11,7 +11,9 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import es.unex.pi.dao.AccommodationDAO;
@@ -34,22 +36,22 @@ import es.unex.pi.model.User;
 public class EditPropertyServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	Logger logger = Logger.getLogger(EditPropertyServlet.class.getName());
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public EditPropertyServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
-		
-		
+	public EditPropertyServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		// TODO Auto-generated method stub
 		Connection conn = (Connection) getServletContext().getAttribute("dbConn");
 		PropertyDAO propertyDao = new JDBCPropertyDAOImpl();
@@ -70,27 +72,28 @@ public class EditPropertyServlet extends HttpServlet {
 				List<PropertiesServices> serviciosPropiedad = propertyServiceDao.getAllByProperty(pid);
 				List<Service> listaServicios = new ArrayList<Service>();
 
-				if (serviciosPropiedad != null) {
-					ServicesDAO serviceDao = new JDBCServicesDAOImpl();
-					serviceDao.setConnection(conn);
-					for (PropertiesServices ps : serviciosPropiedad) {
-						Service servicio = serviceDao.get(ps.getIds());
-						listaServicios.add(servicio);
+				ServicesDAO serviceDao = new JDBCServicesDAOImpl();
+				serviceDao.setConnection(conn);
+				listaServicios = serviceDao.getAll();
+
+				Map<String, Boolean> serviciosAsociados = new HashMap<String, Boolean>();
+
+				for (Service s : listaServicios) {
+					if () {
+						serviciosAsociados.put(s.getName(), true);
+					} else {
+						serviciosAsociados.put(s.getName(), false);
 					}
-					logger.info("Servicios asociados a la propiedad");
-					request.setAttribute("listServices", listaServicios);
-					
-					// Lista de servicios que no tiene la propiedad
-					List<Service> listaServiciosNoAsociados = new ArrayList<Service>();
-					listaServiciosNoAsociados = serviceDao.getAllNotInProperty(pid);
-					logger.info("Servicios no asociados a la propiedad");
-					request.setAttribute("listServicesNotIn", listaServiciosNoAsociados);
-					
-					
-					
-				} else {
-					logger.info("No hay servicios asociados a la propiedad");
 				}
+
+//				//Mostrar map
+//				for (Map.Entry<Long, Boolean> entry : serviciosAsociados.entrySet()) {
+//                    logger.info("Key = " + entry.getKey() + ", Value = " + entry.getValue());
+//               }
+
+				logger.info("Servicios asociados a la propiedad");
+				request.setAttribute("mapServices", serviciosAsociados);
+				
 
 				request.setAttribute("property", property);
 				RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/NewProperty.jsp");
@@ -107,14 +110,14 @@ public class EditPropertyServlet extends HttpServlet {
 
 		}
 
-		
-		
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		logger.info("EditPropertyServlet: Request received");
 		Connection conn = (Connection) getServletContext().getAttribute("dbConn");
@@ -122,7 +125,7 @@ public class EditPropertyServlet extends HttpServlet {
 		propertyDao.setConnection(conn);
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
-		
+
 		try {
 			long id = Long.parseLong(request.getParameter("id"));
 			String name = request.getParameter("nombreAlojamiento");
@@ -132,33 +135,23 @@ public class EditPropertyServlet extends HttpServlet {
 			double dist = Double.parseDouble(request.getParameter("distanciaCentro"));
 			double grades = Double.parseDouble(request.getParameter("valoracionMedia"));
 			String description = request.getParameter("descripcion");
-			int petFriendly =request.getParameter("permitenMascotas")=="Si"?1:0;
-			
-			
-			Property property = new Property(id,name,address,tel,grades,city,dist,description,petFriendly,1,(int)user.getId());
+			int petFriendly = request.getParameter("permitenMascotas") == "Si" ? 1 : 0;
+
+			Property property = new Property(id, name, address, tel, grades, city, dist, description, petFriendly, 1,
+					(int) user.getId());
 			propertyDao.update(property);
-			
-			
+
 			// Servicios del hotel
 			PropertiesServicesDAO propertyServiceDao = new JDBCPropertiesServicesDAOImpl();
 			propertyServiceDao.setConnection(conn);
 			List<PropertiesServices> serviciosPropiedad = propertyServiceDao.getAllByProperty(id);
 			List<Service> listaServiciosModificados = new ArrayList<Service>();
 			listaServiciosModificados = (List<Service>) request.getAttribute("listServices");
-			
-			
-			
-		
-			
+
+		} catch (Exception e) {
+
 		}
-		catch (Exception e) {
-			
-		}
-		
-		
-		
-		
-		
+
 	}
 
 }

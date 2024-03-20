@@ -86,20 +86,11 @@
 
 				<!-- Checkbox de servicios -->
 
+				
 				<ul>
-					<c:forEach var="servicio" items="${listServices}">
-
-						<li><input type="checkbox" id="${servicio.name}"
-							name="servicios" value="${servicio.name}" checked> <label
-							for="${servicio.name}">${servicio.name}</label></li>
+					<c:forEach items="${mapServices}" var="entry">
+						Key = ${entry.key}, value = ${entry.value}<br>
 					</c:forEach>
-					<c:forEach var="servicio" items="${listServicesNotIn}">
-
-						<li><input type="checkbox" id="${servicio.name}"
-							name="servicios" value="${servicio.name}"> <label
-							for="${servicio.name}">${servicio.name}</label></li>
-					</c:forEach>
-
 				</ul>
 
 				<label for="mascotas"> Permite mascotas?</label> <input type="radio"
