@@ -27,6 +27,7 @@ public class LogOutServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		request.getSession().removeAttribute("user");
 		request.getSession().invalidate();
 		RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/Login.jsp");
 		rd.forward(request, response);

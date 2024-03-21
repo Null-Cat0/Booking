@@ -77,14 +77,14 @@ public class EditPropertyServlet extends HttpServlet {
 				listaServicios = serviceDao.getAll();
 
 				Map<String, Boolean> serviciosAsociados = new HashMap<String, Boolean>();
-
-				for (Service s : listaServicios) {
-					if () {
-						serviciosAsociados.put(s.getName(), true);
-					} else {
-						serviciosAsociados.put(s.getName(), false);
-					}
-				}
+//
+//				for (Service s : listaServicios) {
+//					if () {
+//						serviciosAsociados.put(s.getName(), true);
+//					} else {
+//						serviciosAsociados.put(s.getName(), false);
+//					}
+//				}
 
 //				//Mostrar map
 //				for (Map.Entry<Long, Boolean> entry : serviciosAsociados.entrySet()) {
