@@ -53,51 +53,20 @@ public class ListPropertiesServlet extends HttpServlet {
 		
 		
 		logger.info("Atendiendo GET");
+
+		
+		HttpServletRequest req = (HttpServletRequest) request;
+		User user = (User) req.getSession().getAttribute("user");
 		
 		Connection conn = (Connection) getServletContext().getAttribute("dbConn");
-		UserDAO userDAO = new JDBCUserDAOImpl();
-		userDAO.setConnection(conn);
 
-		PropertyDAO PropertyDAO = new JDBCPropertyDAOImpl();
-		PropertyDAO.setConnection(conn);
+		PropertyDAO propertyDAO = new JDBCPropertyDAOImpl();
+		propertyDAO.setConnection(conn);
 		
-		CategoryDAO categoryDAO = new JDBCCategoryDAOImpl();
-		categoryDAO.setConnection(conn);
+		List<Property> properties = new ArrayList<Property>();
+		properties = propertyDAO.getAllByUser(user.getId());
 		
-		PropertiesCategoriesDAO propertiesCategoriesDAO = new JDBCPropertiesCategoriesDAOImpl();
-		propertiesCategoriesDAO.setConnection(conn);
-		
-		List<Property> propertiesList = PropertyDAO.getAll();
-		
-		Iterator<Property> itPropertyList = propertiesList.iterator();
-
-		List<Triplet<Property, User, List<PropertiesCategories>>> propertiesUserList = new ArrayList<Triplet<Property, User, List<PropertiesCategories>>>();
-
-		while(itPropertyList.hasNext()) {
-			Property property = (Property) itPropertyList.next();
-			User user = userDAO.get(property.getIdu());
-			List<PropertiesCategories> propertiesCategories = propertiesCategoriesDAO.getAllByProperty(property.getId());
-			
-			logger.info("User " + user.getName());
-
-			propertiesUserList.add(new Triplet<Property, User, List<PropertiesCategories>>(property,user,propertiesCategories));
-		}
-		
-		
-		List<User> listUser = new ArrayList<User>();
-		listUser = userDAO.getAll();
-		Iterator<User> itUser = listUser.iterator();
-		Map<User,List<Property>> userPropertiesMap = new HashMap<User,List<Property>>();
-		
-		while(itUser.hasNext()) {
-			User user = itUser.next();
-			propertiesList = PropertyDAO.getAllByUser(user.getId());
-			userPropertiesMap.put(user, propertiesList);
-		}
-		
-		request.setAttribute("propertiesList",propertiesUserList);
-		request.setAttribute("usersMap", userPropertiesMap);
-		
+		request.setAttribute("properties", properties);
 		RequestDispatcher view = request.getRequestDispatcher("WEB-INF/ListPropertiesUser.jsp");
 		view.forward(request,response);
 		

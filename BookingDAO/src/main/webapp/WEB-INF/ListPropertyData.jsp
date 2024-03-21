@@ -20,7 +20,12 @@
 	rel="stylesheet"
 	integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
 	crossorigin="anonymous">
-
+<!-- Bootstrap JavaScript (requiere jQuery) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <title>Detalles de ${property.name}</title>
 <link rel="icon" type="image/png" href="img/booking_icono.png">
 </head>
@@ -35,38 +40,41 @@
 			<div class="container d-flex justify-content-end">
 				<!-- <a href="edit_accomodation.html"> <button type="button" class="btn btn-custom me-2">Editar alojamiento</button></a> -->
 
-				<!-- 		<a href="my_reservations.html" class="btn btn-custom me-2">Mis
-					reservas</a> 
-				<a href="cart.html" class="btn btn-custom me-2">Cesta</a> -->
+
 
 				<c:if test="${sessionScope.user.id == property.idu }">
 					<a href="EditPropertyServlet.do?id=${property.id}"
 						class="btn btn-custom me-2">Editar alojamiento</a>
-					<a href="DeleteProperty.do?id=${property.id}"
+					<a href="DeletePropertyServlet.do?id=${property.id}"
 						class="btn btn-custom me-2">Eliminar alojamiento</a>
 					<a href="" class="btn btn-custom me-2">Añadir habitacion</a>
 				</c:if>
-
-
+				<a href="cart.html" class="btn btn-custom me-2">Cesta</a>
+				<c:if test="${sessionScope.user != null}">
+					<div class="dropdown">
+						<button class="btn btn-custom dropdown-toggle" type="button"
+							id="dropdownMenuButton" data-toggle="dropdown"
+							aria-haspopup="true" aria-expanded="false">Hola
+							${user.name}</button>
+						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+							<a href="my_reservations.html" class="dropdown-item">Mis
+								reservas</a> <a href="NewPropertyServlet.do" class="dropdown-item">Añadir
+								alojamiento</a> <a href="EditUserServlet.do" class="dropdown-item">Perfil</a>
+							<a href="LogOutServlet.do" class="dropdown-item">Cerrar
+								sesión</a>
+						</div>
+					</div>
+				</c:if>
 
 				<c:if test="${sessionScope.user == null}">
 					<a href="CreateAccountServlet.do" class="btn btn-custom me-2">Hazte
 						una cuenta</a>
-					<a href="login.html" class="btn btn-custom me-2">Iniciar sesión</a>
+					<a href="LoginServlet.do" class="btn btn-custom me-2">Iniciar sesión</a>
 				</c:if>
-				<c:if test="${sessionScope.user != null}">
-					<a href="EditUserServlet.do" class="btn btn-custom me-2">Perfil</a>
-					<a href="LogOutServlet.do" class="btn btn-custom me-2">Cerrar
-						sesión</a>
 
-
-
-				</c:if>
 			</div>
 		</div>
 	</nav>
-
-
 
 
 

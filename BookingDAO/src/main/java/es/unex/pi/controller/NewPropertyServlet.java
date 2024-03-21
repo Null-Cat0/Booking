@@ -4,7 +4,9 @@ import java.io.IOException;
 import es.unex.pi.dao.*;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,6 +22,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import es.unex.pi.dao.*;
+
 /**
  * Servlet implementation class NewPropertyServlet
  */
@@ -47,15 +50,22 @@ public class NewPropertyServlet extends HttpServlet {
 		try {
 
 			List<Service> listaServicios = new ArrayList<Service>();
-            ServicesDAO serviceDAO = new JDBCServicesDAOImpl();
-            serviceDAO.setConnection(conn);
-            listaServicios = serviceDAO.getAll();
-            request.setAttribute("listServicesNotIn", listaServicios);
-            
-            RequestDispatcher view = request.getRequestDispatcher("WEB-INF/NewProperty.jsp");
-            view.forward(request, response);
-            
-            
+			ServicesDAO serviceDAO = new JDBCServicesDAOImpl();
+			serviceDAO.setConnection(conn);
+			listaServicios = serviceDAO.getAll();
+			request.setAttribute("listServicesNotIn", listaServicios);
+			Map<String, Boolean> serviciosAsociados = new HashMap<String, Boolean>();
+
+			for (int i = 0; i < listaServicios.size(); i++) {
+				Service s = listaServicios.get(i);
+
+				serviciosAsociados.put(s.getName(), false);
+
+			}
+			request.setAttribute("mapServices", serviciosAsociados);
+			RequestDispatcher view = request.getRequestDispatcher("WEB-INF/NewProperty.jsp");
+			view.forward(request, response);
+
 		} catch (NumberFormatException e) {
 			logger.info("parameter id is not a number");
 
@@ -76,8 +86,8 @@ public class NewPropertyServlet extends HttpServlet {
 		/*
 		 * TODO [ ] Recoger los datos del formulario [ ] Crear una nueva propiedad [ ]
 		 * Redirigir a la página de la propiedad creada
-		 * 			
-			//Mover a otro servlet como checkPropertyServlet ? (Parte)
+		 * 
+		 * //Mover a otro servlet como checkPropertyServlet ? (Parte)
 		 */
 
 		logger.setLevel(Level.INFO);
@@ -92,13 +102,11 @@ public class NewPropertyServlet extends HttpServlet {
 			double gradesAverage = Double.parseDouble(request.getParameter("valoracionMedia"));
 			String description = request.getParameter("descripcion");
 
-			
-			//Leer servicios
+			// Leer servicios
 			String[] services = request.getParameterValues("servicios");
 
 			Connection conn = (Connection) getServletContext().getAttribute("dbConn");
 
-						
 			// Obtener usuario de la sesión.
 			HttpSession session = request.getSession();
 			User user = (User) session.getAttribute("user");
@@ -106,34 +114,33 @@ public class NewPropertyServlet extends HttpServlet {
 			// Crear una nueva propiedad
 			PropertyDAO propertyDAO = new JDBCPropertyDAOImpl();
 			propertyDAO.setConnection(conn);
-			Property property = new Property(title, address, tel, gradesAverage, "Cáceres", distance, description, 1, 1, (int)user.getId());
+			Property property = new Property(title, address, tel, gradesAverage, "Cáceres", distance, description, 1, 1,
+					(int) user.getId());
 			long id = propertyDAO.add(property);
 			property.setId(id);
 			logger.info("Property added: " + property.toString());
 
-			//Relacion servicios con la propiedad
+			// Relacion servicios con la propiedad
 			PropertiesServicesDAO propertyServiceDAO = new JDBCPropertiesServicesDAOImpl();
 			propertyServiceDAO.setConnection(conn);
-			
+
 			ServicesDAO serviceDAO = new JDBCServicesDAOImpl();
 			serviceDAO.setConnection(conn);
 
-			 if (services != null && services.length > 0) {
-		            // Iterar sobre los servicios seleccionados
-		            for (String servicio : services) {
-		      			logger.info("Service: " + servicio);
-						Service s = serviceDAO.get(servicio);
-						logger.info("Service: " + s.getName() +  " " + s.getId() + " "+id);
-						PropertiesServices propertyService = new PropertiesServices(id, s.getId() );
-						propertyServiceDAO.add(propertyService);
-		            }
-		        }
-			
-					
+			if (services != null && services.length > 0) {
+				// Iterar sobre los servicios seleccionados
+				for (String servicio : services) {
+					logger.info("Service: " + servicio);
+					Service s = serviceDAO.get(servicio);
+					logger.info("Service: " + s.getName() + " " + s.getId() + " " + id);
+					PropertiesServices propertyService = new PropertiesServices(id, s.getId());
+					propertyServiceDAO.add(propertyService);
+				}
+			}
+
 			RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/SearchAndList.jsp");
 			rd.forward(request, response);
-		
-		
+
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "Error: ", e);
 		}

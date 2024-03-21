@@ -58,6 +58,7 @@
 		<h1 class="d-flex justify-content-center">Edición de alojamiento</h1>
 		<div class="d-flex justify-content-center">
 			<form action="?" method="POST" class="col-6">
+			<input type="hidden" name="id" value="${property.id }">
 				<label for="nombre" class="form-label"> Nombre del
 					alojamiento</label> <input type="text" class="form-control"
 					placeholder="Hotel Ritz Madrid" name="nombreAlojamiento"
@@ -86,10 +87,18 @@
 
 				<!-- Checkbox de servicios -->
 
-				
+
 				<ul>
+				
 					<c:forEach items="${mapServices}" var="entry">
-						Key = ${entry.key}, value = ${entry.value}<br>
+						<c:if test="${entry.value == true}">
+							<li><input type="checkbox" name="servicios"
+								value="${entry.key}" for="${entry.key}" checked  }> ${entry.key}</li>
+						</c:if>
+						<c:if test="${entry.value == false}">
+							<li><input type="checkbox" name="servicios"
+								value="${entry.key}" for="${entry.key}"> ${entry.key}</li>
+						</c:if>
 					</c:forEach>
 				</ul>
 

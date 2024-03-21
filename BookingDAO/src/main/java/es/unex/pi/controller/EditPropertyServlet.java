@@ -77,23 +77,22 @@ public class EditPropertyServlet extends HttpServlet {
 				listaServicios = serviceDao.getAll();
 
 				Map<String, Boolean> serviciosAsociados = new HashMap<String, Boolean>();
-//
-//				for (Service s : listaServicios) {
-//					if () {
-//						serviciosAsociados.put(s.getName(), true);
-//					} else {
-//						serviciosAsociados.put(s.getName(), false);
-//					}
-//				}
 
-//				//Mostrar map
-//				for (Map.Entry<Long, Boolean> entry : serviciosAsociados.entrySet()) {
-//                    logger.info("Key = " + entry.getKey() + ", Value = " + entry.getValue());
-//               }
+				int j = 0;
+				for (int i = 0; i < listaServicios.size(); i++) {
+					Service s = listaServicios.get(i);
+
+					if (j < serviciosPropiedad.size()
+							&& listaServicios.get(i).getId() == serviciosPropiedad.get(j).getIds()) {
+						serviciosAsociados.put(s.getName(), true);
+						j++;
+					} else {
+						serviciosAsociados.put(s.getName(), false);
+					}
+				}
 
 				logger.info("Servicios asociados a la propiedad");
 				request.setAttribute("mapServices", serviciosAsociados);
-				
 
 				request.setAttribute("property", property);
 				RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/NewProperty.jsp");
@@ -127,6 +126,7 @@ public class EditPropertyServlet extends HttpServlet {
 		User user = (User) session.getAttribute("user");
 
 		try {
+
 			long id = Long.parseLong(request.getParameter("id"));
 			String name = request.getParameter("nombreAlojamiento");
 			String address = request.getParameter("direccion");
@@ -144,12 +144,63 @@ public class EditPropertyServlet extends HttpServlet {
 			// Servicios del hotel
 			PropertiesServicesDAO propertyServiceDao = new JDBCPropertiesServicesDAOImpl();
 			propertyServiceDao.setConnection(conn);
-			List<PropertiesServices> serviciosPropiedad = propertyServiceDao.getAllByProperty(id);
-			List<Service> listaServiciosModificados = new ArrayList<Service>();
-			listaServiciosModificados = (List<Service>) request.getAttribute("listServices");
+
+			// De los servicios seleccionados hay que comprobar cuales estan asociados a la
+			// propiedad y cuales ha quitado
+			ServicesDAO serviceDao = new JDBCServicesDAOImpl();
+			serviceDao.setConnection(conn);
+
+			String[] services = request.getParameterValues("servicios");
+
+			List<PropertiesServices> serviciosPropiedad = propertyServiceDao.getAllByProperty(id); // Lista de los
+																									// servicios
+																									// asociados a la
+																									// propiedad
+			List<Service> listaServiciosSelecionados = new ArrayList<Service>(); // Lista de los servicios seleccionados
+																					// por el usuario
+			List<Service> todosLosServicios = serviceDao.getAll(); // Lista con todos los servicios
+			if (services != null) {
+
+				for (String s : services) {
+					Service service = serviceDao.get(s);
+					logger.info("Servicio seleccionado: " + s);
+					listaServiciosSelecionados.add(service);
+				}
+			} else {
+				logger.info("No hay servicios seleccionados");
+				listaServiciosSelecionados = null;
+			}
+
+			// Eliminamos los servicios que no esten seleccionados
+			for (int i = 0; i < serviciosPropiedad.size(); i++) {
+				if (listaServiciosSelecionados == null) {
+						logger.info("Servicio no seleccionado: " + serviciosPropiedad.get(i).getIds());
+						propertyServiceDao.delete(id, serviciosPropiedad.get(i).getIds());
+				}else if (!listaServiciosSelecionados.contains(serviciosPropiedad.get(i))) 
+				{
+					logger.info("Servicio no seleccionado: " + serviciosPropiedad.get(i).getIds());
+					propertyServiceDao.delete(id, serviciosPropiedad.get(i).getIds());
+				}
+		
+				
+			}
+
+			if (listaServiciosSelecionados != null) {
+				// Añadimos los servicios seleccionados
+				for (Service j : listaServiciosSelecionados) {
+					if (!serviciosPropiedad.contains(new PropertiesServices(id, j.getId()))) {
+						logger.info("Añadiendo servicio seleccionado: " + j.getId());
+						propertyServiceDao.add(new PropertiesServices(id, j.getId()));
+					}
+				}
+			}
+			
+			response.sendRedirect("ListCategoriesServlet.do");
 
 		} catch (Exception e) {
-
+			e.printStackTrace();
+			logger.info("Error updating property");
+			response.sendRedirect("ListCategoriesServlet.do");
 		}
 
 	}

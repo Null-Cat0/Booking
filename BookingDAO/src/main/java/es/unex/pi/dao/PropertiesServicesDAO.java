@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.util.List;
 
 import es.unex.pi.model.PropertiesServices;
+import es.unex.pi.model.Service;
 
 public interface PropertiesServicesDAO {
 

@@ -114,4 +114,14 @@
     <servlet-name>EditPropertyServlet</servlet-name>
     <url-pattern>/EditPropertyServlet.do</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DeletePropertyServlet</display-name>
+    <servlet-name>DeletePropertyServlet</servlet-name>
+    <servlet-class>es.unex.pi.controller.DeletePropertyServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeletePropertyServlet</servlet-name>
+    <url-pattern>/DeletePropertyServlet.do</url-pattern>
+  </servlet-mapping>
 </web-app>
