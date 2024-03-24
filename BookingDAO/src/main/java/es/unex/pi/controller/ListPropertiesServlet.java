@@ -19,6 +19,7 @@ import es.unex.pi.dao.JDBCPropertyDAOImpl;
 import es.unex.pi.dao.JDBCPropertiesCategoriesDAOImpl;
 import es.unex.pi.dao.JDBCUserDAOImpl;
 import es.unex.pi.dao.UserDAO;
+import es.unex.pi.model.Accommodation;
 import es.unex.pi.model.Category;
 import es.unex.pi.model.Property;
 import es.unex.pi.model.PropertiesCategories;
@@ -28,8 +29,8 @@ import es.unex.pi.util.Triplet;
 import jakarta.servlet.RequestDispatcher;
 
 import java.sql.Connection;
-
-
+import es.unex.pi.dao.*
+;
 
 /**
  * Servlet implementation class ListPropertyServlet
@@ -66,7 +67,19 @@ public class ListPropertiesServlet extends HttpServlet {
 		List<Property> properties = new ArrayList<Property>();
 		properties = propertyDAO.getAllByUser(user.getId());
 		
-		request.setAttribute("properties", properties);
+		AccommodationDAO accommodationDAO = new JDBCAccommodationDAOImpl();
+		accommodationDAO.setConnection(conn);
+		
+		Map<Property, List<Accommodation>> propertiesAccommodations = new HashMap<Property, List<Accommodation>>();
+		
+		for (Property p : properties) {
+			List<Accommodation> accommodations = new ArrayList<Accommodation>();
+			accommodations = accommodationDAO.getAccommodationProperty(p.getId());
+			propertiesAccommodations.put(p, accommodations);
+		}
+		
+		
+		request.setAttribute("propertiesAccommodations", propertiesAccommodations);
 		RequestDispatcher view = request.getRequestDispatcher("WEB-INF/ListPropertiesUser.jsp");
 		view.forward(request,response);
 		

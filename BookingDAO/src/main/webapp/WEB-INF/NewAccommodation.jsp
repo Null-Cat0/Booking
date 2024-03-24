@@ -38,35 +38,37 @@
 	<!-- Container con el formulario para editar alojamiento-->
 
 	<div class="container">
-		<h1 class="text-center mt-5">Añadir Habitación</h1>
-		<div class="row">
-			<div class="d-flex justify-content-center">
-				<form action="?" method="post" class="col-6">
+		<h1 class="text-center mt-5">${tipoInformacion} Habitación</h1>
+		<div class="row ">
+			<div class="d-flex justify-content-center ">
+			
+				<form action="?" method="post" class="col-6 ">
 					<input type="hidden" name="idp" value='${idp}'>
+					<input type="hidden" name="ida" value='${accommodation.id}'>
 					<label for="name" class="form-label"> Nombre</label>
 					 <input
 						type="text" class="form-control" placeholder="Suite" name="name"
-						id="name" value='${accomodation.address}'> 
+						id="name" value='${accommodation.name}' required> 
 						<label
 						for="price" class="form-label"> Precio por habitación:</label> 
 						<input
 						type="number" class="form-control" placeholder="50$" name="price"
-						id="price" value='${accomodation.price}'> 
+						id="price" value='${accommodation.price}'required> 
 						<label
 						for="descripcion" class="form-label"> Descripcion:</label> 
 						<input
 						type="text" class="form-control" placeholder="Habitación bonita"
-						name="descripcion" id="descripcion"
-						value='${accomodation.description}'>
+						name="description" id="descripcion"
+						value='${accommodation.description}'required>
 						 <label
 						for="nAccommodations" class="form-label"> Número de
 						habitaciones disponibles:</label> 
 						<input type="number" class="form-control"
 						placeholder="15" name="nAccommodations" id="nAccommodations"
-						value='${accomodation.numAccommodations}'>
+						value='${accommodation.numAccommodations}'required>
 				
 						<div class="form-group d-flex justify-content-center">
-						    <button type="submit" class="btn btn-primary mt-3 mx-auto">Añadir habitacion</button>
+						    <button type="submit" class="btn btn-primary mt-3 mx-auto">${tipoInformacion} habitación</button>
 						</div>
 				</form>
 			</div>

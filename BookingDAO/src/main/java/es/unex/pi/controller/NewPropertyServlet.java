@@ -62,6 +62,8 @@ public class NewPropertyServlet extends HttpServlet {
 				serviciosAsociados.put(s.getName(), false);
 
 			}
+
+			request.setAttribute("tipoInformacion","Añadir");
 			request.setAttribute("mapServices", serviciosAsociados);
 			RequestDispatcher view = request.getRequestDispatcher("WEB-INF/NewProperty.jsp");
 			view.forward(request, response);

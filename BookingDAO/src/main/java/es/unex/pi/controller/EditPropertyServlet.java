@@ -95,6 +95,7 @@ public class EditPropertyServlet extends HttpServlet {
 				request.setAttribute("mapServices", serviciosAsociados);
 
 				request.setAttribute("property", property);
+				request.setAttribute("tipoInformacion","Editar");
 				RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/NewProperty.jsp");
 				rd.forward(request, response);
 			} else {
@@ -117,14 +118,13 @@ public class EditPropertyServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		logger.info("EditPropertyServlet: Request received");
 		Connection conn = (Connection) getServletContext().getAttribute("dbConn");
 		PropertyDAO propertyDao = new JDBCPropertyDAOImpl();
 		propertyDao.setConnection(conn);
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
-
+		//TODO :Comprobar que los datos de la habitacion son correctos
 		try {
 
 			long id = Long.parseLong(request.getParameter("id"));

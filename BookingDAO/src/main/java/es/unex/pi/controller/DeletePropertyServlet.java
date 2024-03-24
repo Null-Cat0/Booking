@@ -49,8 +49,6 @@ public class DeletePropertyServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		HttpSession session = request.getSession();
-		// TODO Auto-generated method stub
 		Connection conn = (Connection) getServletContext().getAttribute("dbConn");
 		PropertyDAO propertyDao = new JDBCPropertyDAOImpl();
 		propertyDao.setConnection(conn);
@@ -71,7 +69,7 @@ public class DeletePropertyServlet extends HttpServlet {
 
 			else {
 				logger.info("Property is null");
-				response.sendRedirect("LisCategoriesServlet.do");
+				response.sendRedirect("ListPropertiesServlet.do");
 			}
 		} catch (
 
@@ -112,7 +110,7 @@ public class DeletePropertyServlet extends HttpServlet {
 					response.sendRedirect("ListCategoriesServlet.do");
 				} else {
 					logger.info("User is not the owner of the property");
-					response.sendRedirect("ListCategoriesServlet.do");
+					response.sendRedirect("ListPropertiesServlet.do");
 				}
 			} else {
 				logger.info("Property is null");

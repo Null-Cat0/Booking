@@ -34,7 +34,7 @@ public class JDBCBookingsAccommodationsDAOImpl implements BookingsAccommodations
 			}
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 
@@ -59,7 +59,7 @@ public class JDBCBookingsAccommodationsDAOImpl implements BookingsAccommodations
 			}
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 
@@ -106,7 +106,7 @@ public class JDBCBookingsAccommodationsDAOImpl implements BookingsAccommodations
 			logger.info("fetching BookingsAccommodations by idb: "+bookingsAccommodations.getIdb()+"  and idacc: "+bookingsAccommodations.getIdacc());
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 			
 		}
@@ -131,7 +131,7 @@ public class JDBCBookingsAccommodationsDAOImpl implements BookingsAccommodations
 				logger.info("creating BookingsAccommodations:("+bookingsAccommodations.getIdb()+" "+bookingsAccommodations.getIdacc());
 				done= true;
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 		}
@@ -154,7 +154,7 @@ public class JDBCBookingsAccommodationsDAOImpl implements BookingsAccommodations
 				
 				done= true;
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 		}

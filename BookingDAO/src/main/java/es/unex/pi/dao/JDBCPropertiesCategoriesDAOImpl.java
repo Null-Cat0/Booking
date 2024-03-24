@@ -32,7 +32,7 @@ public class JDBCPropertiesCategoriesDAOImpl implements PropertiesCategoriesDAO 
 				logger.info("fetching all PropertiesCategories: "+propertiesCategories.getIdp()+" "+propertiesCategories.getIdct());
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		return propertiesCategoriesList;
@@ -56,7 +56,7 @@ public class JDBCPropertiesCategoriesDAOImpl implements PropertiesCategoriesDAO 
 			}
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 
@@ -126,7 +126,7 @@ public class JDBCPropertiesCategoriesDAOImpl implements PropertiesCategoriesDAO 
 				logger.info("creating PropertiesCategories:("+propertiesCategories.getIdp()+" "+propertiesCategories.getIdct());
 				done= true;
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+			
 				e.printStackTrace();
 			}
 		}
@@ -149,7 +149,7 @@ public class JDBCPropertiesCategoriesDAOImpl implements PropertiesCategoriesDAO 
 				
 				done= true;
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 		}

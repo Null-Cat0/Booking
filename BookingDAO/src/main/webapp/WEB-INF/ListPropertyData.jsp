@@ -132,7 +132,7 @@
 		</div>
 
 		<!-- Servicios del hotel -->
-		<div class="row">
+		<div class="row mt-2">
 			<h3>Servicios</h3>
 			<div class="row ">
 
@@ -146,7 +146,7 @@
 					</c:forEach>
 				</c:if>
 
-				<c:if test="${listServices != null}">
+				<c:if test="${listServices = null}">
 					<p>El hotel no dispone de servicios asociados.</p>
 				</c:if>
 
@@ -154,7 +154,7 @@
 		</div>
 
 		<!-- Filtrado segun disponibilidad de habitaciones del hotel y fechas-->
-		<div class="row">
+		<div class="row mt-4">
 			<h3>Habitaciones Disponibles</h3>
 
 

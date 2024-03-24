@@ -29,7 +29,7 @@
 	<!-- Container con el formulario para editar alojamiento-->
 
 	<div class="container">
-		<h1 class="d-flex justify-content-center">Edición de alojamiento</h1>
+		<h1 class="d-flex justify-content-center">${tipoInformacion} alojamiento</h1>
 		<div class="d-flex justify-content-center">
 			<form action="?" method="POST" class="col-6">
 				<input type="hidden" name="id" value="${property.id }"> <label
@@ -84,7 +84,7 @@
 					for="mascotas">Si</label>
 				<div class="justify-content-center mt-5">
 					<input class="form-control btn-custom" type="submit"
-						value="Guardar cambios">
+						value="${tipoInformacion} alojamiento">
 				</div>
 
 			</form>

@@ -42,6 +42,7 @@ public class NewAccommodationServlet extends HttpServlet {
 		try {
 			 long idp = Long.parseLong(request.getParameter("id"));
 			 request.setAttribute("idp", idp);
+			 request.setAttribute("tipoInformacion", "Añadir");
 			 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -82,6 +83,7 @@ public class NewAccommodationServlet extends HttpServlet {
 			AccommodationDAO aDAO = new JDBCAccommodationDAOImpl();
 			aDAO.setConnection(conn);
 			aDAO.add(a);
+			
 			response.sendRedirect("ListPropertiesServlet.do");
 			
 			

@@ -189,6 +189,7 @@ public class JDBCAccommodationDAOImpl implements AccommodationDAO {
 
 	public void fromRsToAccommodationObject(ResultSet rs, Accommodation accommodation) throws SQLException{
 		accommodation.setId(rs.getInt("id"));
+		System.out.println("ID: "+rs.getInt("id"));
 		accommodation.setName(rs.getString("name"));
 		accommodation.setPrice(rs.getInt("price"));
 		accommodation.setDescription(rs.getString("description"));
