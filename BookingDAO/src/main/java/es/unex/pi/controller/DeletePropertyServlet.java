@@ -65,7 +65,7 @@ public class DeletePropertyServlet extends HttpServlet {
 			if (property != null) {
 
 				request.setAttribute("property", property);
-				RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/ConfirmationPage.jsp");
+				RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/PropertyConfirmationPage.jsp");
 				rd.forward(request, response);
 			}
 

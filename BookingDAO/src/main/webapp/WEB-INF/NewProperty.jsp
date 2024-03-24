@@ -24,33 +24,7 @@
 </head>
 
 <body>
-	<!-- Barra de navegación -->
-	<nav class="navbar navbar-light bookingcolor">
-		<div class="container-fluid">
-			<a href="search_and_list.html"> <img src="img/booking-logo.png"
-				class="nav-logo" alt="booking_logo"></a>
-			<div class="container d-flex justify-content-end">
-				<!-- <a href="edit_accomodation.html"> <button type="button" class="btn btn-custom me-2">Editar alojamiento</button></a> -->
-
-				<a href="my_reservations.html" class="btn btn-custom me-2">Mis
-					reservas</a> <a href="cart.html" class="btn btn-custom me-2">Cesta</a>
-
-				<c:if test="${sessionScope.user == null}">
-					<a href="create_account.html" class="btn btn-custom me-2">Hazte
-						una cuenta</a>
-					<a href="login.html" class="btn btn-custom me-2">Iniciar sesión</a>
-				</c:if>
-				<c:if test="${sessionScope.user != null}">
-					<form action="ListUserDataServlet.do" method="post">
-						<input class="btn btn-custom me-2" type="submit" value="Perfil">
-					</form>
-					<a href="logout" class="btn btn-custom me-2">Cerrar sesión</a>
-					<a href="NewPropertyServlet.do" class="btn btn-custom me-2">Añadir
-						alojamiento</a>
-				</c:if>
-			</div>
-		</div>
-	</nav>
+	<%@ include file="navbar.html" %>
 
 	<!-- Container con el formulario para editar alojamiento-->
 
@@ -58,15 +32,15 @@
 		<h1 class="d-flex justify-content-center">Edición de alojamiento</h1>
 		<div class="d-flex justify-content-center">
 			<form action="?" method="POST" class="col-6">
-			<input type="hidden" name="id" value="${property.id }">
-				<label for="nombre" class="form-label"> Nombre del
-					alojamiento</label> <input type="text" class="form-control"
-					placeholder="Hotel Ritz Madrid" name="nombreAlojamiento"
-					id="nombre" value='${property.name}'> <label
-					for="direccion" class="form-label"> Dirección</label> <input
+				<input type="hidden" name="id" value="${property.id }"> <label
+					for="nombre" class="form-label"> Nombre del alojamiento</label> <input
+					type="text" class="form-control" placeholder="Hotel Ritz Madrid"
+					name="nombreAlojamiento" id="nombre" value='${property.name}'>
+				<label for="direccion" class="form-label"> Dirección</label> <input
 					type="text" class="form-control"
 					placeholder="Plaza de la Lealtad, 5" name="direccion"
-					id="direccion" value='${property.address}'> <label
+					id="direccion" value='${property.address}'>
+					 <label
 					for="tel" class="form-label"> Teléfono</label> <input type="tel"
 					class="form-control" placeholder="915 21 87 00" id="tel" name="tel"
 					value='${property.telephone}'> <label for="city"
@@ -89,11 +63,12 @@
 
 
 				<ul>
-				
+
 					<c:forEach items="${mapServices}" var="entry">
 						<c:if test="${entry.value == true}">
 							<li><input type="checkbox" name="servicios"
-								value="${entry.key}" for="${entry.key}" checked  }> ${entry.key}</li>
+								value="${entry.key}" for="${entry.key}"checked  }>
+								${entry.key}</li>
 						</c:if>
 						<c:if test="${entry.value == false}">
 							<li><input type="checkbox" name="servicios"

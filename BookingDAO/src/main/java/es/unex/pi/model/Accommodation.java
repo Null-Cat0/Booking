@@ -9,6 +9,18 @@ public class Accommodation {
 	private long idp;
 	private int numAccommodations;
 	
+	public Accommodation(String name2, int price2, String description2, int nAccommodations,long idp2) {
+		this.name = name2;
+		this.price =  price2;
+		this.description = description2;
+		this.numAccommodations = nAccommodations;
+		this.idp = idp2;
+		
+	}
+
+	public Accommodation() {
+        // TODO Auto-generated constructor stub
+    }
 	public long getIdp() {
 		return idp;
 	}

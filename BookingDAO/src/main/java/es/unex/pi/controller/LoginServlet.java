@@ -107,7 +107,7 @@ public class LoginServlet extends HttpServlet {
 				}
 			} else {
 				messages.put("email", "Usuario no encontrado, registrese para poder acceder al sistema.");
-				session.setAttribute("messages", messages);
+				request.setAttribute("messages", messages);
 
 				logger.info("Usuario no encontrado");
 

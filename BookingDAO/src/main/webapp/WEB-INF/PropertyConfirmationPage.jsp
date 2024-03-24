@@ -34,50 +34,7 @@
 
 <body>
 
-	<!-- Barra de navegación -->
-	<nav class="navbar navbar-light bookingcolor">
-		<div class="container-fluid">
-			<a href="search_and_list.html"> <img src="img/booking-logo.png"
-				class="nav-logo" alt="booking_logo"></a>
-			<div class="container d-flex justify-content-end">
-				<!-- <a href="edit_accomodation.html"> <button type="button" class="btn btn-custom me-2">Editar alojamiento</button></a> -->
-
-
-
-				<c:if test="${sessionScope.user.id == property.idu }">
-					<a href="EditPropertyServlet.do?id=${property.id}"
-						class="btn btn-custom me-2">Editar alojamiento</a>
-					<a href="DeleteProperty.do?id=${property.id}"
-						class="btn btn-custom me-2">Eliminar alojamiento</a>
-					<a href="" class="btn btn-custom me-2">Añadir habitacion</a>
-				</c:if>
-				<a href="cart.html" class="btn btn-custom me-2">Cesta</a>
-				<c:if test="${sessionScope.user != null}">
-					<div class="dropdown">
-						<button class="btn btn-custom dropdown-toggle" type="button"
-							id="dropdownMenuButton" data-toggle="dropdown"
-							aria-haspopup="true" aria-expanded="false">Hola
-							${user.name}</button>
-						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-							<a href="my_reservations.html" class="dropdown-item">Mis
-								reservas</a> <a href="NewPropertyServlet.do" class="dropdown-item">Añadir
-								alojamiento</a> <a href="EditUserServlet.do" class="dropdown-item">Perfil</a>
-							<a href="LogOutServlet.do" class="dropdown-item">Cerrar
-								sesión</a>
-						</div>
-					</div>
-				</c:if>
-
-				<c:if test="${sessionScope.user == null}">
-					<a href="CreateAccountServlet.do" class="btn btn-custom me-2">Hazte
-						una cuenta</a>
-					<a href="LoginServlet.do" class="btn btn-custom me-2">Iniciar
-						sesión</a>
-				</c:if>
-
-			</div>
-		</div>
-	</nav>
+	<%@ include file="navbar.html" %>
 	<!-- Fin barra de navegación -->
 
 	<!-- Contenido de la propiedad a borrar -->
@@ -104,5 +61,7 @@
 					<button type="submit" class="btn btn-danger">Eliminar</button>
 				</form>
 			</div>
-		</div></body>
+		</div>
+	</div>
+</body>
 </html>

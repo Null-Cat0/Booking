@@ -124,4 +124,47 @@
     <servlet-name>DeletePropertyServlet</servlet-name>
     <url-pattern>/DeletePropertyServlet.do</url-pattern>
   </servlet-mapping>
+  <filter>
+    <display-name>LoginFilter</display-name>
+    <filter-name>LoginFilter</filter-name>
+    <filter-class>es.unex.pi.filter.LoginFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>LoginFilter</filter-name>
+    <servlet-name>NewPropertyServlet</servlet-name>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>LoginFilter</filter-name>
+    <servlet-name>EditPropertyServlet</servlet-name>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>LoginFilter</filter-name>
+    <servlet-name>EditUserServlet</servlet-name>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>LoginFilter</filter-name>
+    <servlet-name>DeletePropertyServlet</servlet-name>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>LoginFilter</filter-name>
+    <servlet-name>ListPropertiesServlet</servlet-name>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>LoginFilter</filter-name>
+    <servlet-name>DeleteAccountServlet</servlet-name>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>LoginFilter</filter-name>
+    <servlet-name>CreateAccountServlet</servlet-name>
+  </filter-mapping>
+  <servlet>
+    <description></description>
+    <display-name>NewAccommodationServlet</display-name>
+    <servlet-name>NewAccommodationServlet</servlet-name>
+    <servlet-class>es.unex.pi.controller.NewAccommodationServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>NewAccommodationServlet</servlet-name>
+    <url-pattern>/NewAccommodationServlet.do</url-pattern>
+  </servlet-mapping>
 </web-app>
