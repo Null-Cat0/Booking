@@ -18,6 +18,7 @@ import java.util.logging.Logger;
 
 import es.unex.pi.dao.JDBCUserDAOImpl;
 import es.unex.pi.dao.UserDAO;
+import es.unex.pi.model.Accommodation;
 import es.unex.pi.model.User;
 import es.unex.pi.util.Validador;
 
@@ -88,8 +89,18 @@ public class LoginServlet extends HttpServlet {
 				if (user.getPassword().equals(password)) {
 					logger.info("Contraseña correcta");
 
+					HttpSession sesion = request.getSession();
+					
+					//TODO Añadir la lista historica de las reservas a la sesión.
+
+					
+					
+					//TODO Añadir el carro a la sesión.
+					
+					session.setAttribute("cart", new HashMap<Accommodation, Integer>());
+					
 					// Añadir el usuario a la sesión
-					request.getSession().setAttribute("user", user);
+					session.setAttribute("user", user);
 
 					// Redirigir a la página principal
 					response.sendRedirect("ListCategoriesServlet.do");

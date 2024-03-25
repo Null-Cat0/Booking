@@ -34,10 +34,6 @@
 	<%@ include file="navbar.html" %>
 
 
-
-
-
-
 	<!-- Extensión del color de booking -->
 	<div class="container-fluid extColor">
 		<div class="container p-3"></div>

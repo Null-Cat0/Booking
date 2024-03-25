@@ -101,4 +101,6 @@ public interface AccommodationDAO {
 	 */
 	
 	public boolean delete(long id);
+
+	List<Accommodation> getAllByProperty(int idp);
 }

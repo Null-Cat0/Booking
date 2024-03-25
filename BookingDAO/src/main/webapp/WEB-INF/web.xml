@@ -187,4 +187,14 @@
     <servlet-name>DeleteAccommodationServlet</servlet-name>
     <url-pattern>/DeleteAccommodationServlet.do</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AddCartServlet</display-name>
+    <servlet-name>AddCartServlet</servlet-name>
+    <servlet-class>es.unex.pi.controller.AddCartServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AddCartServlet</servlet-name>
+    <url-pattern>/AddCartServlet.do</url-pattern>
+  </servlet-mapping>
 </web-app>

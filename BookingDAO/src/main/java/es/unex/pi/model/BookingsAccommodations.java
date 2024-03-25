@@ -6,6 +6,20 @@ public class BookingsAccommodations {
 	private long idacc;
 	private long numAccommodations; 
 	
+
+	public BookingsAccommodations(long idb, long idacc, long numAccom) {
+		this.idb = idb;
+		this.idacc = idacc;
+		this.numAccommodations = numAccom;
+	}
+
+	public BookingsAccommodations(long idacc, long numAccom) {
+		this.idacc = idacc;
+		this.numAccommodations = numAccom;
+	}
+	public BookingsAccommodations() {
+	
+	}	
 	public long getIdb() {
 		return idb;
 	}

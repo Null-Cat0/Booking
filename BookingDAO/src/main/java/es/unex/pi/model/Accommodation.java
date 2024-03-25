@@ -17,7 +17,6 @@ public class Accommodation {
 		this.description = description2;
 		this.numAccommodations = nAccommodations;
 		this.idp = idp2;
-		
 	}
 
 	
@@ -70,5 +69,12 @@ public class Accommodation {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	
+	@Override
+	public String toString() {
+		return "Accommodation [id=" + id + ", name=" + name + ", price=" + price + ", description=" + description
+				+ ", idp=" + idp + ", numAccommodations=" + numAccommodations + "]";
+	}
+	
 
 }

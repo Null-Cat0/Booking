@@ -26,14 +26,12 @@
 								reservas</a> 
 								<a href="ListPropertiesServlet.do" class="dropdown-item">Mis
 								alojamiento</a>
-								<a href="NewPropertyServlet.do" class="dropdown-item">Añadir
-								alojamiento</a> <a href="EditUserServlet.do" class="dropdown-item">Perfil</a>
+						    <a href="EditUserServlet.do" class="dropdown-item">Perfil</a>
 							<a href="LogOutServlet.do" class="dropdown-item">Cerrar
 								sesión</a>
 						</div>
 					</div>
 				</c:if>
-
 				<c:if test="${sessionScope.user == null}">
 					<a href="CreateAccountServlet.do" class="btn btn-custom me-2">Hazte
 						una cuenta</a>

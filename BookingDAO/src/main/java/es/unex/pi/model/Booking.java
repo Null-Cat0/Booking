@@ -6,6 +6,17 @@ public class Booking {
 	private long idu;
 	private int totalPrice;
 
+	public Booking(long id, long idu, int totalPrice) {
+		this.id = id;
+		this.idu = idu;
+		this.totalPrice = totalPrice;
+	}
+	public Booking(long idu, int totalPrice) {
+		this.idu = idu;
+		this.totalPrice = totalPrice;
+	}
+	public Booking() {
+	}
 	public int getTotalPrice() {
 		return totalPrice;
 	}

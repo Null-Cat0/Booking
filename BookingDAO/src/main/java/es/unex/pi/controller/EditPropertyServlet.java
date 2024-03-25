@@ -152,12 +152,8 @@ public class EditPropertyServlet extends HttpServlet {
 
 			String[] services = request.getParameterValues("servicios");
 
-			List<PropertiesServices> serviciosPropiedad = propertyServiceDao.getAllByProperty(id); // Lista de los
-																									// servicios
-																									// asociados a la
-																									// propiedad
-			List<Service> listaServiciosSelecionados = new ArrayList<Service>(); // Lista de los servicios seleccionados
-																					// por el usuario
+			List<PropertiesServices> serviciosPropiedad = propertyServiceDao.getAllByProperty(id); // Lista de los  servicios  asociados a la  propiedad
+			List<Service> listaServiciosSelecionados = new ArrayList<Service>(); // Lista de los servicios seleccionados por el usuario
 			List<Service> todosLosServicios = serviceDao.getAll(); // Lista con todos los servicios
 			if (services != null) {
 

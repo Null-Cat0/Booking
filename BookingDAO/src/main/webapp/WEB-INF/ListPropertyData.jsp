@@ -33,7 +33,7 @@
 <body>
 
 
-	<%@ include file="navbar.html" %>
+	<%@ include file="navbar.html"%>
 
 
 	<!-- Container -->
@@ -159,34 +159,37 @@
 
 
 			<!-- Tabla con las habitaciones disponibles -->
-			<div class="row pt-4">
-				<table>
-
-					<tr>
-						<th>Tipo de habitación</th>
-						<th>Descripción</th>
-						<th>Precio</th>
-						<th>Numero de habitaciones disponibles</th>
-						<th>Reservar</th>
-					</tr>
-					<c:forEach items="${listAccommodations}" var="room">
+			<form action="AddCartServlet.do?id=${property.id}">
+				<input type="hidden" name="id" value="${property.id}">
+				<div class="row pt-4">
+					<table>
+					
 						<tr>
-							<td>${room.name}</td>
-							<td>${room.description}</td>
-							<td>${room.price}</td>
-
-							<td><select name="numero_huespedes">
-									<c:forEach begin="0" end="${room.numAccommodations}"
-										var="numero">
-										<option value="${numero}">${numero}</option>
-									</c:forEach>
-							</select></td>
-							<td><a href="cart.html" class="btn btn-reserva">Reservaré</a></td>
+							<th>Tipo de habitación</th>
+							<th>Descripción</th>
+							<th>Precio</th>
+							<th>Numero de habitaciones disponibles</th>
 						</tr>
-					</c:forEach>
 
-				</table>
-			</div>
+						<c:forEach items="${listAccommodations}" var="room">
+							<tr>
+								<td>
+									<p>${room.name}<br> <span class="ecofriendly">
+											Hay ${room.numAccommodations} habitaciones disponibles.</span>
+									</p>
+
+								</td>
+								<td>${room.description}</td>
+								<td>${room.price}€</td>
+								<td><input type="number" max="${room.numAccommodations}"
+									name="nHabitaciones${room.id}" class="form-input"></td>
+							</tr>
+						</c:forEach>
+
+					</table>
+				</div>
+					<input type="submit" class="btn btn-reserva" value="Reservaré">
+			</form>
 		</div>
 	</div>
 	<!-- Cierre del container -->
