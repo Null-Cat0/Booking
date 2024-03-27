@@ -122,9 +122,7 @@ public class ListPropertyData extends HttpServlet {
 		accommodationDao.setConnection(conn);
 
 		// Creación de la reserva y la reserva relacionada con la habitación
-		try {
-
-			
+		try {	
 			
 			String id = request.getParameter("id");
 			if (id != null) {// Si se ha seleccionado una propiedad, por lo que se puede llamar en el inicio
@@ -134,6 +132,7 @@ public class ListPropertyData extends HttpServlet {
 				List<Accommodation> la = accommodationDao.getAllByProperty(idp);
 				Map<Property, List<Entry<Accommodation, Integer>>> reservas = (Map<Property, List<Entry<Accommodation, Integer>>>) session
 						.getAttribute("cart");
+				
 				if (reservas == null) {
 					reservas = new HashMap<Property, List<Entry<Accommodation, Integer>>>();
 				}

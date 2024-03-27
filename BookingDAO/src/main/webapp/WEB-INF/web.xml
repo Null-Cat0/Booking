@@ -197,4 +197,14 @@
     <servlet-name>AddCartServlet</servlet-name>
     <url-pattern>/AddCartServlet.do</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DeleteCartServlet</display-name>
+    <servlet-name>DeleteCartServlet</servlet-name>
+    <servlet-class>es.unex.pi.controller.DeleteCartServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeleteCartServlet</servlet-name>
+    <url-pattern>/DeleteCartServlet.do</url-pattern>
+  </servlet-mapping>
 </web-app>

@@ -1,5 +1,7 @@
 package es.unex.pi.model;
 
+import java.util.Objects;
+
 public class Property {
 
 	private long id;
@@ -122,7 +124,17 @@ public class Property {
 				+ ", description=" + description + ", petFriendly=" + petFriendly + ", available=" + available
 				+ ", idu=" + idu + "]";
 	}
-
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Property property = (Property) o;
+        return id == property.id &&
+                Objects.equals(name, property.name);
+    }
 	
-	
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
+    }
 }

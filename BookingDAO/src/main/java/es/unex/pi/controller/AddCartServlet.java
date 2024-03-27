@@ -48,13 +48,13 @@ public class AddCartServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		logger.info("doGet : AddCartServlet");
-		
+
 		HttpSession session = request.getSession();
-		Map<Accommodation, Integer> cart = (Map<Accommodation, Integer>) session.getAttribute("cart");
-		request.setAttribute("cart", cart);
-		RequestDispatcher view = request.getRequestDispatcher("WEB-INF/Cart.jsp");
+		Map<Property, List<Entry<Accommodation, Integer>>> reservas = (Map<Property, List<Entry<Accommodation, Integer>>>) session
+				.getAttribute("cart");
+		request.setAttribute("cart", reservas);
+		RequestDispatcher view = request.getRequestDispatcher("WEB-INF/cart.jsp");
 		view.forward(request, response);
-		
 
 	}
 
@@ -69,27 +69,55 @@ public class AddCartServlet extends HttpServlet {
 		logger.info("doPost : AddCartServlet");
 
 		HttpSession session = request.getSession();
-
-		User user = (User) session.getAttribute("user");
-		Map<Accommodation, Integer> cart = (Map<Accommodation, Integer>) session.getAttribute("cart");
 		Connection conn = (Connection) getServletContext().getAttribute("dbConn");
 
-		for (Map.Entry<Accommodation, Integer> entry : cart.entrySet()) {
-			Accommodation a = entry.getKey();
-			int n = entry.getValue();
+		User user = (User) session.getAttribute("user");
+		Map<Property, List<Entry<Accommodation, Integer>>> cart = (Map<Property, List<Entry<Accommodation, Integer>>>) session
+				.getAttribute("cart");
 
-			Booking b = new Booking(user.getId(), a.getPrice() * n);
+		//Necesario para las reservas
+		BookingDAO bookingDao = new JDBCBookingDAOImpl();
+		bookingDao.setConnection(conn);
 
-			BookingDAO bookingDao = new JDBCBookingDAOImpl();
-			bookingDao.setConnection(conn);
-			long idb = bookingDao.add(b);
+		BookingsAccommodationsDAO bookingsAccommodationsDao = new JDBCBookingsAccommodationsDAOImpl();
+		bookingsAccommodationsDao.setConnection(conn);
+		
+		//Necesario para reducir el número de habitaciones disponibles		
+		AccommodationDAO accommodationDao = new JDBCAccommodationDAOImpl();
+		accommodationDao.setConnection(conn);
+		try {
+			int totalPrice = Integer.parseInt(request.getParameter("totalPrice"));
 
-			BookingsAccommodations ba = new BookingsAccommodations(idb, a.getId(), n);
+			for (Property property : cart.keySet()) {
 
-			BookingsAccommodationsDAO bookingsAccommodationsDao = new JDBCBookingsAccommodationsDAOImpl();
-			bookingsAccommodationsDao.setConnection(conn);
-			bookingsAccommodationsDao.add(ba);
+				Booking booking = new Booking();
+				booking.setIdu(user.getId());
+				booking.setTotalPrice(totalPrice);
+				long idBooking = bookingDao.add(booking);
+				booking.setId(idBooking);
+				for (Entry<Accommodation, Integer> entry : cart.get(property)) {
+
+					//Hacer la reserva de la habitación
+					BookingsAccommodations bookingsAccommodations = new BookingsAccommodations();
+					bookingsAccommodations.setIdacc(entry.getKey().getId());
+					bookingsAccommodations.setIdb(idBooking);
+					bookingsAccommodations.setNumAccommodations(entry.getValue());
+					bookingsAccommodationsDao.add(bookingsAccommodations);
+					
+					//Reducir el número de habitaciones disponibles
+					Accommodation accommodation = accommodationDao.get(entry.getKey().getId());
+					accommodation.setNumAccommodations(accommodation.getNumAccommodations()-entry.getValue());
+					accommodationDao.update(accommodation);
+				}
+			}
+		} catch (NumberFormatException e) {
+			logger.info("parameter id is not a number");
+			response.sendRedirect("ListCategoriesServlet.do");
 		}
+		
+		//Vaciar el carrito
+		session.setAttribute("cart", new HashMap<Property, List<Entry<Accommodation, Integer>>>());
+		response.sendRedirect("ListCategoriesServlet.do");
 
 	}
 
