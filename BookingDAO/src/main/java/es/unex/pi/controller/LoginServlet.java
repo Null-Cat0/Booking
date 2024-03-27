@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,9 +20,11 @@ import java.util.logging.Logger;
 import es.unex.pi.dao.JDBCUserDAOImpl;
 import es.unex.pi.dao.UserDAO;
 import es.unex.pi.model.Accommodation;
+import es.unex.pi.model.Property;
 import es.unex.pi.model.User;
+import es.unex.pi.util.Entry;
 import es.unex.pi.util.Validador;
-
+import es.unex.pi.util.Entry;
 /**
  * Servlet implementation class LoginServlet
  */
@@ -96,8 +99,8 @@ public class LoginServlet extends HttpServlet {
 					
 					
 					//TODO Añadir el carro a la sesión.
-					
-					session.setAttribute("cart", new HashMap<Accommodation, Integer>());
+					Map<Property,List<Entry<Accommodation,Integer>>> reservas = new HashMap<Property,List<Entry<Accommodation,Integer>>>();
+					session.setAttribute("cart", reservas);
 					
 					// Añadir el usuario a la sesión
 					session.setAttribute("user", user);

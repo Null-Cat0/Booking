@@ -7,13 +7,18 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import es.unex.pi.model.*;
+import es.unex.pi.util.Entry;
 import es.unex.pi.dao.*;
 
 /**
@@ -103,10 +108,62 @@ public class ListPropertyData extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
+	@SuppressWarnings("unchecked")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		// Obtención del usuario y de la propiedad de la que son las habitaciones
+		Connection conn = (Connection) getServletContext().getAttribute("dbConn");
+		HttpSession session = request.getSession();
+
+		PropertyDAO propertyDao = new JDBCPropertyDAOImpl();
+		propertyDao.setConnection(conn);
+
+		AccommodationDAO accommodationDao = new JDBCAccommodationDAOImpl();
+		accommodationDao.setConnection(conn);
+
+		// Creación de la reserva y la reserva relacionada con la habitación
+		try {
+
+			
+			
+			String id = request.getParameter("id");
+			if (id != null) {// Si se ha seleccionado una propiedad, por lo que se puede llamar en el inicio
+				int idp = Integer.parseInt(id);
+				Property property = propertyDao.get(idp);
+
+				List<Accommodation> la = accommodationDao.getAllByProperty(idp);
+				Map<Property, List<Entry<Accommodation, Integer>>> reservas = (Map<Property, List<Entry<Accommodation, Integer>>>) session
+						.getAttribute("cart");
+				if (reservas == null) {
+					reservas = new HashMap<Property, List<Entry<Accommodation, Integer>>>();
+				}
+
+				List<Entry<Accommodation, Integer>> le;
+
+				if (reservas.containsKey(property)) {
+					System.out.println("Property: " + property);
+					le = reservas.get(property);
+				} else {
+					System.out.println("No contiene " + property);
+					le = new ArrayList<Entry<Accommodation, Integer>>();
+				}
+
+				for (Accommodation a : la) {
+					int n = Integer.parseInt(request.getParameter("nHabitaciones" + a.getId()));
+					if (n > 0) {
+						System.out.println(a + " Numero seleccionado: " + n);
+						Entry<Accommodation, Integer> e = new Entry<Accommodation, Integer>(a, n);
+						le.add(e);
+					}
+				}
+				reservas.put(property, le);
+				session.setAttribute("cart", reservas);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+        response.sendRedirect("AddCartServlet.do");
 	}
 
 }

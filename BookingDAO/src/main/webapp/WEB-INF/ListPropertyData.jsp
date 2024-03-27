@@ -159,7 +159,7 @@
 
 
 			<!-- Tabla con las habitaciones disponibles -->
-			<form action="AddCartServlet.do?id=${property.id}">
+			<form action="ListPropertyData.do" method="post">
 				<input type="hidden" name="id" value="${property.id}">
 				<div class="row pt-4">
 					<table>
@@ -181,8 +181,7 @@
 								</td>
 								<td>${room.description}</td>
 								<td>${room.price}€</td>
-								<td><input type="number" max="${room.numAccommodations}"
-									name="nHabitaciones${room.id}" class="form-input"></td>
+								<td><input type="number" min="0" max="${room.numAccommodations}" name="nHabitaciones${room.id}" value="0" class="form-input"></td>
 							</tr>
 						</c:forEach>
 
