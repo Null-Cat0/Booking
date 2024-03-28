@@ -76,16 +76,15 @@ public class ListPropertyData extends HttpServlet {
 				}
 
 				// Habitaciones del hotel
-				
+
 				AccommodationDAO accomodationDao = new JDBCAccommodationDAOImpl();
 				accomodationDao.setConnection(conn);
 				List<Accommodation> habitaciones = accomodationDao.getAccommodationProperty(pid);
-				if(habitaciones!=null) {
+				if (habitaciones != null) {
 					request.setAttribute("listAccommodations", habitaciones);
 				} else {
 					logger.info("No hay habitaciones asociadas a la propiedad");
 				}
-				
 
 				request.setAttribute("property", property);
 				RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/ListPropertyData.jsp");
@@ -122,8 +121,8 @@ public class ListPropertyData extends HttpServlet {
 		accommodationDao.setConnection(conn);
 
 		// Creación de la reserva y la reserva relacionada con la habitación
-		try {	
-			
+		try {
+
 			String id = request.getParameter("id");
 			if (id != null) {// Si se ha seleccionado una propiedad, por lo que se puede llamar en el inicio
 				int idp = Integer.parseInt(id);
@@ -132,37 +131,42 @@ public class ListPropertyData extends HttpServlet {
 				List<Accommodation> la = accommodationDao.getAllByProperty(idp);
 				Map<Property, List<Entry<Accommodation, Integer>>> reservas = (Map<Property, List<Entry<Accommodation, Integer>>>) session
 						.getAttribute("cart");
-				
+
 				if (reservas == null) {
 					reservas = new HashMap<Property, List<Entry<Accommodation, Integer>>>();
 				}
 
-				List<Entry<Accommodation, Integer>> le;
-
-				if (reservas.containsKey(property)) {
-					System.out.println("Property: " + property);
-					le = reservas.get(property);
-				} else {
-					System.out.println("No contiene " + property);
-					le = new ArrayList<Entry<Accommodation, Integer>>();
-				}
+				List<Entry<Accommodation, Integer>> le = null;
 
 				for (Accommodation a : la) {
 					int n = Integer.parseInt(request.getParameter("nHabitaciones" + a.getId()));
 					if (n > 0) {
-						System.out.println(a + " Numero seleccionado: " + n);
+						if (reservas.containsKey(property)) {
+							logger.info("Property: " + property);
+							le = reservas.get(property);
+						} else {
+							logger.info("No Property " + property);
+							le = new ArrayList<Entry<Accommodation, Integer>>();
+						}
+						logger.info(a + " Numero seleccionado: " + n);
 						Entry<Accommodation, Integer> e = new Entry<Accommodation, Integer>(a, n);
 						le.add(e);
 					}
 				}
-				reservas.put(property, le);
-				session.setAttribute("cart", reservas);
+
+				//Si se ha seleccionado alguna habitación se pone en la sesión
+				if (le != null) {
+					reservas.put(property, le);
+					session.setAttribute("cart", reservas);
+				} else {
+					session.setAttribute("cart", null);
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-        response.sendRedirect("AddCartServlet.do");
+		response.sendRedirect("AddCartServlet.do");
 	}
 
 }

@@ -207,4 +207,14 @@
     <servlet-name>DeleteCartServlet</servlet-name>
     <url-pattern>/DeleteCartServlet.do</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ListBookingsRecordServlet</display-name>
+    <servlet-name>ListBookingsRecordServlet</servlet-name>
+    <servlet-class>es.unex.pi.controller.ListBookingsRecordServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ListBookingsRecordServlet</servlet-name>
+    <url-pattern>/ListBookingsRecordServlet.do</url-pattern>
+  </servlet-mapping>
 </web-app>

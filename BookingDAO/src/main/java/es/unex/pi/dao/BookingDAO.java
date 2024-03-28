@@ -48,7 +48,15 @@ public interface BookingDAO {
 	 */
 	public List<Booking> getAll();
 	
+	/**
+	 * Gets all the bookings from the database.
+	 * @param idu User Identifier.
+	 * @return List of all the bookinges with user id idu from the database .
+	 */
 
+
+	public List<Booking> getAllByUser(long idu);
+	
 	/**
 	 * Adds a booking to the database.
 	 * 
@@ -82,4 +90,5 @@ public interface BookingDAO {
 	 */
 	
 	public boolean delete(long id);
+
 }
