@@ -217,4 +217,23 @@
     <servlet-name>ListBookingsRecordServlet</servlet-name>
     <url-pattern>/ListBookingsRecordServlet.do</url-pattern>
   </servlet-mapping>
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>Entire Application</web-resource-name>
+      <url-pattern>/*</url-pattern>
+    </web-resource-collection>
+    <user-data-constraint>
+      <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+    </user-data-constraint>
+  </security-constraint>
+  <servlet>
+    <description></description>
+    <display-name>NewFavouriteServlet</display-name>
+    <servlet-name>NewFavouriteServlet</servlet-name>
+    <servlet-class>es.unex.pi.controller.NewFavouriteServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>NewFavouriteServlet</servlet-name>
+    <url-pattern>/NewFavouriteServlet.do</url-pattern>
+  </servlet-mapping>
 </web-app>

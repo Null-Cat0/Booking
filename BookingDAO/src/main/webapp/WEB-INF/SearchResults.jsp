@@ -18,6 +18,13 @@
 	rel="stylesheet"
 	integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
 	crossorigin="anonymous">
+	
+<!-- Bootstrap JavaScript (requiere jQuery) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <!-- Font Awesome -->
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
@@ -151,7 +158,7 @@
                                             <i class="fa-solid fa-check"></i> Sin pago por adelantado
                                         </p>
                                         <!-- Botón de añadir a favoritos -->
-                                        <form action="AgregarFavoritoServlet" method="post">
+                                        <form action="NewFavouriteServlet.do" method="post">
                                             <input type="hidden" name="propertyid" value="${property.id}">
                                             <button type="submit" class="btn btn-outline-danger mt-3">
                                                 <i class="far fa-heart"></i> Añadir a favoritos
@@ -194,12 +201,7 @@
 			Extremadura</div>
 	</footer>
 
-	<!-- JavaScript -->
-	<!-- Bootstrap Bundle with Popper -->
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-		integrity="sha384-5KiSLih+I1hwlC6xFQ45kz5l4XGxV+x3pneLevujBpN0+U8hZcIh9R4uZqNwIN1V"
-		crossorigin="anonymous"></script>
+
 </body>
 
 </html>
