@@ -75,6 +75,7 @@ public class ListResultsServlet extends HttpServlet {
 
 			// Añadir la lista de propiedades a la request
 			request.setAttribute("listProperties", listPropertiesName);
+			request.setAttribute("search", search);
 
 			// Redirigir a la pagina de resultados
 			request.getRequestDispatcher("/WEB-INF/SearchResults.jsp").forward(request, response);

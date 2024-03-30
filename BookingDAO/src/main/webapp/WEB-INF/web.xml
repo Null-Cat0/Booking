@@ -217,15 +217,6 @@
     <servlet-name>ListBookingsRecordServlet</servlet-name>
     <url-pattern>/ListBookingsRecordServlet.do</url-pattern>
   </servlet-mapping>
-  <security-constraint>
-    <web-resource-collection>
-      <web-resource-name>Entire Application</web-resource-name>
-      <url-pattern>/*</url-pattern>
-    </web-resource-collection>
-    <user-data-constraint>
-      <transport-guarantee>CONFIDENTIAL</transport-guarantee>
-    </user-data-constraint>
-  </security-constraint>
   <servlet>
     <description></description>
     <display-name>NewFavouriteServlet</display-name>
@@ -235,5 +226,25 @@
   <servlet-mapping>
     <servlet-name>NewFavouriteServlet</servlet-name>
     <url-pattern>/NewFavouriteServlet.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ListFavouritesServlet</display-name>
+    <servlet-name>ListFavouritesServlet</servlet-name>
+    <servlet-class>es.unex.pi.controller.ListFavouritesServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ListFavouritesServlet</servlet-name>
+    <url-pattern>/ListFavouritesServlet.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DeleteFavouriteServlet</display-name>
+    <servlet-name>DeleteFavouriteServlet</servlet-name>
+    <servlet-class>es.unex.pi.controller.DeleteFavouriteServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeleteFavouriteServlet</servlet-name>
+    <url-pattern>/DeleteFavouriteServlet.do</url-pattern>
   </servlet-mapping>
 </web-app>

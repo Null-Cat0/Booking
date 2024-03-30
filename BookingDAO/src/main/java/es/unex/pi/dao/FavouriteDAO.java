@@ -34,7 +34,7 @@ public interface FavouriteDAO {
 	public List<Favourite> getAllByUser(long idu);
 	
 	/**
-	 * Adds an Review to the database.
+	 * Adds an favourite to the database.
 	 * 
 	 * @param Favourite
 	 *            Favourite object with the details of the relation between the property and the user.
@@ -43,4 +43,14 @@ public interface FavouriteDAO {
 	 */
 	
 	public boolean add(Favourite Favourite);
+	/**
+	 * Remove an Review from the database.
+	 * 
+	 * @param Favourite
+	 *            Favourite object with the details of the relation between the property and the user.
+	 * 
+	 * @return property identifier or -1 in case the operation failed.
+	 */
+	
+	public boolean delete(Favourite Favourite);
 }

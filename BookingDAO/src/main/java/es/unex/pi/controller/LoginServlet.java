@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -95,7 +96,8 @@ public class LoginServlet extends HttpServlet {
 					HttpSession sesion = request.getSession();
 					
 					//TODO Añadir la lista historica de las reservas a la sesión.
-
+					List<Property> historico = new ArrayList<Property>();
+					session.setAttribute("listProp", historico);
 					
 					
 					//TODO Añadir el carro a la sesión.

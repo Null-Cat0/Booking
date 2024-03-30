@@ -29,31 +29,41 @@
 	<%@ include file="navbar.html"%>
 	<!-- Fin barra de navegación -->
 	<!-- Container con toda la información -->
-	<div class="container">
-		<h1 class="text-center mt-5">Mis reservas</h1>
 
-		<div class="row mt-5">
-			<c:forEach items="${historico}" var="a">
-				<div class="col-12">
-					<div class="card shadow mb-4">
-						<div class="card-body">
-							<div class="row align-items-center">
-								<div class="col-md-4">
-									<img class="img-fluid rounded"
-										src="img/ilunion_suites_madrid.jpg"
-										alt="Ilunion suites madrid">
-								</div>
-								<div class="col-md-8">
-									<h2>${a.key.city}</h2>
-									<h3 class="mt-3">${a.key.name}</h3>
-									<p class="mt-3">Reserva</p>
-									<h4>${a.value}</h4>
+	<div class="container mt-5">
+		<h1 class="text-center mb-5">Mis Favoritos</h1>
+
+		<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+			<c:choose>
+				<c:when test="${empty listProp}">
+					<div class="row">
+						<div class="alert alert-info" role="alert">No tienes ningún
+							favorito guardado.</div>
+					</div>
+				</c:when>
+				<c:otherwise>
+					<c:forEach items="${listProp}" var="property">
+						<div class="col">
+							<div class="card h-100">
+								<img src="img/ilunion_suites_madrid.jpg" class="card-img-top"
+									alt="Ilunion Suites Madrid">
+								<div class="card-body">
+									<h5 class="card-title">${property.city}</h5>
+									<h6 class="card-subtitle mb-3">${property.name}</h6>
+									<p class="card-text">${property.description}</p>
+									<p class="card-text">${property.address}</p>
+									<form action="DeleteFavouriteServlet.do" method="post">
+										<input type="hidden" name="propertyId" value="${property.id}">
+										<button type="submit" class="btn btn-danger">
+											<i class="fas fa-heart"></i> Eliminar de favoritos
+										</button>
+									</form>
 								</div>
 							</div>
 						</div>
-					</div>
-				</div>
-			</c:forEach>
+					</c:forEach>
+				</c:otherwise>
+			</c:choose>
 		</div>
 	</div>
 

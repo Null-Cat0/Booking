@@ -27,41 +27,90 @@ public class JDBCFavouriteDAOImpl implements FavouriteDAO{
 
 		if (conn == null) return null;
 		
-		ArrayList<Favourite> categories = new ArrayList<Favourite>();
+		ArrayList<Favourite> favourites = new ArrayList<Favourite>();
 		try {
 			Statement stmt;
 			ResultSet rs;
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery("SELECT * FROM Favourites");
 			while ( rs.next() ) {
-				Category category = new Category();
-				fromRsToCategoryObject(rs,category);
-				categories.add(category);
-				logger.info("fetching Categories: "+category.getId()+" "+category.getName()+" "+category.getDescription());
+				Favourite favourite = new Favourite();
+				fromRsToCategoryObject(rs,favourite);
+				favourites.add(favourite);
+				logger.info("fetching Favourites: "+favourite.getIdu()+" "+favourite.getIdp());
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return categories;
+		return favourites;
 	}
 
 	@Override
 	public List<Favourite> getAllByUser(long idu) {
-		// TODO Auto-generated method stub
-		return null;
+
+		if (conn == null) return null;
+		
+		ArrayList<Favourite> favourites = new ArrayList<Favourite>();
+		try {
+			Statement stmt;
+			ResultSet rs;
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery("SELECT * FROM Favourites WHERE idu="+idu);
+			while ( rs.next() ) {
+				Favourite favourite = new Favourite();
+				fromRsToCategoryObject(rs,favourite);
+				favourites.add(favourite);
+				logger.info("fetching Favourites: "+favourite.getIdu()+" "+favourite.getIdp());
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return favourites;
 	}
 
 	@Override
 	public boolean add(Favourite Favourite) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+		boolean result = false;
+		if (conn != null){
 
-	public void fromRsToCategoryObject(ResultSet rs,Category category) throws SQLException{
-		category.setId(rs.getInt("id"));
-		category.setName(rs.getString("name"));
-		category.setDescription(rs.getString("description"));
+			Statement stmt;
+			try {
+				stmt = conn.createStatement();
+				stmt.executeUpdate("INSERT INTO Favourites (idu,idp) VALUES(" + Favourite.getIdu() +", " + Favourite.getIdp()+ ")");
+				result = true;
+				logger.info("CREATING Favourites: ");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	@Override
+	public boolean delete(Favourite Favourite) {
+		boolean result = false;
+		if (conn != null){
+
+			Statement stmt;
+			try {
+				stmt = conn.createStatement();
+				stmt.executeUpdate("DELETE FROM Favourites WHERE idu="+Favourite.getIdu()+" AND idp="+Favourite.getIdp());
+				result = true;
+				logger.info("Delete Favourites: ");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	
+	
+	
+
+	public void fromRsToCategoryObject(ResultSet rs,Favourite favourite) throws SQLException{
+		favourite.setIdu(rs.getInt("idu"));
+		favourite.setIdp(rs.getInt("idp"));
 	}
 	
 }
