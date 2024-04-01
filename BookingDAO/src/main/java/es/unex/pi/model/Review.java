@@ -7,6 +7,17 @@ public class Review {
 	private String review;
 	private int grade;
 	
+	
+	public Review(long idp, long idu, String review, int grade) {
+		this.idp = idp;
+		this.idu = idu;
+		this.review = review;
+		this.grade = grade;
+	}
+	
+	public Review() {
+		
+	}	
 	public long getIdp() {
 		return idp;
 	}
@@ -32,6 +43,9 @@ public class Review {
 		this.grade = grade;
 	}
 	
+	public String toString() {
+		return "Review [idp=" + idp + ", idu=" + idu + ", review=" + review + ", grade=" + grade + "]";
+	}
 	
 	
 	

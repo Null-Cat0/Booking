@@ -49,6 +49,13 @@ public class AddCartServlet extends HttpServlet {
 
 		logger.info("doGet : AddCartServlet");
 
+		/*
+		 * Map<String,String> messages = new HashMap<String,String>();
+		 * 
+		 * messages.put("noHab", "No hay suficientes habitaciones disponibles de"+
+		 * accommodation.getName() + " en " + property.getName() +
+		 * " para realizar la reserva."); request.setAttribute("messages", messages);
+		 */
 		HttpSession session = request.getSession();
 		Map<Property, List<Entry<Accommodation, Integer>>> reservas = (Map<Property, List<Entry<Accommodation, Integer>>>) session
 				.getAttribute("cart");
@@ -75,14 +82,14 @@ public class AddCartServlet extends HttpServlet {
 		Map<Property, List<Entry<Accommodation, Integer>>> cart = (Map<Property, List<Entry<Accommodation, Integer>>>) session
 				.getAttribute("cart");
 
-		//Necesario para las reservas
+		// Necesario para las reservas
 		BookingDAO bookingDao = new JDBCBookingDAOImpl();
 		bookingDao.setConnection(conn);
 
 		BookingsAccommodationsDAO bookingsAccommodationsDao = new JDBCBookingsAccommodationsDAOImpl();
 		bookingsAccommodationsDao.setConnection(conn);
-		
-		//Necesario para reducir el número de habitaciones disponibles		
+
+		// Necesario para reducir el número de habitaciones disponibles
 		AccommodationDAO accommodationDao = new JDBCAccommodationDAOImpl();
 		accommodationDao.setConnection(conn);
 		try {
@@ -97,27 +104,35 @@ public class AddCartServlet extends HttpServlet {
 				booking.setId(idBooking);
 				for (Entry<Accommodation, Integer> entry : cart.get(property)) {
 
-					//Hacer la reserva de la habitación
-					BookingsAccommodations bookingsAccommodations = new BookingsAccommodations();
-					bookingsAccommodations.setIdacc(entry.getKey().getId());
-					bookingsAccommodations.setIdb(idBooking);
-					bookingsAccommodations.setNumAccommodations(entry.getValue());
-					bookingsAccommodationsDao.add(bookingsAccommodations);
-					
-					//Reducir el número de habitaciones disponibles
 					Accommodation accommodation = accommodationDao.get(entry.getKey().getId());
-					accommodation.setNumAccommodations(accommodation.getNumAccommodations()-entry.getValue());
-					accommodationDao.update(accommodation);
+
+					if (accommodation.getNumAccommodations() < entry.getValue()) {
+						logger.info("No hay suficientes habitaciones disponibles");
+
+						response.sendRedirect("AddCartServlet.do");
+					} else {
+						// Hacer la reserva de la habitación
+						BookingsAccommodations bookingsAccommodations = new BookingsAccommodations();
+						bookingsAccommodations.setIdacc(entry.getKey().getId());
+						bookingsAccommodations.setIdb(idBooking);
+						bookingsAccommodations.setNumAccommodations(entry.getValue());
+						bookingsAccommodationsDao.add(bookingsAccommodations);
+
+						// Reducir el número de habitaciones disponibles
+						accommodation.setNumAccommodations(accommodation.getNumAccommodations() - entry.getValue());
+						accommodationDao.update(accommodation);
+
+						// Vaciar el carrito
+						session.setAttribute("cart", new HashMap<Property, List<Entry<Accommodation, Integer>>>());
+						response.sendRedirect("ListCategoriesServlet.do");
+
+					}
 				}
 			}
 		} catch (NumberFormatException e) {
 			logger.info("parameter id is not a number");
 			response.sendRedirect("ListCategoriesServlet.do");
 		}
-		
-		//Vaciar el carrito
-		session.setAttribute("cart", new HashMap<Property, List<Entry<Accommodation, Integer>>>());
-		response.sendRedirect("ListCategoriesServlet.do");
 
 	}
 

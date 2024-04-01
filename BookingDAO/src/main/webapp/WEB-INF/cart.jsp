@@ -46,6 +46,8 @@
 			<div class="row justify-content-center">
 				<div class="col-md-8">
 					<h1 class="text-center mb-4">Carrito de la compra</h1>
+					
+					<h3 class="text-warning">${messages.noHab}</h3>
 
 					<c:set var="totalPrice" value="0" />
 					<c:forEach var="aux" items="${cart}" varStatus="status">

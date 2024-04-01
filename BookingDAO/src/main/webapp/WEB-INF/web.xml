@@ -247,4 +247,14 @@
     <servlet-name>DeleteFavouriteServlet</servlet-name>
     <url-pattern>/DeleteFavouriteServlet.do</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>NewReviewServlet</display-name>
+    <servlet-name>NewReviewServlet</servlet-name>
+    <servlet-class>es.unex.pi.controller.NewReviewServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>NewReviewServlet</servlet-name>
+    <url-pattern>/NewReviewServlet.do</url-pattern>
+  </servlet-mapping>
 </web-app>

@@ -9,7 +9,7 @@
 	<classpathentry exported="true" kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/asier/Documents/apache-tomcat-10.1.19/lib/servlet-api.jar" sourcepath="src/main/webapp/WEB-INF/lib">
+	<classpathentry kind="lib" path="C:/Users/asier/Documents/apache-tomcat-10.1.20/lib/servlet-api.jar" sourcepath="src/main/webapp/WEB-INF/lib">
 		<attributes>
 			<attribute name="javadoc_location" value="https://jakarta.ee/specifications/servlet/6.0/apidocs/"/>
 		</attributes>
