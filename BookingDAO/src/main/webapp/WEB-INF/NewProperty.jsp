@@ -24,75 +24,83 @@
 </head>
 
 <body>
-	<%@ include file="navbar.html" %>
-
-	<!-- Container con el formulario para editar alojamiento-->
+<%@ include file="navbar.html" %>
 
 	<div class="container">
-		<h1 class="d-flex justify-content-center">${tipoInformacion} alojamiento</h1>
-		<div class="d-flex justify-content-center">
-			<form action="?" method="POST" class="col-6">
-				<input type="hidden" name="id" value="${property.id }"> <label
-					for="nombre" class="form-label"> Nombre del alojamiento</label> <input
-					type="text" class="form-control" placeholder="Hotel Ritz Madrid"
-					name="nombreAlojamiento" id="nombre" value='${property.name}'>
-				<label for="direccion" class="form-label"> Dirección</label> <input
-					type="text" class="form-control"
-					placeholder="Plaza de la Lealtad, 5" name="direccion"
-					id="direccion" value='${property.address}'>
-					 <label
-					for="tel" class="form-label"> Teléfono</label> <input type="tel"
-					class="form-control" placeholder="915 21 87 00" id="tel" name="tel"
-					value='${property.telephone}'> <label for="city"
-					class="form-label"> Ciudad</label> <input type="text"
-					class="form-control" placeholder="Caceres" id="ciudad"
-					name="ciudad" value='${property.telephone}'> <label
-					for="distancia" class="form-label"> Distancia al centro (en
-					kilometros)</label> <input type="text" class="form-control"
-					placeholder="1000" id="distancia" name="distanciaCentro"
-					value='${property.centerDistance}'> <label for="valoracion"
-					class="form-label"> Valoración media</label> <input type="text"
-					class="form-control" placeholder="8.9" id="valoracion"
-					name="valoracionMedia" value='${property.gradesAverage}'> <label
-					for="descripcion" class="form-label"> Descripción</label> <input
-					type="text" class="form-control" id="descripcion"
-					name="descripcion" value='${property.description}'>
-				<p>Sevicios ofrecidos</p>
-
-				<!-- Checkbox de servicios -->
-
-
-				<ul>
-
-					<c:forEach items="${mapServices}" var="entry">
-						<c:if test="${entry.value == true}">
-							<li><input type="checkbox" name="servicios"
-								value="${entry.key}" for="${entry.key}"checked  }>
-								${entry.key}</li>
-						</c:if>
-						<c:if test="${entry.value == false}">
-							<li><input type="checkbox" name="servicios"
-								value="${entry.key}" for="${entry.key}"> ${entry.key}</li>
-						</c:if>
-					</c:forEach>
-				</ul>
-
-				<label for="mascotas"> Permite mascotas?</label> <input type="radio"
-					name="permitenMascotas" id="mascotas" value="No"> <label
-					for="mascotas">No</label> <input type="radio"
-					name="permitenMascotas" id="mascotas" value="Si"> <label
-					for="mascotas">Si</label>
-				<div class="justify-content-center mt-5">
-					<input class="form-control btn-custom" type="submit"
-						value="${tipoInformacion} alojamiento">
+	    <h1 class="text-center">${tipoInformacion} Alojamiento</h1>
+	    <div class="row justify-content-center">
+	        <form action="?" method="POST" class="col-lg-6 col-md-8 col-sm-10">
+	            <input type="hidden" name="id" value="${property.id}">
+	            
+	            <div class="mb-3">
+	                <label for="nombre" class="form-label">Nombre del Alojamiento</label>
+	                <input type="text" class="form-control" id="nombre" name="nombreAlojamiento" placeholder="Hotel Ritz Madrid" value="${property.name}">
+	            </div>
+	            
+	            <div class="mb-3">
+	                <label for="direccion" class="form-label">Dirección</label>
+	                <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Plaza de la Lealtad, 5" value="${property.address}">
+	            </div>
+	            
+	            <div class="mb-3">
+	                <label for="tel" class="form-label">Teléfono</label>
+	                <input type="tel" class="form-control" id="tel" name="tel" placeholder="915 21 87 00" value="${property.telephone}">
+	            </div>
+	            
+	            <div class="mb-3">
+	                <label for="ciudad" class="form-label">Ciudad</label>
+	                <input type="text" class="form-control" id="ciudad" name="ciudad" placeholder="Caceres" value="${property.city}">
+	            </div>
+	            
+	            <div class="mb-3">
+	                <label for="distancia" class="form-label">Distancia al Centro (en kilómetros)</label>
+	                <input type="text" class="form-control" id="distancia" name="distanciaCentro" placeholder="1000" value="${property.centerDistance}">
+	            </div>
+	            
+	            <div class="mb-3">
+	                <label for="descripcion" class="form-label">Descripción</label>
+	                <input type="text" class="form-control" id="descripcion" name="descripcion" value="${property.description}">
+	            </div>
+	            
+	            <div class="mb-3">
+	                <p>Servicios Ofrecidos</p>
+	                <ul class="list-group">
+	                    <c:forEach items="${mapServices}" var="entry">
+	                        <li class="list-group-item">
+	                            <input type="checkbox" name="servicios" id="${entry.key}" value="${entry.key}" ${entry.value ? 'checked' : ''}>
+	                            <label for="${entry.key}">${entry.key}</label>
+	                        </li>
+	                    </c:forEach>
+	                </ul>
+	            </div>
+	            
+				<div class="mb-3">
+				    <label for="mascotas">¿Permite mascotas?</label>
+				    <div class="form-check">
+				        <input type="radio" id="mascotas-no" name="permitenMascotas" value="No" class="form-check-input" ${property.petFriendly == 0 ? 'checked' : ''}>
+				        <label for="mascotas-no" class="form-check-label">No</label>
+				    </div>
+				    <div class="form-check">
+				        <input type="radio" id="mascotas-si" name="permitenMascotas" value="Si" class="form-check-input" ${property.petFriendly == 1 ? 'checked' : ''}>
+				        <label for="mascotas-si" class="form-check-label">Sí</label>
+				    </div>
 				</div>
-
-			</form>
-		</div>
-
-
-
-
+	            <div class="mb-3">
+	                <label for="mascotas">¿Se encuentra disponible?</label>
+	                <div class="form-check">
+	                    <input type="radio" id="mascotas-no" name="disponibilidad" value="No" class="form-check-input" ${property.available == 0 ? 'checked' : ''}>
+	                    <label for="mascotas-no" class="form-check-label">No</label>
+	                </div>
+	                <div class="form-check">
+	                    <input type="radio" id="mascotas-si" name="disponibilidad" value="Si"class="form-check-input" ${property.available == 1 ? 'checked' : ''}>
+	                    <label for="mascotas-si" class="form-check-label">Sí</label>
+	                </div>
+	            </div>
+	            <div class="text-center">
+	                <input type="submit" class="btn btn-primary" value="${tipoInformacion} Alojamiento">
+	            </div>
+	        </form>
+	    </div>
 	</div>
 
 

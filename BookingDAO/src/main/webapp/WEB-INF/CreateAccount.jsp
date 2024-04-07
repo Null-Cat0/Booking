@@ -34,56 +34,48 @@
 
 	<!-- Container con el formulario para clear cuenta -->
 	<div class="container">
-		<div class="row justify-content-center">
-			<div class="col-4 m-5">
-				<h1 class="text-center">${tipoInformacion}Cuenta</h1>
-				<h6 class="	text-danger">${messages.password}</h6>
-				<h6 class="text-danger">${messages.email}</h6>
-				<br>
-				<form action="?" method="post">
-					<label class="form-label" for="name">Nombre:</label><br> <input
-						class="form-control" type="text" id="name" name="name"
-						placeholder="Indica tu nombre"
-						value="${empty user ? '' : user.name}"><br> <label
-						class="form-label" for="name">Apellidos:</label><br> <input
-						class="form-control" type="text" id="secondname" name="secondname"
-						placeholder="Indica tus apellidos"
-						value="${empty user ? '' : user.surname}"><br> <label
-						class="form-label" for="email">E-mail:</label> <br> <input
-						class="form-control" type="text" id="email" name="email"
-						placeholder="Indica tu dirección de email"
-						value="${empty user ? '' : user.email}"
-						<c:if test="${sessionScope.user != null}"> readonly </c:if>><br>
-
-					<label class="form-label" for="password">Contraseña:</label><br>
-					<input class="form-control" type="password" id="password"
-						name="password" placeholder="Indica tu contraseña" minlength="8"
-						value="${empty user ? '' : user.password}"><br> <label
-						class="form-label" for="password">Confirma tu contraseña:
-					</label><br> <input class="form-control" type="password"
-						id="repeatedpassword"
-						pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\w).{8,}"
-						name="password2" placeholder="Indica tu contraseña" minlength="8"><br>
-					<br> <input class="form-control custom-submit" type="submit"
-						value="${tipoInformacion} cuenta">
-				<c:if test="${user != null}">
-
-					<a href="DeleteAccountServlet.do"
-						class="form-control btn btn-danger mt-2"> Eliminar Cuenta</a>
-				</c:if>
-
-				</form>
-
-
-
-				<c:if test="${tipoInformacion == 'Crear'}">
-					<p>
-						¿Ya tienes una cuenta? <a href="login.html">Inicia sesión</a>
-					</p>
-				</c:if>
-			</div>
-		</div>
+	    <div class="row justify-content-center">
+	        <div class="col-md-6 col-lg-4 mt-5">
+	            <div class="card p-4">
+	                <h1 class="text-center mb-4">${tipoInformacion} Cuenta</h1>
+	                <div class="text-danger mb-3">${messages.password}</div>
+	                <div class="text-danger mb-3">${messages.email}</div>
+	                <form action="?" method="post">
+	                    <div class="mb-3">
+	                        <label class="form-label" for="name">Nombre:</label>
+	                        <input class="form-control" type="text" id="name" name="name" placeholder="Indica tu nombre" value="${empty user ? '' : user.name}">
+	                    </div>
+	                    <div class="mb-3">
+	                        <label class="form-label" for="secondname">Apellidos:</label>
+	                        <input class="form-control" type="text" id="secondname" name="secondname" placeholder="Indica tus apellidos" value="${empty user ? '' : user.surname}">
+	                    </div>
+	                    <div class="mb-3">
+	                        <label class="form-label" for="email">E-mail:</label>
+	                        <input class="form-control" type="email" id="email" name="email" placeholder="Indica tu dirección de email" value="${empty user ? '' : user.email}" <c:if test="${sessionScope.user != null}"> readonly </c:if>>
+	                    </div>
+	                    <div class="mb-3">
+	                        <label class="form-label" for="password">Contraseña:</label>
+	                        <input class="form-control" type="password" id="password" name="password" placeholder="Indica tu contraseña" minlength="8" value="${empty user ? '' : user.password}">
+	                    </div>
+	                    <div class="mb-3">
+	                        <label class="form-label" for="repeatedpassword">Confirma tu contraseña:</label>
+	                        <input class="form-control" type="password" id="repeatedpassword" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\w).{8,}" name="password2" placeholder="Confirma tu contraseña" minlength="8">
+	                    </div>
+	                    <div class="mb-3">
+	                        <input class="btn btn-primary form-control" type="submit" value="${tipoInformacion} cuenta">
+	                    </div>
+	                    <c:if test="${user != null}">
+	                        <a href="DeleteAccountServlet.do" class="btn btn-danger form-control">Eliminar Cuenta</a>
+	                    </c:if>
+	                </form>
+	                <c:if test="${tipoInformacion == 'Crear'}">
+	                    <p class="text-center mt-3">¿Ya tienes una cuenta? <a href="login.html">Inicia sesión</a></p>
+	                </c:if>
+	            </div>
+	        </div>
+	    </div>
 	</div>
+
 
 	<!-- Footer -->
 	<footer class="text-center text-white mt-5"

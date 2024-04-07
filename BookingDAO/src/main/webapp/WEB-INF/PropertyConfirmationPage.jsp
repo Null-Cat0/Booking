@@ -33,35 +33,40 @@
 
 
 <body>
+<%@ include file="navbar.html" %>
+<!-- Fin barra de navegación -->
 
-	<%@ include file="navbar.html" %>
-	<!-- Fin barra de navegación -->
-
-	<!-- Contenido de la propiedad a borrar -->
-	<div class="container">
-		<div class="row ">
-			<div class="col-12">
-				<h1>¿Estás seguro de que quieres eliminar esta propiedad?</h1>
-			</div>
-		</div>
-		<div class="row text-center">
-			<ul >
-				<li>Nombre: ${property.name}</li>
-				<li>Descripción: ${property.description}</li>
-				<li>Localización: ${property.address}</li>
-				<li>Teléfino: ${property.telephone}</li>
-				<li>Valoración: ${property.gradesAverage}</li>
-				<li>Dsitancia al centro: ${property.centerDistance}</li>
-			</ul>
-		</div>
-		<div class="row">
-			<div class="col-12">
-				<form action="?id=${property.id}" method="post">
-					<input type="hidden" name="id" value="${property.id}">
-					<button type="submit" class="btn btn-danger">Eliminar</button>
-				</form>
-			</div>
-		</div>
-	</div>
+<!-- Contenido de la propiedad a borrar -->
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <h1 class="mb-4">¿Estás seguro de que quieres eliminar esta propiedad?</h1>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><strong>Nombre:</strong> ${property.name}</li>
+                        <li class="list-group-item"><strong>Descripción:</strong> ${property.description}</li>
+                        <li class="list-group-item"><strong>Localización:</strong> ${property.address}</li>
+                        <li class="list-group-item"><strong>Teléfono:</strong> ${property.telephone}</li>
+                        <li class="list-group-item"><strong>Valoración Media:</strong> ${property.gradesAverage}</li>
+                        <li class="list-group-item"><strong>Distancia al centro:</strong> ${property.centerDistance}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center mt-4">
+        <div class="col-md-4 text-center">
+            <form action="?id=${property.id}" method="post">
+                <input type="hidden" name="id" value="${property.id}">
+                <button type="submit" class="btn btn-danger btn-lg">Eliminar</button>
+            </form>
+        </div>
+    </div>
+</div>
 </body>
 </html>

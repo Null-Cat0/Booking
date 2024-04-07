@@ -1,21 +1,29 @@
 package es.unex.pi.controller;
 
 import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRequest;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import es.unex.pi.dao.JDBCUserDAOImpl;
 import es.unex.pi.dao.UserDAO;
+import es.unex.pi.model.Accommodation;
 import es.unex.pi.model.Property;
+import es.unex.pi.model.Review;
 import es.unex.pi.model.User;
+import es.unex.pi.util.Entry;
 import es.unex.pi.dao.*;
 
 /**
@@ -39,14 +47,19 @@ public class ListResultsServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Obtener datos del form de busqueda y hacer una lista con los hoteles que
-		// cumplan los requisitos
-
 		logger.setLevel(Level.INFO);
+		logger.info("ListResultsServlet: doGet");
 
+		//Valores con los que se ordena los resultados de la busqueda
+		String [] ordernacionValores = request.getParameterValues("valores");
+		if (ordernacionValores != null) {
+			logger.info("Ordenacion por: " + ordernacionValores[0]);
+		}
+		
+		
+		
 		// Obtener los datos del formulario de busqueda
-		String search = request.getParameter("search");
-
+		String search =  request.getParameter("search");
 		if (search.isEmpty()) {
 			logger.info("No se ha introducido ninguna ciudad");
 			// Redirigir a la pagina de resultados con un mensaje de error
@@ -68,13 +81,41 @@ public class ListResultsServlet extends HttpServlet {
 			// Unir las dos listas
 			listPropertiesName.addAll(listPropertiesCity);
 
-			for (Iterator iterator = listPropertiesName.iterator(); iterator.hasNext();) {
-				Property property = (Property) iterator.next();
-				logger.info("Propiedad:" + property.getName());
+			//Mapa para incluir el numero de reviews que tiene esa propiedad y el precio de una habitacion
+			Map<Property,Entry<Integer,Double>> mapaResultados = new HashMap<Property,Entry<Integer,Double>>();
+			Iterator<Property> it = listPropertiesName.iterator();
+			
+			//Reviews
+			ReviewDAO reviewDao = new JDBCReviewDAOImpl();
+			reviewDao.setConnection(conn);
+			
+			//Habitacion
+			AccommodationDAO accommodationDao = new JDBCAccommodationDAOImpl();
+			accommodationDao.setConnection(conn);
+			
+					
+			while (it.hasNext()) {
+				Property p = it.next();
+				List<Review> listReviews = reviewDao.getAllByProperty(p.getId());
+				List<Accommodation> listAccommodations = accommodationDao.getAllByProperty((int)p.getId());
+                int numReviews = 0;
+                double price = 0;
+                
+                if (listReviews != null && listReviews.size() > 0) {
+                	numReviews = listReviews.size();
+                }
+                
+				if (listAccommodations != null && listAccommodations.size() > 0) {
+					price = listAccommodations.get(0).getPrice();
+				}
+				
+				Entry<Integer,Double> e = new Entry<Integer,Double>(numReviews,price);
+				
+				mapaResultados.put(p, e);
 			}
 
-			// Añadir la lista de propiedades a la request
-			request.setAttribute("listProperties", listPropertiesName);
+			// Añadir los elementos a la request
+			request.setAttribute("mapaResultados", mapaResultados);
 			request.setAttribute("search", search);
 
 			// Redirigir a la pagina de resultados
@@ -89,7 +130,8 @@ public class ListResultsServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
+
+		logger.info("ListResultsServlet: doPost");
 		doGet(request, response);
 	}
 

@@ -28,35 +28,36 @@
 <body>
 	<%@ include file="navbar.html"%>
 	<!-- Fin barra de navegación -->
-
+	
 	<!-- Contenido de la propiedad a borrar -->
 	<div class="container">
-		<div class="row text-center">
-			<div class="col-12">
-				<h1>¿Estás seguro de que quieres eliminar esta habitación?</h1>
-			</div>
-		</div>
-		<div class="row ">
-				
-				<div class="col-3 offset-3 card-body shadow-sm">
-				<ul>
-				
-					<li>Nombre: ${accommodation.name}</li>
-					<li>Descripción: ${accommodation.description}</li>
-					<li>Precio por noche: ${accommodation.price}</li>
-					<li>Numero de habitaciones disponibles:
-						${accommodation.numAccommodations}</li>
-				</ul>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-12 text-center">
-				<form action="?id=${accommodation.id}" method="post">
-					<input type="hidden" name="id" value="${accommodation.id}">
-					<button type="submit" class="btn btn-danger">Eliminar</button>
-				</form>
-			</div>
-		</div>
+	    <div class="row justify-content-center">
+	        <div class="col-md-8 text-center">
+	            <h1 class="mb-4">¿Estás seguro de que quieres eliminar esta habitación?</h1>
+	        </div>
+	    </div>
+	    <div class="row justify-content-center">
+	        <div class="col-md-6">
+	            <div class="card shadow-sm">
+	                <div class="card-body">
+	                    <ul class="list-group list-group-flush">
+	                        <li class="list-group-item"><strong>Nombre:</strong> ${accommodation.name}</li>
+	                        <li class="list-group-item"><strong>Descripción:</strong> ${accommodation.description}</li>
+	                        <li class="list-group-item"><strong>Precio por noche:</strong> ${accommodation.price}</li>
+	                        <li class="list-group-item"><strong>Número de habitaciones disponibles:</strong> ${accommodation.numAccommodations}</li>
+	                    </ul>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	    <div class="row justify-content-center mt-4">
+	        <div class="col-md-4 text-center">
+	            <form action="?id=${accommodation.id}" method="post">
+	                <input type="hidden" name="id" value="${accommodation.id}">
+	                <button type="submit" class="btn btn-danger btn-lg">Eliminar</button>
+	            </form>
+	        </div>
+	    </div>
 	</div>
 </body>
 </html>

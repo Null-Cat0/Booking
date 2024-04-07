@@ -44,7 +44,9 @@ public class NewPropertyServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
+
+		//Cargo los servicios en el formulario de nueva propiedad
+		
 		Connection conn = (Connection) getServletContext().getAttribute("dbConn");
 
 		try {
@@ -70,8 +72,6 @@ public class NewPropertyServlet extends HttpServlet {
 
 		} catch (NumberFormatException e) {
 			logger.info("parameter id is not a number");
-
-			// TODO: Redirect to ListOrderServlet.
 			response.sendRedirect("LisCategoriesServlet.do");
 
 		}
@@ -85,25 +85,33 @@ public class NewPropertyServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		/*
-		 * TODO [ ] Recoger los datos del formulario [ ] Crear una nueva propiedad [ ]
-		 * Redirigir a la página de la propiedad creada
-		 * 
-		 * //Mover a otro servlet como checkPropertyServlet ? (Parte)
-		 */
-
 		logger.setLevel(Level.INFO);
 		logger.info("NewPropertyServlet:doPost");
 
 		try {
+			
 			// Recoger los datos del formulario
 			String title = request.getParameter("nombreAlojamiento");
 			String address = request.getParameter("direccion");
 			String tel = request.getParameter("tel");
 			double distance = Double.parseDouble(request.getParameter("distanciaCentro"));
-			double gradesAverage = Double.parseDouble(request.getParameter("valoracionMedia"));
 			String description = request.getParameter("descripcion");
+			
+			int petFriendly = 0;
+			int disponible = 0;
 
+			
+			if(request.getParameter("permitenMascotas").equals("Si")) {
+                petFriendly = 1;
+			}
+			
+			if (request.getParameter("disponibilidad").equals("Si")) {
+				disponible = 1;
+			}
+			
+			System.out.println("disponible: " + disponible);
+			System.out.println("petFriendly: " + petFriendly);
+			
 			// Leer servicios
 			String[] services = request.getParameterValues("servicios");
 
@@ -116,7 +124,7 @@ public class NewPropertyServlet extends HttpServlet {
 			// Crear una nueva propiedad
 			PropertyDAO propertyDAO = new JDBCPropertyDAOImpl();
 			propertyDAO.setConnection(conn);
-			Property property = new Property(title, address, tel, gradesAverage, "Cáceres", distance, description, 1, 1,
+			Property property = new Property(title, address, tel, 0, "Cáceres", distance, description, 1 , 1,
 					(int) user.getId());
 			long id = propertyDAO.add(property);
 			property.setId(id);

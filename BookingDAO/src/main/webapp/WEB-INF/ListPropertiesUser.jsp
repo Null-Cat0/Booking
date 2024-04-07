@@ -32,97 +32,68 @@
 <title>Propiedades de ${user.name}</title>
 </head>
 <body>
-	<%@ include file="navbar.html"%>
+<%@ include file="navbar.html" %>
 
-	<!-- Container con toda la información -->
-	<div class="container">
-		<h1 class="text-center">Mis alojamientos</h1>
+<!-- Container con toda la información -->
+<div class="container">
+    <h1 class="text-center mb-4">Mis alojamientos</h1>
 
-		<a href="NewPropertyServlet.do" class="btn btn-custom">Añadir
-			alojamiento</a>
-		<c:set var="collapseId" value="0" />
-		<c:forEach var="entry" items="${propertiesAccommodations}">
+    <a href="NewPropertyServlet.do" class="btn btn-custom mb-4">Añadir alojamiento</a>
 
-			<div class="row mt-4">
-				<div class="col-6 offset-3">
-					<div class="card shadow">
-						<div class="card-body">
-							<div class="row img-center ">
-								<div class="col">
-									<h5>${entry.key.name}</h5>
-									<p>Dirección: ${entry.key.address}</p>
-									<p>Teléfono: ${entry.key.telephone}</p>
-									<p>Reseñas: ${entry.key.gradesAverage}</p>
-									<p>Ciudad: ${entry.key.city}</p>
-									<p>Distancia al centro: ${entry.key.centerDistance}</p>
-								</div>
-								<div class="col-4 text-end">
-									<div class="row pt-3">
+    <c:forEach var="entry" items="${propertiesAccommodations}">
+        <div class="row mt-4">
+            <div class="col-md-8 offset-md-2">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h5>${entry.key.name}</h5>
+                        <p>Dirección: ${entry.key.address}</p>
+                        <p>Teléfono: ${entry.key.telephone}</p>
+                        <p>Reseñas: ${entry.key.gradesAverage}</p>
+                        <p>Ciudad: ${entry.key.city}</p>
+                        <p>Distancia al centro: ${entry.key.centerDistance}</p>
 
-										<a
-											href="<c:url value='EditPropertyServlet.do?id=${entry.key.id}'/>"
-											class="btn bg-success  text-white"> <!--   <img src="${pageContext.request.contextPath}/img/edit.png"  alt="edit ${property.id}" />-->
-											Editar Propiedad
-										</a>
-									</div>
-									<div class="row pt-3">
-										<a
-											href="<c:url value='DeletePropertyServlet.do?id=${entry.key.id}'/>"
-											class="btn bg-danger  text-white"> <!--	 <img src="${pageContext.request.contextPath}/img/delete.png"
-                                                 alt="delete${property.id}" />-->
-											Eliminar Propiedad
-										</a>
-									</div>
-									<div class="row pt-3">
-										<a
-											href="<c:url value='NewAccommodationServlet.do?id=${entry.key.id}'/>"
-											class="btn btn-custom">Añadir Habitación</a>
-									</div>
-								</div>
-								<p class="d-inline-flex gap-1">
-									<a class="btn btn-outline-primary" data-bs-toggle="collapse"
-										href="#collapseExample${entry.key.id}" role="button"
-										aria-expanded="false"
-										aria-controls="collapseExample${entry.key.id}">
-										Habitaciones: </a>
-								</p>
-								<div class="collapse  " id="collapseExample${entry.key.id}">
-									<c:forEach var="a" items="${entry.value}">
-										<div class="card card-body mt-3">
-											<div class="row">
-												<div class="col-6">
-													<p>Nombre: ${a.name}</p>
-													<p>Descripción: ${a.description}</p>
-													<p>Precio por noche: ${a.price} €</p>
-													<p>Habitaciones disponibles: ${a.numAccommodations}</p>
-												</div>
-											</div>
-											<div class="flex-row">
-												<a
-													href="<c:url value='EditAccommodationServlet.do?id=${a.id}'/>">
-													<img src="${pageContext.request.contextPath}/img/edit.png"
-													alt="edit ${a.id}"/>
-												</a> 
-												<a
-													href="<c:url value='DeleteAccommodationServlet.do?id=${a.id}'/>">
-													<img
-													src="${pageContext.request.contextPath}/img/delete.png"
-													alt="edit ${a.id}"/>
-												</a>
-											</div>
-										</div>
-									</c:forEach>
+                        <div class="mt-3 d-flex justify-content-between align-items-center">
+                            <div>
+                                <a href="<c:url value='EditPropertyServlet.do?id=${entry.key.id}'/>" class="btn btn-outline-primary me-2">
+                                    Editar Propiedad
+                                </a>
+                                <a href="<c:url value='DeletePropertyServlet.do?id=${entry.key.id}'/>" class="btn btn-outline-danger me-2">
+                                    Eliminar Propiedad
+                                </a>
+                                <a href="<c:url value='NewAccommodationServlet.do?id=${entry.key.id}'/>" class="btn btn-outline-secondary">
+                                    Añadir Habitación
+                                </a>
+                            </div>
+                            <button class="btn btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample${entry.key.id}" aria-expanded="false" aria-controls="collapseExample${entry.key.id}">
+                                Habitaciones
+                            </button>
+                        </div>
 
-
-
-								</div>
-
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</c:forEach>
-	</div>
+                        <div class="collapse mt-3" id="collapseExample${entry.key.id}">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <c:forEach var="a" items="${entry.value}">
+                                        <p>Nombre: ${a.name}</p>
+                                        <p>Descripción: ${a.description}</p>
+                                        <p>Precio por noche: ${a.price} €</p>
+                                        <p>Habitaciones disponibles: ${a.numAccommodations}</p>
+                                        <div class="d-flex justify-content-end">
+                                            <a href="<c:url value='EditAccommodationServlet.do?id=${a.id}'/>" class="btn btn-outline-primary me-2">
+                                                Editar
+                                            </a>
+                                            <a href="<c:url value='DeleteAccommodationServlet.do?id=${a.id}'/>" class="btn btn-outline-danger">
+                                                Eliminar
+                                            </a>
+                                        </div>
+                                    </c:forEach>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </c:forEach>
+</div>
 </body>
 </html>

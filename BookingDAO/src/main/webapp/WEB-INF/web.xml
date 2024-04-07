@@ -257,4 +257,14 @@
     <servlet-name>NewReviewServlet</servlet-name>
     <url-pattern>/NewReviewServlet.do</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DeleteReviewServlet</display-name>
+    <servlet-name>DeleteReviewServlet</servlet-name>
+    <servlet-class>es.unex.pi.controller.DeleteReviewServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeleteReviewServlet</servlet-name>
+    <url-pattern>/DeleteReviewServlet.do</url-pattern>
+  </servlet-mapping>
 </web-app>
