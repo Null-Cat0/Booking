@@ -1,13 +1,5 @@
 package es.unex.pi.controller;
 
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-
 import java.io.IOException;
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -16,19 +8,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import es.unex.pi.dao.AccommodationDAO;
-import es.unex.pi.dao.JDBCAccommodationDAOImpl;
 import es.unex.pi.dao.JDBCPropertiesServicesDAOImpl;
 import es.unex.pi.dao.JDBCPropertyDAOImpl;
 import es.unex.pi.dao.JDBCServicesDAOImpl;
 import es.unex.pi.dao.PropertiesServicesDAO;
 import es.unex.pi.dao.PropertyDAO;
 import es.unex.pi.dao.ServicesDAO;
-import es.unex.pi.model.Accommodation;
 import es.unex.pi.model.PropertiesServices;
 import es.unex.pi.model.Property;
 import es.unex.pi.model.Service;
 import es.unex.pi.model.User;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class EditPropertyServlet
@@ -133,11 +128,14 @@ public class EditPropertyServlet extends HttpServlet {
 			String tel = request.getParameter("tel");
 			String city = request.getParameter("ciudad");
 			double dist = Double.parseDouble(request.getParameter("distanciaCentro"));
-			double grades = Double.parseDouble(request.getParameter("valoracionMedia"));
 			String description = request.getParameter("descripcion");
-			int petFriendly = request.getParameter("permitenMascotas") == "Si" ? 1 : 0;
+			int petFriendly = request.getParameter("permitenMascotas").equals("Si") ? 1 : 0;
+			int available = request.getParameter("disponibilidad").equals("Si") ? 1 : 0;
 
-			Property property = new Property(id, name, address, tel, grades, city, dist, description, petFriendly, 1,
+			
+			System.out.println("Pet friendly: " + petFriendly);
+			System.out.println("Available: " + available);
+			Property property = new Property(id, name, address, tel, city, dist, description, petFriendly, available,
 					(int) user.getId());
 			propertyDao.update(property);
 
@@ -154,7 +152,8 @@ public class EditPropertyServlet extends HttpServlet {
 
 			List<PropertiesServices> serviciosPropiedad = propertyServiceDao.getAllByProperty(id); // Lista de los  servicios  asociados a la  propiedad
 			List<Service> listaServiciosSelecionados = new ArrayList<Service>(); // Lista de los servicios seleccionados por el usuario
-			List<Service> todosLosServicios = serviceDao.getAll(); // Lista con todos los servicios
+		
+			
 			if (services != null) {
 
 				for (String s : services) {

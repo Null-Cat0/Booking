@@ -1,5 +1,6 @@
 package es.unex.pi.model;
 
+import java.util.Comparator;
 import java.util.Objects;
 
 public class Property {
@@ -34,13 +35,12 @@ public class Property {
 		this.idu = idu;
 
 	}
-	public Property(long id2,String name, String address, String telephone, double gradesAverage, String city,
+	public Property(long id2,String name, String address, String telephone, String city,
 			double centerDistance, String description, int petFriendly, int available, int idu) {
 		this.id=id2;
 		this.name = name;
 		this.address = address;
 		this.telephone = telephone;
-		this.gradesAverage = gradesAverage;
 		this.city = city;
 		this.centerDistance = centerDistance;
 		this.description = description;
@@ -117,6 +117,9 @@ public class Property {
 		this.petFriendly = petFriendly;
 	}
 
+	public static Comparator<Property> gradesAverageComparator = Comparator.comparingDouble(Property::getGradesAverage);
+	
+	
 	@Override
 	public String toString() {
 		return "Property [id=" + id + ", name=" + name + ", address=" + address + ", telephone=" + telephone

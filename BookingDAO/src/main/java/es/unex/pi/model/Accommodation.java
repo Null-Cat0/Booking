@@ -1,5 +1,7 @@
 package es.unex.pi.model;
 
+import java.util.Comparator;
+
 public class Accommodation {
 	
 	private long id;
@@ -69,7 +71,7 @@ public class Accommodation {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
+	public static Comparator<Accommodation> numAccommodationsComparator = Comparator.comparingInt(Accommodation::getNumAccommodations);
 	@Override
 	public String toString() {
 		return "Accommodation [id=" + id + ", name=" + name + ", price=" + price + ", description=" + description

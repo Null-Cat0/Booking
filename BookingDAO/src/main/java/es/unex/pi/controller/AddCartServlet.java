@@ -108,7 +108,6 @@ public class AddCartServlet extends HttpServlet {
 
 					if (accommodation.getNumAccommodations() < entry.getValue()) {
 						logger.info("No hay suficientes habitaciones disponibles");
-
 						response.sendRedirect("AddCartServlet.do");
 					} else {
 						// Hacer la reserva de la habitación
@@ -124,7 +123,7 @@ public class AddCartServlet extends HttpServlet {
 
 						// Vaciar el carrito
 						session.setAttribute("cart", new HashMap<Property, List<Entry<Accommodation, Integer>>>());
-						response.sendRedirect("ListCategoriesServlet.do");
+				
 
 					}
 				}
@@ -133,6 +132,7 @@ public class AddCartServlet extends HttpServlet {
 			logger.info("parameter id is not a number");
 			response.sendRedirect("ListCategoriesServlet.do");
 		}
+		response.sendRedirect("ListCategoriesServlet.do");
 
 	}
 

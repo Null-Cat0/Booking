@@ -10,8 +10,11 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -24,6 +27,7 @@ import es.unex.pi.model.Property;
 import es.unex.pi.model.Review;
 import es.unex.pi.model.User;
 import es.unex.pi.util.Entry;
+import es.unex.pi.util.Ordenator;
 import es.unex.pi.dao.*;
 
 /**
@@ -50,17 +54,14 @@ public class ListResultsServlet extends HttpServlet {
 		logger.setLevel(Level.INFO);
 		logger.info("ListResultsServlet: doGet");
 
+		
 		//Valores con los que se ordena los resultados de la busqueda
-		String [] ordernacionValores = request.getParameterValues("valores");
-		if (ordernacionValores != null) {
-			logger.info("Ordenacion por: " + ordernacionValores[0]);
-		}
-		
-		
+        String[] valores = request.getParameterValues("valores");
+        String[] filtros = request.getParameterValues("available");
 		
 		// Obtener los datos del formulario de busqueda
 		String search =  request.getParameter("search");
-		if (search.isEmpty()) {
+		if (search == null || search.isEmpty()) {
 			logger.info("No se ha introducido ninguna ciudad");
 			// Redirigir a la pagina de resultados con un mensaje de error
 			request.getRequestDispatcher("/WEB-INF/SearchResults.jsp").forward(request, response);
@@ -81,8 +82,20 @@ public class ListResultsServlet extends HttpServlet {
 			// Unir las dos listas
 			listPropertiesName.addAll(listPropertiesCity);
 
+			//Ordenar la lista de propiedades
+			if (valores != null && valores.length > 0) {
+				logger.info("Ordenacion por: " + valores[0]);
+				Ordenator.ordenarLista(listPropertiesName, valores);
+			}
+			
+		    //Filtrar la lista de propiedades
+			if (filtros != null && filtros.length > 0) {
+				logger.info("Filtros: " + Arrays.toString(filtros));
+				Ordenator.filtrarLista(listPropertiesName, filtros);
+			}
+			
 			//Mapa para incluir el numero de reviews que tiene esa propiedad y el precio de una habitacion
-			Map<Property,Entry<Integer,Double>> mapaResultados = new HashMap<Property,Entry<Integer,Double>>();
+			Map<Property,Entry<Integer,Double>> mapaResultados = new LinkedHashMap<Property,Entry<Integer,Double>>();
 			Iterator<Property> it = listPropertiesName.iterator();
 			
 			//Reviews
@@ -98,15 +111,19 @@ public class ListResultsServlet extends HttpServlet {
 				Property p = it.next();
 				List<Review> listReviews = reviewDao.getAllByProperty(p.getId());
 				List<Accommodation> listAccommodations = accommodationDao.getAllByProperty((int)p.getId());
-                int numReviews = 0;
+				
+				//Ordenar las habitaciones por numero de disponibles
+				Collections.sort(listAccommodations,Accommodation.numAccommodationsComparator.reversed());
+                
+				int numReviews = 0;
                 double price = 0;
                 
-                if (listReviews != null && listReviews.size() > 0) {
+                if (listReviews != null && listReviews.size() > 0 ) {
                 	numReviews = listReviews.size();
                 }
-                
-				if (listAccommodations != null && listAccommodations.size() > 0) {
-					price = listAccommodations.get(0).getPrice();
+				if (listAccommodations != null && listAccommodations.size() > 0 ) {
+					if(listAccommodations.get(0).getNumAccommodations() > 0)
+						price = listAccommodations.get(0).getPrice();
 				}
 				
 				Entry<Integer,Double> e = new Entry<Integer,Double>(numReviews,price);

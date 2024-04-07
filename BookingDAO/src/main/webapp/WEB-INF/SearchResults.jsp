@@ -70,33 +70,35 @@
 	                </div>
 	                <div class="card-body">
 	                    <form id="filterForm" action="ListResultsServlet.do">
-	                        <!-- Tipo de alojamiento -->
-	                        <div class="form-group">
-	                            <p class="fw-bold">Puntuación</p>
-	                            <div class="form-check">
-	                                <input class="form-check-input" type="checkbox" name="valores" value="grades" id="gradesCheckbox">
-	                                <label class="form-check-label" for="gradesCheckbox">Valoración Media</label>
-	                            </div>
-	                        </div>
-	                        <!-- Instalaciones -->
-	                        <div class="form-group">
-	                            <p class="fw-bold">Instalaciones</p>
-	                            <div class="form-check">
-	                                <input class="form-check-input" type="checkbox" name="facilities" value="wifi" id="wifiCheckbox">
-	                                <label class="form-check-label" for="wifiCheckbox">Wifi</label>
-	                            </div>
-	                            <div class="form-check">
-	                                <input class="form-check-input" type="checkbox" name="facilities" value="pool" id="poolCheckbox">
-	                                <label class="form-check-label" for="poolCheckbox">Piscina</label>
-	                            </div>
-	                            <div class="form-check">
-	                                <input class="form-check-input" type="checkbox" name="facilities" value="parking" id="parkingCheckbox">
-	                                <label class="form-check-label" for="parkingCheckbox">Estacionamiento</label>
-	                            </div>
-	                        </div>
-	                        <br>
-	                        <button type="submit" class="btn btn-primary">Aplicar filtros</button>
-	                    </form>
+						    <input class="form-control" type="hidden" id="search" name="search" value="${search}" >
+						    
+						    <!-- Ordenar -->
+						    <div class="form-group">
+						        <p class="fw-bold">Ordenar por:</p>
+						        <div class="form-check">
+						            <input class="form-check-input" type="checkbox" name="valores" value="grades" id="gradesCheckbox">
+						            <label class="form-check-label" for="gradesCheckbox">Valoración Media</label>
+						        </div>
+						    </div>
+						 	<!-- Tipo de alojamiento -->
+						    <div class="form-group">
+						        <p class="fw-bold">Filtrar por:</p>
+						        <div class="form-check">
+						    		<input class="form-check-input" type="radio" name="available" value="all" id="allRadio">
+						            <label class="form-check-label" for="allRadio">Todos</label>
+						        </div>   
+						        <div class="form-check">
+						            <input class="form-check-input" type="radio" name="available" value="available" id="available">
+						            <label class="form-check-label" for="available">Con disponibilidad</label>
+						        </div>
+						        <div class="form-check">
+						           	<input class="form-check-input" type="radio" name="available" value="notAvailable" id="notAvailable">
+						           	<label class="form-check-label" for="notAvailable">Sin disponibilidad</label>
+								</div>
+						    </div>			    			    
+						    <br>
+						    <button type="submit" class="btn btn-primary">Aplicar filtros</button>
+						</form>
 	                </div>
 	            </div>
 	        </div>
@@ -141,7 +143,7 @@
 										    </div>
 										</div>
 	                                    <!-- Botón de añadir o eliminar favoritos -->
-	                                    <c:if test="${fn:contains(listProp, entry.key.id)}">
+	                                    <c:if test="${fn:contains(listProp, entry.key)}">
 	                                        <form action="DeleteFavouriteServlet.do" method="post">
 	                                            <input type="hidden" name="propertyId" value="${entry.key.id}">
 	                                            <button type="submit" class="btn btn-outline-danger mt-3">
@@ -149,7 +151,7 @@
 	                                            </button>
 	                                        </form>
 	                                    </c:if>
-	                                    <c:if test="${!fn:contains(listProp, entry.key.id)}">
+	                                    <c:if test="${!fn:contains(listProp, entry.key)}">
 	                                        <form action="NewFavouriteServlet.do" method="post">
 	                                            <input type="hidden" name="propertyId" value="${entry.key.id}">
 	                                            <button type="submit" class="btn btn-outline-danger mt-3">
