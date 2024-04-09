@@ -51,6 +51,8 @@ public class EditPropertyServlet extends HttpServlet {
 		Connection conn = (Connection) getServletContext().getAttribute("dbConn");
 		PropertyDAO propertyDao = new JDBCPropertyDAOImpl();
 		propertyDao.setConnection(conn);
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
 
 		try {
 			String id = request.getParameter("id");
@@ -60,39 +62,44 @@ public class EditPropertyServlet extends HttpServlet {
 			logger.info("Property id (" + id + ") and casting " + pid);
 			Property property = propertyDao.get(pid);
 			if (property != null) {
-				// Servicios del hotel
-				PropertiesServicesDAO propertyServiceDao = new JDBCPropertiesServicesDAOImpl();
-				propertyServiceDao.setConnection(conn);
+				if (property.getIdu() != user.getId()) {
+					logger.info("User is not the owner of the property");
+					response.sendRedirect("ListCategoriesServlet.do");
+				} else {
+					// Servicios del hotel
+					PropertiesServicesDAO propertyServiceDao = new JDBCPropertiesServicesDAOImpl();
+					propertyServiceDao.setConnection(conn);
 
-				List<PropertiesServices> serviciosPropiedad = propertyServiceDao.getAllByProperty(pid);
-				List<Service> listaServicios = new ArrayList<Service>();
+					List<PropertiesServices> serviciosPropiedad = propertyServiceDao.getAllByProperty(pid);
+					List<Service> listaServicios = new ArrayList<Service>();
 
-				ServicesDAO serviceDao = new JDBCServicesDAOImpl();
-				serviceDao.setConnection(conn);
-				listaServicios = serviceDao.getAll();
+					ServicesDAO serviceDao = new JDBCServicesDAOImpl();
+					serviceDao.setConnection(conn);
+					listaServicios = serviceDao.getAll();
 
-				Map<String, Boolean> serviciosAsociados = new HashMap<String, Boolean>();
+					Map<String, Boolean> serviciosAsociados = new HashMap<String, Boolean>();
 
-				int j = 0;
-				for (int i = 0; i < listaServicios.size(); i++) {
-					Service s = listaServicios.get(i);
+					int j = 0;
+					for (int i = 0; i < listaServicios.size(); i++) {
+						Service s = listaServicios.get(i);
 
-					if (j < serviciosPropiedad.size()
-							&& listaServicios.get(i).getId() == serviciosPropiedad.get(j).getIds()) {
-						serviciosAsociados.put(s.getName(), true);
-						j++;
-					} else {
-						serviciosAsociados.put(s.getName(), false);
+						if (j < serviciosPropiedad.size()
+								&& listaServicios.get(i).getId() == serviciosPropiedad.get(j).getIds()) {
+							serviciosAsociados.put(s.getName(), true);
+							j++;
+						} else {
+							serviciosAsociados.put(s.getName(), false);
+						}
 					}
+
+					logger.info("Servicios asociados a la propiedad");
+					request.setAttribute("mapServices", serviciosAsociados);
+
+					request.setAttribute("property", property);
+					request.setAttribute("tipoInformacion", "Editar");
+					RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/NewProperty.jsp");
+					rd.forward(request, response);
 				}
-
-				logger.info("Servicios asociados a la propiedad");
-				request.setAttribute("mapServices", serviciosAsociados);
-
-				request.setAttribute("property", property);
-				request.setAttribute("tipoInformacion","Editar");
-				RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/NewProperty.jsp");
-				rd.forward(request, response);
 			} else {
 				logger.info("Property is null");
 				response.sendRedirect("LisCategoriesServlet.do");
@@ -119,7 +126,7 @@ public class EditPropertyServlet extends HttpServlet {
 		propertyDao.setConnection(conn);
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
-		//TODO :Comprobar que los datos de la habitacion son correctos
+		// TODO :Comprobar que los datos de la habitacion son correctos
 		try {
 
 			long id = Long.parseLong(request.getParameter("id"));
@@ -132,7 +139,6 @@ public class EditPropertyServlet extends HttpServlet {
 			int petFriendly = request.getParameter("permitenMascotas").equals("Si") ? 1 : 0;
 			int available = request.getParameter("disponibilidad").equals("Si") ? 1 : 0;
 
-			
 			System.out.println("Pet friendly: " + petFriendly);
 			System.out.println("Available: " + available);
 			Property property = new Property(id, name, address, tel, city, dist, description, petFriendly, available,
@@ -150,10 +156,13 @@ public class EditPropertyServlet extends HttpServlet {
 
 			String[] services = request.getParameterValues("servicios");
 
-			List<PropertiesServices> serviciosPropiedad = propertyServiceDao.getAllByProperty(id); // Lista de los  servicios  asociados a la  propiedad
-			List<Service> listaServiciosSelecionados = new ArrayList<Service>(); // Lista de los servicios seleccionados por el usuario
-		
-			
+			List<PropertiesServices> serviciosPropiedad = propertyServiceDao.getAllByProperty(id); // Lista de los
+																									// servicios
+																									// asociados a la
+																									// propiedad
+			List<Service> listaServiciosSelecionados = new ArrayList<Service>(); // Lista de los servicios seleccionados
+																					// por el usuario
+
 			if (services != null) {
 
 				for (String s : services) {
@@ -169,15 +178,13 @@ public class EditPropertyServlet extends HttpServlet {
 			// Eliminamos los servicios que no esten seleccionados
 			for (int i = 0; i < serviciosPropiedad.size(); i++) {
 				if (listaServiciosSelecionados == null) {
-						logger.info("Servicio no seleccionado: " + serviciosPropiedad.get(i).getIds());
-						propertyServiceDao.delete(id, serviciosPropiedad.get(i).getIds());
-				}else if (!listaServiciosSelecionados.contains(serviciosPropiedad.get(i))) 
-				{
+					logger.info("Servicio no seleccionado: " + serviciosPropiedad.get(i).getIds());
+					propertyServiceDao.delete(id, serviciosPropiedad.get(i).getIds());
+				} else if (!listaServiciosSelecionados.contains(serviciosPropiedad.get(i))) {
 					logger.info("Servicio no seleccionado: " + serviciosPropiedad.get(i).getIds());
 					propertyServiceDao.delete(id, serviciosPropiedad.get(i).getIds());
 				}
-		
-				
+
 			}
 
 			if (listaServiciosSelecionados != null) {
@@ -189,7 +196,7 @@ public class EditPropertyServlet extends HttpServlet {
 					}
 				}
 			}
-			
+
 			response.sendRedirect("ListCategoriesServlet.do");
 
 		} catch (Exception e) {

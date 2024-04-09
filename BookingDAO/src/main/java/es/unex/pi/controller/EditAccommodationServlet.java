@@ -7,6 +7,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.util.HashMap;
@@ -15,6 +17,7 @@ import java.util.logging.Logger;
 
 import es.unex.pi.model.Accommodation;
 import es.unex.pi.model.Property;
+import es.unex.pi.model.User;
 
 /**
  * Servlet implementation class EditAccommodationServlet
@@ -22,26 +25,32 @@ import es.unex.pi.model.Property;
 public class EditAccommodationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	Logger logger = Logger.getLogger(HttpServlet.class.getName());
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public EditAccommodationServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public EditAccommodationServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
-		logger.info("GET request");
-		
+
+		logger.info("EditAccommodationServlet: doGet");
+
 		Connection conn = (Connection) getServletContext().getAttribute("dbConn");
 		AccommodationDAO accommodationDao = new JDBCAccommodationDAOImpl();
 		accommodationDao.setConnection(conn);
+
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
+
 		try {
 			String id = request.getParameter("id");
 			logger.info("Accommodation id (" + id + ")");
@@ -49,38 +58,50 @@ public class EditAccommodationServlet extends HttpServlet {
 			aid = Long.parseLong(id);
 			logger.info("Accommodation id (" + id + ") and casting " + aid);
 			Accommodation a = accommodationDao.get(aid);
-			if(a!=null) {
-				logger.info("Accommodation is not null");
-				request.setAttribute("idp", a.getIdp());
-				request.setAttribute("accommodation", a);
-			}else {
-				logger.info("Accommodation is null");
+
+			if (a != null) {
+				PropertyDAO propertyDao = new JDBCPropertyDAOImpl();
+				propertyDao.setConnection(conn);
+				Property p = propertyDao.get(a.getIdp());
+				if (p != null) {
+					if (p.getIdu() != user.getId()) {
+						logger.info("User is not the owner of the property");
+						response.sendRedirect("ListCategoriesServlet.do");
+					} else {
+
+						logger.info("Accommodation is not null");
+						request.setAttribute("idp", a.getIdp());
+						request.setAttribute("accommodation", a);
+					}
+
+				}
+
+			} else {
+				response.sendRedirect("ListCategoriesServlet.do");
 			}
-			
-			
+
 			request.setAttribute("tipoInformacion", "Editar");
 			RequestDispatcher rq = request.getRequestDispatcher("/WEB-INF/NewAccommodation.jsp");
 			rq.forward(request, response);
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		
-		
-		
+
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		Connection conn = (Connection) getServletContext().getAttribute("dbConn");
 		AccommodationDAO accommodationDao = new JDBCAccommodationDAOImpl();
 		accommodationDao.setConnection(conn);
 		try {
-		
+
 			String name = request.getParameter("name");
 			String description = request.getParameter("description");
 			int price = Integer.parseInt(request.getParameter("price"));
@@ -90,15 +111,14 @@ public class EditAccommodationServlet extends HttpServlet {
 
 			Map<String, String> messages = new HashMap<String, String>();
 
-			//TODO :Comprobar que los datos de la habitacion son correctos
-			
-			Accommodation a = new Accommodation(id,name,price,description,nAccommodations,idp);
+			// TODO :Comprobar que los datos de la habitacion son correctos
+
+			Accommodation a = new Accommodation(id, name, price, description, nAccommodations, idp);
 			accommodationDao.update(a);
-			
-			
+
 			response.sendRedirect("ListPropertiesServlet.do");
-		
-		}catch (Exception e) {
+
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

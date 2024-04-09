@@ -53,6 +53,9 @@ public class DeletePropertyServlet extends HttpServlet {
 		PropertyDAO propertyDao = new JDBCPropertyDAOImpl();
 		propertyDao.setConnection(conn);
 
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
+
 		try {
 			String id = request.getParameter("id");
 			logger.info("Property id (" + id + ")");
@@ -61,13 +64,17 @@ public class DeletePropertyServlet extends HttpServlet {
 			logger.info("Property id (" + id + ") and casting " + pid);
 			Property property = propertyDao.get(pid);
 			if (property != null) {
+				if (property.getIdu() != user.getId()) {
+					logger.info("User is not the owner of the property");
+					response.sendRedirect("ListCategoriesServlet.do");
+				} else {
 
-				request.setAttribute("property", property);
-				RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/PropertyConfirmationPage.jsp");
-				rd.forward(request, response);
-			}
+					request.setAttribute("property", property);
+					RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/PropertyConfirmationPage.jsp");
+					rd.forward(request, response);
 
-			else {
+				}
+			} else {
 				logger.info("Property is null");
 				response.sendRedirect("ListPropertiesServlet.do");
 			}
@@ -91,6 +98,7 @@ public class DeletePropertyServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		logger.info("DeletePropertyServlet: Request received");
+
 		Connection conn = (Connection) getServletContext().getAttribute("dbConn");
 		PropertyDAO propertyDao = new JDBCPropertyDAOImpl();
 		propertyDao.setConnection(conn);
