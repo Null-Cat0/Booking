@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import es.unex.pi.model.Accommodation;
 import es.unex.pi.model.Booking;
@@ -26,6 +27,7 @@ import java.sql.Connection;
  */
 public class ListBookingsRecordServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	Logger logger = Logger.getLogger(HttpServlet.class.getName());
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -42,6 +44,7 @@ public class ListBookingsRecordServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		logger.info("ListBookingsRecordServlet: doGet");
 		Connection conn = (Connection) getServletContext().getAttribute("dbConn");
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
@@ -90,8 +93,7 @@ public class ListBookingsRecordServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+			doGet(request, response);
 	}
 
 }

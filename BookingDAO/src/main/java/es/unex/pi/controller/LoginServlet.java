@@ -47,7 +47,7 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		logger.info("LoginServlet.do: doGet");
 		RequestDispatcher view = request.getRequestDispatcher("WEB-INF/Login.jsp");
 		view.forward(request, response);
 
@@ -60,10 +60,8 @@ public class LoginServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		/*
-		 * TODO Comprobar los datos del usuario y en caso de que no sean correctos,
-		 * indicarselo al usuario.
-		 */
+		logger.info("LoginServlet.do: doPost");
+		
 		logger.setLevel(Level.INFO);
 
 		// Recuperar la sesión
@@ -92,15 +90,12 @@ public class LoginServlet extends HttpServlet {
 				logger.info("Usuario encontrado");
 				if (user.getPassword().equals(password)) {
 					logger.info("Contraseña correcta");
-
-					HttpSession sesion = request.getSession();
 					
-					//TODO Añadir la lista historica de las reservas a la sesión.
+					// Añadir la lista historica de las reservas a la sesión.
 					List<Property> historico = new ArrayList<Property>();
 					session.setAttribute("listProp", historico);
 					
-					
-					//TODO Añadir el carro a la sesión.
+					// Añadir el carro a la sesión.
 					Map<Property,List<Entry<Accommodation,Integer>>> reservas = new HashMap<Property,List<Entry<Accommodation,Integer>>>();
 					session.setAttribute("cart", reservas);
 					
@@ -109,6 +104,7 @@ public class LoginServlet extends HttpServlet {
 
 					// Redirigir a la página principal
 					response.sendRedirect("ListCategoriesServlet.do");
+					
 
 				} else {
 					messages.put("password", "Contraseña incorrecta");

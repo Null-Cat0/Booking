@@ -26,6 +26,8 @@ import es.unex.pi.model.PropertiesServices;
 import es.unex.pi.model.Property;
 import es.unex.pi.model.Service;
 import es.unex.pi.model.User;
+import es.unex.pi.model.*;
+import es.unex.pi.dao.*;
 
 /**
  * Servlet implementation class DeletePropertyServlet
@@ -48,7 +50,9 @@ public class DeletePropertyServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
+
+		logger.info("DeletePropertyServlet: doGet");
+
 		Connection conn = (Connection) getServletContext().getAttribute("dbConn");
 		PropertyDAO propertyDao = new JDBCPropertyDAOImpl();
 		propertyDao.setConnection(conn);
@@ -78,13 +82,9 @@ public class DeletePropertyServlet extends HttpServlet {
 				logger.info("Property is null");
 				response.sendRedirect("ListPropertiesServlet.do");
 			}
-		} catch (
-
-		NumberFormatException e) {
+		} catch (NumberFormatException e) {
 			logger.info("parameter id is not a number");
-
-			// TODO: Redirect to ListOrderServlet.
-			response.sendRedirect("LisCategoriesServlet.do");
+			response.sendRedirect("ListPropertyServlet.do");
 
 		}
 
@@ -96,13 +96,18 @@ public class DeletePropertyServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		logger.info("DeletePropertyServlet: Request received");
+
+		logger.info("DeletePropertyServlet: doPost");
 
 		Connection conn = (Connection) getServletContext().getAttribute("dbConn");
+		HttpSession session = request.getSession();
+
 		PropertyDAO propertyDao = new JDBCPropertyDAOImpl();
 		propertyDao.setConnection(conn);
-		HttpSession session = request.getSession();
+
+		AccommodationDAO accommodationDao = new JDBCAccommodationDAOImpl();
+		accommodationDao.setConnection(conn);
+
 		User user = (User) session.getAttribute("user");
 
 		try {
@@ -114,6 +119,14 @@ public class DeletePropertyServlet extends HttpServlet {
 			Property property = propertyDao.get(pid);
 			if (property != null) {
 				if (property.getIdu() == user.getId()) {
+
+					List<Accommodation> la = accommodationDao.getAccommodationProperty(pid);
+					
+					for (Accommodation a : la) {
+						logger.info("Accommodation id: " + a.getId());
+						accommodationDao.delete(a.getId());
+					}
+									
 					propertyDao.delete(pid);
 					response.sendRedirect("ListCategoriesServlet.do");
 				} else {

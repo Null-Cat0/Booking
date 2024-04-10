@@ -32,7 +32,8 @@ public class DeleteFavouriteServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
+		logger.info("DeleteFavouriteServlet: doGet");
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
@@ -40,8 +41,8 @@ public class DeleteFavouriteServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		logger.info("doPost : DeleteFavouriteServlet");
+		
+		logger.info("DeleteFavouriteServlet: doPost");
 		
 		try {
 			HttpSession session = request.getSession();
@@ -55,7 +56,9 @@ public class DeleteFavouriteServlet extends HttpServlet {
 			FavouriteDAO fdao = new JDBCFavouriteDAOImpl();
 			fdao.setConnection(conn);
 			
-			fdao.delete(new Favourite(user.getId(),idp));
+			//Si el favorito existe, lo borramos
+			if(fdao.get(user.getId(),idp)!=null)		
+				fdao.delete(new Favourite(user.getId(),idp));
 			
 			response.sendRedirect("ListFavouritesServlet.do");
 			

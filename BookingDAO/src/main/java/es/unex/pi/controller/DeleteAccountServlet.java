@@ -36,7 +36,8 @@ public class DeleteAccountServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
+		logger.info("DeleteAccountServlet : doGet");
 		
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
@@ -55,7 +56,8 @@ public class DeleteAccountServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		logger.log(Level.INFO, "doPost() DeleteAccountServlet");
+		logger.info("DeleteAccountServlet : doGet");
+		
 		HttpSession session = request.getSession();
 		Connection connection = (Connection) getServletContext().getAttribute("dbConn");
 		
@@ -64,12 +66,13 @@ public class DeleteAccountServlet extends HttpServlet {
 		
 		User user = (User) session.getAttribute("user");
 		
-		logger.log(Level.INFO, "User: " + user.toString());
+		logger.info("User: " + user.toString());
 		if (user != null) {
 			dao.delete(user.getId());
 			session.removeAttribute("user");
 			user = null;
 			session.invalidate();
+			
 			RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/Login.jsp");
 			rd.forward(request, response);
 		}

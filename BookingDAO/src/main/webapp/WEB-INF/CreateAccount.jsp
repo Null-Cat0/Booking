@@ -64,12 +64,13 @@
 	                    <div class="mb-3">
 	                        <input class="btn btn-primary form-control" type="submit" value="${tipoInformacion} cuenta">
 	                    </div>
-	                    <c:if test="${user != null}">
-	                        <a href="DeleteAccountServlet.do" class="btn btn-danger form-control">Eliminar Cuenta</a>
-	                    </c:if>
+					<c:if test="${not empty sessionScope.user}">
+					    <a href="<c:url value='/DeleteAccountServlet.do' />" class="btn btn-danger form-control">Eliminar Cuenta</a>
+					</c:if>
+
 	                </form>
 	                <c:if test="${tipoInformacion == 'Crear'}">
-	                    <p class="text-center mt-3">¿Ya tienes una cuenta? <a href="login.html">Inicia sesión</a></p>
+	                    <p class="text-center mt-3">¿Ya tienes una cuenta? <a href="LoginServlet.do">Inicia sesión</a></p>
 	                </c:if>
 	            </div>
 	        </div>

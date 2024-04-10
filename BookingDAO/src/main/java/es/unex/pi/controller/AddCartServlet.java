@@ -49,16 +49,31 @@ public class AddCartServlet extends HttpServlet {
 
 		logger.info("doGet : AddCartServlet");
 
-		/*
-		 * Map<String,String> messages = new HashMap<String,String>();
-		 * 
-		 * messages.put("noHab", "No hay suficientes habitaciones disponibles de"+
-		 * accommodation.getName() + " en " + property.getName() +
-		 * " para realizar la reserva."); request.setAttribute("messages", messages);
-		 */
 		HttpSession session = request.getSession();
-		Map<Property, List<Entry<Accommodation, Integer>>> reservas = (Map<Property, List<Entry<Accommodation, Integer>>>) session
-				.getAttribute("cart");
+		Map<Property, List<Entry<Accommodation, Integer>>> reservas = (Map<Property, List<Entry<Accommodation, Integer>>>) session.getAttribute("cart");
+
+		boolean modificar = false;
+		// Mensaje de error si no hay suficientes habitaciones
+		Map<String, String> messages = new HashMap<String, String>();
+		for (Property property : reservas.keySet()) {
+			for (Entry<Accommodation, Integer> entry : reservas.get(property)) {
+				if (entry.getKey().getNumAccommodations() < entry.getValue()) {
+					messages.put("noHab", "No hay suficientes habitaciones disponibles de " + entry.getKey().getName()
+							+ " en " + property.getName() + " para realizar la reserva. Se ha establecido en número de habitaciones al máximo disponible.");
+					entry.setValue(entry.getKey().getNumAccommodations());
+					modificar = true;
+					request.setAttribute("messages", messages);
+				}
+				logger.info("Property: " + property.getName() + " Accommodation: " + entry.getKey().getName()
+						+ " NumAccommodations: " + entry.getValue());
+			}
+		}
+
+		//Si se ha modificado el carrito, se actualiza la sesión
+		if (modificar) {
+			session.setAttribute("cart", reservas);
+		}
+		
 		request.setAttribute("cart", reservas);
 		RequestDispatcher view = request.getRequestDispatcher("WEB-INF/cart.jsp");
 		view.forward(request, response);
@@ -106,26 +121,31 @@ public class AddCartServlet extends HttpServlet {
 
 					Accommodation accommodation = accommodationDao.get(entry.getKey().getId());
 
-					if (accommodation.getNumAccommodations() < entry.getValue()) {
-						logger.info("No hay suficientes habitaciones disponibles");
-						response.sendRedirect("AddCartServlet.do");
-					} else {
-						// Hacer la reserva de la habitación
-						BookingsAccommodations bookingsAccommodations = new BookingsAccommodations();
-						bookingsAccommodations.setIdacc(entry.getKey().getId());
-						bookingsAccommodations.setIdb(idBooking);
-						bookingsAccommodations.setNumAccommodations(entry.getValue());
-						bookingsAccommodationsDao.add(bookingsAccommodations);
+					// Hacer la reserva de la habitación
+					BookingsAccommodations bookingsAccommodations = new BookingsAccommodations();
+					bookingsAccommodations.setIdacc(entry.getKey().getId());
+					bookingsAccommodations.setIdb(idBooking);
+					bookingsAccommodations.setNumAccommodations(entry.getValue());
+					bookingsAccommodationsDao.add(bookingsAccommodations);
 
-						// Reducir el número de habitaciones disponibles
-						accommodation.setNumAccommodations(accommodation.getNumAccommodations() - entry.getValue());
-						accommodationDao.update(accommodation);
+					// Reducir el número de habitaciones disponibles
+					accommodation.setNumAccommodations(accommodation.getNumAccommodations() - entry.getValue());
+					accommodationDao.update(accommodation);
+					
+					List<Accommodation> accommodations = new ArrayList<Accommodation>();
+					accommodations = accommodationDao.getAccommodationProperty(accommodation.getIdp());
+					
+					//Se establece como que la propiedad no tiene habitaciones disponibles y si se encuentra alguna habitación disponible se cambia
+					property.setAvailable(0);
+					for (Accommodation a : accommodations) {
+						if(a.getNumAccommodations()>=1) {
+	                    	property.setAvailable(1);
+	                    }
+                    }
+                    
+					// Vaciar el carrito
+					session.setAttribute("cart", new HashMap<Property, List<Entry<Accommodation, Integer>>>());
 
-						// Vaciar el carrito
-						session.setAttribute("cart", new HashMap<Property, List<Entry<Accommodation, Integer>>>());
-				
-
-					}
 				}
 			}
 		} catch (NumberFormatException e) {

@@ -35,6 +35,9 @@ public class DeleteAccommodationServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		logger.info("DeleteAccommodationServlet : doGet");
+		
 		Connection conn = (Connection) getServletContext().getAttribute("dbConn");
 		AccommodationDAO accommodationDao = new JDBCAccommodationDAOImpl();
 		accommodationDao.setConnection(conn);
@@ -64,8 +67,7 @@ public class DeleteAccommodationServlet extends HttpServlet {
 			logger.severe("parameter id is not a number");
 			logger.severe("Error en POST: DeleteAccommodationServlet " + e.getMessage());
 			e.printStackTrace();
-			
-			// TODO: Redirect to ListOrderServlet.
+
 			response.sendRedirect("ListPropertiesServlet.do");
 
 		}
@@ -75,8 +77,8 @@ public class DeleteAccommodationServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		logger.info("doPost : DeleteAccommodationServlet");
+
+		logger.info("DeleteAccommodationServlet: doPost");
 		
 		Connection conn = (Connection) getServletContext().getAttribute("dbConn");
 		AccommodationDAO accommodationDao = new JDBCAccommodationDAOImpl();

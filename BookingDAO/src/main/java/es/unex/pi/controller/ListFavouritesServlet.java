@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import es.unex.pi.dao.*;
 import es.unex.pi.model.Favourite;
@@ -22,6 +23,7 @@ import es.unex.pi.model.User;
  */
 public class ListFavouritesServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	Logger logger = Logger.getLogger(HttpServlet.class.getName());
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -36,7 +38,7 @@ public class ListFavouritesServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		
+		logger.info("ListFavouritesServlet: doGet");
 		HttpSession session = request.getSession();
 		Connection conn = (Connection) getServletContext().getAttribute("dbConn");
 		

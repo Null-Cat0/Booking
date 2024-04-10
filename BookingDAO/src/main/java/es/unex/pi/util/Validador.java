@@ -1,8 +1,5 @@
 package es.unex.pi.util;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 public class Validador {
 	String validacion;
 
@@ -12,6 +9,17 @@ public class Validador {
 
 	public boolean esValido(String aux) {
 		return aux.matches(validacion);
+	}
+	public boolean esValido(int aux) {
+		return aux >= 0;
+	}
+
+	public boolean esValido(String name, String address, String tel, String city, double dist, String description,
+			int petFriendly, int available) {
+		if (name != null && address != null && tel != null && city != null  && description != null)
+				return true;
+		return false;
+
 	}
 
 }

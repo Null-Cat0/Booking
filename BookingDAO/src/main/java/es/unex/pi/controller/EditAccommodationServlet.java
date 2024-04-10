@@ -40,7 +40,6 @@ public class EditAccommodationServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
 
 		logger.info("EditAccommodationServlet: doGet");
 
@@ -96,10 +95,18 @@ public class EditAccommodationServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
+	
+		logger.info("EditAccommodationServlet: doPost");
+		
 		Connection conn = (Connection) getServletContext().getAttribute("dbConn");
+		HttpSession session = request.getSession();
+		
 		AccommodationDAO accommodationDao = new JDBCAccommodationDAOImpl();
 		accommodationDao.setConnection(conn);
+		
+
+		User user = (User) session.getAttribute("user");
+		
 		try {
 
 			String name = request.getParameter("name");
@@ -109,10 +116,22 @@ public class EditAccommodationServlet extends HttpServlet {
 			long id = Long.parseLong(request.getParameter("ida"));
 			long idp = Long.parseLong(request.getParameter("idp"));
 
-			Map<String, String> messages = new HashMap<String, String>();
-
-			// TODO :Comprobar que los datos de la habitacion son correctos
-
+	
+			PropertyDAO pDAO = new JDBCPropertyDAOImpl();
+			pDAO.setConnection(conn);
+			Property p = pDAO.get(idp);
+			if (p !=null) 
+			{
+				if(p.getIdu() != user.getId())
+				{
+					logger.info("User is not the owner of the property");
+					response.sendRedirect("ListPropertiesServlet.do");
+				}
+			} else {
+				logger.info("Property is null");
+				response.sendRedirect("ListPropertiesServlet.do");
+			}
+			
 			Accommodation a = new Accommodation(id, name, price, description, nAccommodations, idp);
 			accommodationDao.update(a);
 

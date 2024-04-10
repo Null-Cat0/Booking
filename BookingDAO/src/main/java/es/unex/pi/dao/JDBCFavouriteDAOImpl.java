@@ -21,6 +21,31 @@ public class JDBCFavouriteDAOImpl implements FavouriteDAO{
 		this.conn = conn;
 		
 	}
+	
+	@Override
+	public Favourite get(long idu, long idp) {
+
+		if (conn == null) return null;
+		
+		Favourite favourite = null;
+		try {
+			Statement stmt;
+			ResultSet rs;
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery("SELECT * FROM Favourites WHERE idu="+idu+" AND idp="+idp);
+			while ( rs.next() ) {
+				
+				fromRsToCategoryObject(rs,favourite);
+				if(favourite!=null)
+					logger.info("fetching Favourites: "+favourite.getIdu()+" "+favourite.getIdp());
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return favourite;
+	}
+	
 
 	@Override
 	public List<Favourite> getAll() {

@@ -18,6 +18,7 @@ import es.unex.pi.model.PropertiesServices;
 import es.unex.pi.model.Property;
 import es.unex.pi.model.Service;
 import es.unex.pi.model.User;
+import es.unex.pi.util.Validador;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -47,7 +48,8 @@ public class EditPropertyServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		// TODO Auto-generated method stub
+		logger.info("EditPropertyServlet: doGet()");
+
 		Connection conn = (Connection) getServletContext().getAttribute("dbConn");
 		PropertyDAO propertyDao = new JDBCPropertyDAOImpl();
 		propertyDao.setConnection(conn);
@@ -66,6 +68,7 @@ public class EditPropertyServlet extends HttpServlet {
 					logger.info("User is not the owner of the property");
 					response.sendRedirect("ListCategoriesServlet.do");
 				} else {
+
 					// Servicios del hotel
 					PropertiesServicesDAO propertyServiceDao = new JDBCPropertiesServicesDAOImpl();
 					propertyServiceDao.setConnection(conn);
@@ -97,18 +100,17 @@ public class EditPropertyServlet extends HttpServlet {
 
 					request.setAttribute("property", property);
 					request.setAttribute("tipoInformacion", "Editar");
+
 					RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/NewProperty.jsp");
 					rd.forward(request, response);
 				}
 			} else {
-				logger.info("Property is null");
-				response.sendRedirect("LisCategoriesServlet.do");
+				logger.severe("Property is null");
+				response.sendRedirect("ListPropertiesServlet.do");
 			}
 		} catch (NumberFormatException e) {
-			logger.info("parameter id is not a number");
-
-			// TODO: Redirect to ListOrderServlet.
-			response.sendRedirect("LisCategoriesServlet.do");
+			logger.severe("parameter id is not a number");
+			response.sendRedirect("ListPropertiesServlet.do");
 
 		}
 
@@ -126,7 +128,7 @@ public class EditPropertyServlet extends HttpServlet {
 		propertyDao.setConnection(conn);
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
-		// TODO :Comprobar que los datos de la habitacion son correctos
+
 		try {
 
 			long id = Long.parseLong(request.getParameter("id"));
@@ -139,65 +141,80 @@ public class EditPropertyServlet extends HttpServlet {
 			int petFriendly = request.getParameter("permitenMascotas").equals("Si") ? 1 : 0;
 			int available = request.getParameter("disponibilidad").equals("Si") ? 1 : 0;
 
-			System.out.println("Pet friendly: " + petFriendly);
-			System.out.println("Available: " + available);
-			Property property = new Property(id, name, address, tel, city, dist, description, petFriendly, available,
-					(int) user.getId());
-			propertyDao.update(property);
+			Validador pat = new Validador("");
 
-			// Servicios del hotel
-			PropertiesServicesDAO propertyServiceDao = new JDBCPropertiesServicesDAOImpl();
-			propertyServiceDao.setConnection(conn);
+			if (pat.esValido(name, address, tel, city, dist, description, petFriendly, available)) {
 
-			// De los servicios seleccionados hay que comprobar cuales estan asociados a la
-			// propiedad y cuales ha quitado
-			ServicesDAO serviceDao = new JDBCServicesDAOImpl();
-			serviceDao.setConnection(conn);
+				logger.info("Updating property");
+				logger.info("Property id: " + id);
+				logger.info("Property name: " + name);
+				logger.info("Property address: " + address);
+				logger.info("Property tel: " + tel);
+				logger.info("Property city: " + city);
+				logger.info("Property dist: " + dist);
+				logger.info("Property description: " + description);
+				logger.info("Property petFriendly: " + petFriendly);
+				logger.info("Property available: " + available);
 
-			String[] services = request.getParameterValues("servicios");
+				Property property = new Property(id, name, address, tel, city, dist, description, petFriendly,
+						available, (int) user.getId());
+				propertyDao.update(property);
 
-			List<PropertiesServices> serviciosPropiedad = propertyServiceDao.getAllByProperty(id); // Lista de los
-																									// servicios
-																									// asociados a la
-																									// propiedad
-			List<Service> listaServiciosSelecionados = new ArrayList<Service>(); // Lista de los servicios seleccionados
-																					// por el usuario
+				// Servicios del hotel
+				PropertiesServicesDAO propertyServiceDao = new JDBCPropertiesServicesDAOImpl();
+				propertyServiceDao.setConnection(conn);
 
-			if (services != null) {
+				// De los servicios seleccionados hay que comprobar cuales estan asociados a la
+				// propiedad y cuales ha quitado
+				ServicesDAO serviceDao = new JDBCServicesDAOImpl();
+				serviceDao.setConnection(conn);
 
-				for (String s : services) {
-					Service service = serviceDao.get(s);
-					logger.info("Servicio seleccionado: " + s);
-					listaServiciosSelecionados.add(service);
+				String[] services = request.getParameterValues("servicios");
+
+				// Lista de los servicios asociados a la propiedad
+				List<PropertiesServices> serviciosPropiedad = propertyServiceDao.getAllByProperty(id); 
+				
+				// Lista de los servicios seleccionados por el usuario
+				List<Service> listaServiciosSelecionados = new ArrayList<Service>();
+
+				if (services != null) {
+
+					for (String s : services) {
+						Service service = serviceDao.get(s);
+						logger.info("Servicio seleccionado: " + s);
+						listaServiciosSelecionados.add(service);
+					}
+				} else {
+					logger.info("No hay servicios seleccionados");
+					listaServiciosSelecionados = null;
 				}
-			} else {
-				logger.info("No hay servicios seleccionados");
-				listaServiciosSelecionados = null;
-			}
 
-			// Eliminamos los servicios que no esten seleccionados
-			for (int i = 0; i < serviciosPropiedad.size(); i++) {
-				if (listaServiciosSelecionados == null) {
-					logger.info("Servicio no seleccionado: " + serviciosPropiedad.get(i).getIds());
-					propertyServiceDao.delete(id, serviciosPropiedad.get(i).getIds());
-				} else if (!listaServiciosSelecionados.contains(serviciosPropiedad.get(i))) {
-					logger.info("Servicio no seleccionado: " + serviciosPropiedad.get(i).getIds());
-					propertyServiceDao.delete(id, serviciosPropiedad.get(i).getIds());
+				// Eliminamos los servicios que no esten seleccionados
+				for (int i = 0; i < serviciosPropiedad.size(); i++) {
+					if (listaServiciosSelecionados == null) {
+						logger.info("Servicio no seleccionado: " + serviciosPropiedad.get(i).getIds());
+						propertyServiceDao.delete(id, serviciosPropiedad.get(i).getIds());
+					} else if (!listaServiciosSelecionados.contains(serviciosPropiedad.get(i))) {
+						logger.info("Servicio no seleccionado: " + serviciosPropiedad.get(i).getIds());
+						propertyServiceDao.delete(id, serviciosPropiedad.get(i).getIds());
+					}
+
 				}
 
-			}
-
-			if (listaServiciosSelecionados != null) {
-				// Añadimos los servicios seleccionados
-				for (Service j : listaServiciosSelecionados) {
-					if (!serviciosPropiedad.contains(new PropertiesServices(id, j.getId()))) {
-						logger.info("Añadiendo servicio seleccionado: " + j.getId());
-						propertyServiceDao.add(new PropertiesServices(id, j.getId()));
+				if (listaServiciosSelecionados != null) {
+					// Añadimos los servicios seleccionados
+					for (Service j : listaServiciosSelecionados) {
+						if (!serviciosPropiedad.contains(new PropertiesServices(id, j.getId()))) {
+							logger.info("Añadiendo servicio seleccionado: " + j.getId());
+							propertyServiceDao.add(new PropertiesServices(id, j.getId()));
+						}
 					}
 				}
 			}
-
-			response.sendRedirect("ListCategoriesServlet.do");
+			else {
+				logger.info("Property data is not valid");
+			}
+			response.sendRedirect("ListPropertiesServlet.do");
 
 		} catch (Exception e) {
 			e.printStackTrace();

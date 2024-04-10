@@ -155,7 +155,23 @@
   </filter-mapping>
   <filter-mapping>
     <filter-name>LoginFilter</filter-name>
-    <servlet-name>CreateAccountServlet</servlet-name>
+    <servlet-name>NewAccommodationServlet</servlet-name>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>LoginFilter</filter-name>
+    <servlet-name>DeleteAccommodationServlet</servlet-name>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>LoginFilter</filter-name>
+    <servlet-name>EditAccommodationServlet</servlet-name>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>LoginFilter</filter-name>
+    <servlet-name>DeleteReviewServlet</servlet-name>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>LoginFilter</filter-name>
+    <servlet-name>NewReviewServlet</servlet-name>
   </filter-mapping>
   <servlet>
     <description></description>

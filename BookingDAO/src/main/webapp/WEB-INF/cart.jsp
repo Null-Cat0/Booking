@@ -47,7 +47,7 @@
 				<div class="col-md-8">
 					<h1 class="text-center mb-4">Carrito de la compra</h1>
 					
-					<h3 class="text-warning">${messages.noHab}</h3>
+					<h4 class="text-danger">${messages.noHab}</h4>
 
 					<c:set var="totalPrice" value="0" />
 					<c:forEach var="aux" items="${cart}" varStatus="status">
@@ -107,11 +107,15 @@
 						</div>
 					</div>
 
+
+				
 					<div class="text-center">
+						
 						<form action="AddCartServlet.do" method="post">
 							<input type="hidden" name="totalPrice" value="${totalPrice}">
 							<input type="submit" class="btn btn-primary mt-3" value="Pagar">
 						</form>
+					
 					</div>
 				</div>
 			</div>

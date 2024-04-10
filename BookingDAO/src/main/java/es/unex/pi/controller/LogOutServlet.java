@@ -6,13 +6,17 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
+import java.util.logging.Logger;
 
 /**
  * Servlet implementation class LogOutServlet
  */
 public class LogOutServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	Logger logger = Logger.getLogger(HttpServlet.class.getName());
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -26,9 +30,13 @@ public class LogOutServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		request.getSession().removeAttribute("user");
-		request.getSession().invalidate();
+		
+		logger.info("LogOutServlet.do: doGet");
+		
+		HttpSession session = request.getSession();
+		session.removeAttribute("user");
+		session.invalidate();
+		
 		RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/Login.jsp");
 		rd.forward(request, response);
 		

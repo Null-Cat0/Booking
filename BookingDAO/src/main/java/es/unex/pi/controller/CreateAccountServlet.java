@@ -55,12 +55,9 @@ public class CreateAccountServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		/*
-		 * TODO Comprobar existencia del usuario en la base de datos Si existe,
-		 * indicarselo al usuario Si no existe, redirigir a la página principal
-		 */
+
 		logger.setLevel(Level.INFO);
-		// Recuperar conexión a la base de datos y crear un UserDAO
+		
 		Connection conn = (Connection) getServletContext().getAttribute("dbConn");
 		UserDAO userDAO = new JDBCUserDAOImpl();
 		userDAO.setConnection(conn);
@@ -74,7 +71,7 @@ public class CreateAccountServlet extends HttpServlet {
 			String password = request.getParameter("password");
 			String password2 = request.getParameter("password2");
 			
-			// Crear un objeto User con los datos del formulario
+			
 			User user = new User(name, surname, email, password);
 
 			// Errores
@@ -120,6 +117,7 @@ public class CreateAccountServlet extends HttpServlet {
 						messages.put("password", "La contraseña no es válida");
 						request.setAttribute("messages", messages);
 						request.setAttribute("user", user);
+						request.setAttribute("tipoInformacion", "Crear");
 						
 
 						RequestDispatcher view = request.getRequestDispatcher("WEB-INF/CreateAccount.jsp");
@@ -131,7 +129,7 @@ public class CreateAccountServlet extends HttpServlet {
 					messages.put("password", "Las contraseñas no coinciden");
 					request.setAttribute("messages", messages);
 					request.setAttribute("user", user);
-					
+					request.setAttribute("tipoInformacion", "Crear");
 
 					RequestDispatcher view = request.getRequestDispatcher("WEB-INF/CreateAccount.jsp");
 					view.forward(request, response);

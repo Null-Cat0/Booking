@@ -154,7 +154,7 @@
 	                                                    <td>${room.description}</td>
 	                                                    <td>${room.price}€</td>
 	                                                    <td>
-	                                                        <input type="number" min="0" max="${room.numAccommodations}" name="nHabitaciones${room.id}" value="0" class="form-control">
+	                                                        <input type="number" min="1" max="${room.numAccommodations}" name="nHabitaciones${room.id}" value="0" class="form-control" ${room.numAccommodations == 0} ? 'disabled' : ''>
 	                                                    </td>
 	                                                </tr>
 	                                            </c:forEach>
@@ -179,7 +179,7 @@
 	            </c:choose>
 	
 	            <!-- Valoraciones -->
-	            <c:if test="${property.id != user.id and !hasReviewed}">
+	            <c:if test="${property.idu != user.id and !hasReviewed}">
 	                <div class="row mb-4">
 	                    <div class="col">
 	                        <div class="card">

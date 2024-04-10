@@ -38,9 +38,10 @@ public class EditUserServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
+		
 		logger.setLevel(Level.INFO);
-		logger.info("ListUserDataServlet: Request received");
+		logger.info("ListUserDataServlet: doGet");
 
 		// Recuperar la sesión y cargar los datos del usuario de la sesion en la request
 		HttpSession session = request.getSession();
@@ -58,10 +59,9 @@ public class EditUserServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		// doGet(request, response);
+
 		logger.setLevel(Level.INFO);
-		logger.info("EditUserServlet: Request received");
+		logger.info("EditUserServlet: doPost");
 
 		Connection conn = (Connection) getServletContext().getAttribute("dbConn");
 		UserDAO userDAO = new JDBCUserDAOImpl();

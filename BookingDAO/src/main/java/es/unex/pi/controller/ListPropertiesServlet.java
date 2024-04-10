@@ -53,7 +53,7 @@ public class ListPropertiesServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		
-		logger.info("Atendiendo GET");
+		logger.info("ListPropertiesServlet: doGet");
 
 		
 		HttpServletRequest req = (HttpServletRequest) request;

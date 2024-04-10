@@ -24,6 +24,18 @@ public interface FavouriteDAO {
 	public List<Favourite> getAll();
 
 	/**
+	 * Gets a favorite property by its identifier.
+	 * 
+	 * @param idu User identifier
+	 * @param idp Property identifier
+	 * 
+	 * @return Favourite object with the details of the relation between the
+	 *         property and the user.
+	 */
+	
+	Favourite get(long idu, long idp);
+	
+	/**
 	 *Gets all the Review that are related to a user.
 	 * 
 	 * @param idu
@@ -53,4 +65,6 @@ public interface FavouriteDAO {
 	 */
 	
 	public boolean delete(Favourite Favourite);
+
+	
 }

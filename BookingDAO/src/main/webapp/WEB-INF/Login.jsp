@@ -49,10 +49,11 @@
 					<input class="form-control custom-submit" type="submit"
 						value="Iniciar sesión">
 				</form>
-				<p>
-					¿No tienes una cuenta? <a href="create_account.html">Crea una
-						cuenta</a>
-				</p>
+					<p>
+					    ¿No tienes una cuenta? 
+					    <a href="<c:url value='CreateAccountServlet.do'/>">Crea una cuenta</a>
+					</p>
+
 			</div>
 		</div>
 	</div>
