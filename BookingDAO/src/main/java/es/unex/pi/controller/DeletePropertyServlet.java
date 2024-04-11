@@ -119,14 +119,7 @@ public class DeletePropertyServlet extends HttpServlet {
 			Property property = propertyDao.get(pid);
 			if (property != null) {
 				if (property.getIdu() == user.getId()) {
-
-					List<Accommodation> la = accommodationDao.getAccommodationProperty(pid);
-					
-					for (Accommodation a : la) {
-						logger.info("Accommodation id: " + a.getId());
-						accommodationDao.delete(a.getId());
-					}
-									
+                    logger.info("User is the owner of the property");							
 					propertyDao.delete(pid);
 					response.sendRedirect("ListCategoriesServlet.do");
 				} else {
