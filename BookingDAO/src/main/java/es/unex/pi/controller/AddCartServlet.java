@@ -145,14 +145,16 @@ public class AddCartServlet extends HttpServlet {
                     
 					// Vaciar el carrito
 					session.setAttribute("cart", new HashMap<Property, List<Entry<Accommodation, Integer>>>());
-
 				}
+				response.sendRedirect("ListCategoriesServlet.do");
 			}
 		} catch (NumberFormatException e) {
 			logger.info("parameter id is not a number");
-			response.sendRedirect("ListCategoriesServlet.do");
+			request.setAttribute("error", "Error en la reserva");
+			RequestDispatcher view = request.getRequestDispatcher("WEB-INF/Error.jsp");
+			view.forward(request, response);
 		}
-		response.sendRedirect("ListCategoriesServlet.do");
+		
 
 	}
 

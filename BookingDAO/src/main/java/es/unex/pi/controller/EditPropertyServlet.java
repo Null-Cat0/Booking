@@ -106,11 +106,15 @@ public class EditPropertyServlet extends HttpServlet {
 				}
 			} else {
 				logger.severe("Property is null");
-				response.sendRedirect("ListPropertiesServlet.do");
+				request.setAttribute("error", "Error al editar la propiedad. Por favor, inténtelo de nuevo");
+				RequestDispatcher view = request.getRequestDispatcher("WEB-INF/Error.jsp");
+				view.forward(request, response);
 			}
 		} catch (NumberFormatException e) {
 			logger.severe("parameter id is not a number");
-			response.sendRedirect("ListPropertiesServlet.do");
+			request.setAttribute("error", "Error al editar la propiedad. Por favor, inténtelo de nuevo");
+			RequestDispatcher view = request.getRequestDispatcher("WEB-INF/Error.jsp");
+			view.forward(request, response);
 
 		}
 
@@ -210,16 +214,22 @@ public class EditPropertyServlet extends HttpServlet {
 						}
 					}
 				}
+				response.sendRedirect("ListPropertiesServlet.do");
 			}
 			else {
 				logger.info("Property data is not valid");
+				request.setAttribute("error", "Error al editar la propiedad. Los datos introducidos no son válidos. Por favor, inténtelo de nuevo.");
+				RequestDispatcher view = request.getRequestDispatcher("WEB-INF/Error.jsp");
+				view.forward(request, response);
 			}
-			response.sendRedirect("ListPropertiesServlet.do");
+		
 
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.info("Error updating property");
-			response.sendRedirect("ListCategoriesServlet.do");
+			request.setAttribute("error", "Error al editar la propiedad. Por favor, inténtelo de nuevo.");
+			RequestDispatcher view = request.getRequestDispatcher("WEB-INF/Error.jsp");
+			view.forward(request, response);
 		}
 
 	}

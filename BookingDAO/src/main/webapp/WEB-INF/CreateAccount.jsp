@@ -58,10 +58,6 @@
 	                        <input class="form-control" type="password" id="password" name="password" placeholder="Indica tu contraseña" minlength="8" value="${empty user ? '' : user.password}">
 	                    </div>
 	                    <div class="mb-3">
-	                        <label class="form-label" for="repeatedpassword">Confirma tu contraseña:</label>
-	                        <input class="form-control" type="password" id="repeatedpassword" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\w).{8,}" name="password2" placeholder="Confirma tu contraseña" minlength="8">
-	                    </div>
-	                    <div class="mb-3">
 	                        <input class="btn btn-primary form-control" type="submit" value="${tipoInformacion} cuenta">
 	                    </div>
 					<c:if test="${not empty sessionScope.user}">

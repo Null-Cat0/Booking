@@ -69,6 +69,9 @@ public class NewAccommodationServlet extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.severe("Error: " + e.getMessage());
+			request.setAttribute("error", "Error al crear la habitaciónb. Por favor, inténtelo de nuevo.");
+			RequestDispatcher view = request.getRequestDispatcher("WEB-INF/Error.jsp");
+			view.forward(request, response);
 		}
 
 	}

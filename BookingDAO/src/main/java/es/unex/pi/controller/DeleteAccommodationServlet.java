@@ -58,7 +58,9 @@ public class DeleteAccommodationServlet extends HttpServlet {
 
 			else {
 				logger.severe("Accommodation is null");
-				response.sendRedirect("ListPropertiesServlet.do");
+				request.setAttribute("error", "Error, la propiedad que está tratando de borrar no existe");
+				RequestDispatcher view = request.getRequestDispatcher("WEB-INF/Error.jsp");
+				view.forward(request, response);
 			}
 		} catch (
 
@@ -68,8 +70,9 @@ public class DeleteAccommodationServlet extends HttpServlet {
 			logger.severe("Error en POST: DeleteAccommodationServlet " + e.getMessage());
 			e.printStackTrace();
 
-			response.sendRedirect("ListPropertiesServlet.do");
-
+			request.setAttribute("error", "Error en la petición, el id no es un número válido");
+			RequestDispatcher view = request.getRequestDispatcher("WEB-INF/Error.jsp");
+			view.forward(request, response);
 		}
 	}
 
@@ -93,7 +96,9 @@ public class DeleteAccommodationServlet extends HttpServlet {
 			logger.setLevel(Level.SEVERE);
 			logger.severe("Error en POST: DeleteAccommodationServlet " + e.getMessage());
 			e.printStackTrace();
-			response.sendRedirect("ListPropertiesServlet.do");
+			request.setAttribute("error", "Error en la petición, el id no es un número válido");
+			RequestDispatcher view = request.getRequestDispatcher("WEB-INF/Error.jsp");
+			view.forward(request, response);
 		}
 		
 		

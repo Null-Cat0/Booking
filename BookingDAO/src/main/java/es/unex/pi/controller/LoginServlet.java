@@ -129,6 +129,9 @@ public class LoginServlet extends HttpServlet {
 		} catch (Exception e) {
 			logger.info("Error en el login");
 			e.printStackTrace();
+			request.setAttribute("error", "Error al crear al iniciar sesión. Por favor, inténtelo de nuevo.");
+			RequestDispatcher view = request.getRequestDispatcher("WEB-INF/Error.jsp");
+			view.forward(request, response);
 		}
 	}
 }

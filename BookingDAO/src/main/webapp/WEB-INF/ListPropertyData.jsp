@@ -198,7 +198,8 @@
 	                    </div>
 	                </div>
 	            </c:if>
-	
+
+    </div>
 	            <!-- Listado de valoraciones -->
 	            <div class="row">
 	                <div class="col">

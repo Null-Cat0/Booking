@@ -1,5 +1,6 @@
 package es.unex.pi.controller;
 
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -65,13 +66,16 @@ public class NewFavouriteServlet extends HttpServlet {
 			fdao.setConnection(conn);
 
 			fdao.add(fav);
-			
+			response.sendRedirect("ListFavouritesServlet.do");
 		} catch (Exception e) {
 			logger.info("Error: " + e.getMessage());
+			request.setAttribute("error", "Error al añadir favorito");
+			RequestDispatcher view = request.getRequestDispatcher("WEB-INF/Error.jsp");
+			view.forward(request, response);
 			
 		}
 		
-		response.sendRedirect("ListFavouritesServlet.do");
+
 
 	}
 

@@ -57,7 +57,7 @@ public class CreateAccountServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		logger.setLevel(Level.INFO);
-		
+
 		Connection conn = (Connection) getServletContext().getAttribute("dbConn");
 		UserDAO userDAO = new JDBCUserDAOImpl();
 		userDAO.setConnection(conn);
@@ -69,9 +69,7 @@ public class CreateAccountServlet extends HttpServlet {
 			String surname = request.getParameter("secondname");
 			String email = request.getParameter("email");
 			String password = request.getParameter("password");
-			String password2 = request.getParameter("password2");
-			
-			
+
 			User user = new User(name, surname, email, password);
 
 			// Errores
@@ -79,54 +77,38 @@ public class CreateAccountServlet extends HttpServlet {
 
 			if (userDAO.getUserByEmail(email) != null) {
 				logger.info("Existe un usuario con el email proporcionado");
-				
+
 				messages.put("email", "El email ya está en uso");
 				request.setAttribute("messages", messages);
 				request.setAttribute("user", user);
-				
+
 				RequestDispatcher view = request.getRequestDispatcher("WEB-INF/CreateAccount.jsp");
 				view.forward(request, response);
 			} else {
 				logger.info("No existe un usuario con el email proporcionado");
 
-				if (password != null & password.equals(password2)) {
-					logger.info("las contraseñas coinciden");
-
 //				Validador pat = new Validador("(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\\w).{8,}");
-					boolean validate = true;// pat.esValido(password);
-					if (validate) {
-						logger.info("Contraseña válida");
-						logger.info("Name: " + name);
-						logger.info("Surname: " + surname);
-						logger.info("Email: " + email);
-						logger.info("Password: " + password);
-						logger.info("Password2: " + password2);
+				boolean validate = true;// pat.esValido(password);
+				if (validate) {
+					logger.info("Contraseña válida");
+					logger.info("Name: " + name);
+					logger.info("Surname: " + surname);
+					logger.info("Email: " + email);
+					logger.info("Password: " + password);
 
-						// Crear un objeto User con los datos del formulario
-						long id = userDAO.add(user);
+					// Crear un objeto User con los datos del formulario
+					long id = userDAO.add(user);
 
-						// Añadir el usuario a la sesión
-						user.setId(id);
-						HttpSession session = request.getSession();
-						session.setAttribute("user", user);
-						
-						response.sendRedirect("ListCategoriesServlet.do");
-					} else {
-						logger.info("Contraseña no válida");
-						
-						messages.put("password", "La contraseña no es válida");
-						request.setAttribute("messages", messages);
-						request.setAttribute("user", user);
-						request.setAttribute("tipoInformacion", "Crear");
-						
+					// Añadir el usuario a la sesión
+					user.setId(id);
+					HttpSession session = request.getSession();
+					session.setAttribute("user", user);
 
-						RequestDispatcher view = request.getRequestDispatcher("WEB-INF/CreateAccount.jsp");
-						view.forward(request, response);
-					}
+					response.sendRedirect("ListCategoriesServlet.do");
 				} else {
-					logger.info("Las contraseñas no coinciden");
-					
-					messages.put("password", "Las contraseñas no coinciden");
+					logger.info("Contraseña no válida");
+
+					messages.put("password", "La contraseña no es válida");
 					request.setAttribute("messages", messages);
 					request.setAttribute("user", user);
 					request.setAttribute("tipoInformacion", "Crear");
@@ -135,8 +117,12 @@ public class CreateAccountServlet extends HttpServlet {
 					view.forward(request, response);
 				}
 			}
+
 		} catch (Exception e) {
 			logger.info("Error al crear el usuario");
+			request.setAttribute("error", "Error en la creación del usuario");
+			RequestDispatcher view = request.getRequestDispatcher("WEB-INF/Error.jsp");
+			view.forward(request, response);
 		}
 	}
 

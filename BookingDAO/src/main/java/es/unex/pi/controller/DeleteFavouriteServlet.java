@@ -1,5 +1,6 @@
 package es.unex.pi.controller;
 
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -65,6 +66,9 @@ public class DeleteFavouriteServlet extends HttpServlet {
 		}
 		catch (Exception e) {
 			e.printStackTrace();
+			request.setAttribute("error", "Error al borrar el favorito. Por favor, inténtelo de nuevo.");
+			RequestDispatcher view = request.getRequestDispatcher("WEB-INF/Error.jsp");
+			view.forward(request, response);
 		}
 	
 	}

@@ -80,11 +80,15 @@ public class DeletePropertyServlet extends HttpServlet {
 				}
 			} else {
 				logger.info("Property is null");
-				response.sendRedirect("ListPropertiesServlet.do");
+				request.setAttribute("error", "Error al borrar la propiedad. Por favor, inténtelo de nuevo.");
+				RequestDispatcher view = request.getRequestDispatcher("WEB-INF/Error.jsp");
+				view.forward(request, response);
 			}
 		} catch (NumberFormatException e) {
 			logger.info("parameter id is not a number");
-			response.sendRedirect("ListPropertyServlet.do");
+			request.setAttribute("error", "Error al borrar la propiedad. Por favor, inténtelo de nuevo.");
+			RequestDispatcher view = request.getRequestDispatcher("WEB-INF/Error.jsp");
+			view.forward(request, response);
 
 		}
 
@@ -128,13 +132,21 @@ public class DeletePropertyServlet extends HttpServlet {
 				}
 			} else {
 				logger.info("Property is null");
-				response.sendRedirect("ListCategoriesServlet.do");
+				request.setAttribute("error", "Error al borrar la propiedad, no existe.");
+				RequestDispatcher view = request.getRequestDispatcher("WEB-INF/Error.jsp");
+				view.forward(request, response);
 			}
 		} catch (NumberFormatException e) {
 			logger.info("parameter id is not a number");
+			request.setAttribute("error", "Error al borrar la propiedad, el id no es un número válido.");
+			RequestDispatcher view = request.getRequestDispatcher("WEB-INF/Error.jsp");
+			view.forward(request, response);
 
 		} catch (Exception e) {
-			// TODO: handle exception
+			logger.info("Error al borrar la propiedad");
+			request.setAttribute("error", "Error al borrar la propiedad. Por favor, inténtelo de nuevo.");
+			RequestDispatcher view = request.getRequestDispatcher("WEB-INF/Error.jsp");
+			view.forward(request, response);
 		}
 
 	}

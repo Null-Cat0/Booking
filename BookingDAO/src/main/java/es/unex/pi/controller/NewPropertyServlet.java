@@ -71,8 +71,10 @@ public class NewPropertyServlet extends HttpServlet {
 			view.forward(request, response);
 
 		} catch (NumberFormatException e) {
-			logger.info("parameter id is not a number");
-			response.sendRedirect("LisCategoriesServlet.do");
+			logger.info("parameter id is not a number");			
+			request.setAttribute("error", "Error al crear la propiedad.El id no es un número. Por favor, inténtelo de nuevo.");
+			RequestDispatcher view = request.getRequestDispatcher("WEB-INF/Error.jsp");
+			view.forward(request, response);
 
 		}
 
@@ -142,6 +144,9 @@ public class NewPropertyServlet extends HttpServlet {
 
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "Error: ", e);
+			request.setAttribute("error", "Error al crear la propiedad. Por favor, inténtelo de nuevo.");
+			RequestDispatcher view = request.getRequestDispatcher("WEB-INF/Error.jsp");
+			view.forward(request, response);
 		}
 
 	}

@@ -3,6 +3,7 @@ package es.unex.pi.filter;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.FilterConfig;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
@@ -43,7 +44,9 @@ public class LoginFilter extends HttpFilter implements Filter {
 		HttpServletResponse res = (HttpServletResponse) response;
 		HttpSession session = req.getSession(true);
 		if (session.getAttribute("user") == null) {
-			res.sendRedirect(req.getContextPath() + "/LoginServlet.do");
+			request.setAttribute("error", "Lo sentimos, no tienes permiso para acceder a esta página");
+			RequestDispatcher view = request.getRequestDispatcher("WEB-INF/Error.jsp");
+			view.forward(request, response);
 		} else {
 			// pass the request along the filter chain
 			chain.doFilter(request, response);

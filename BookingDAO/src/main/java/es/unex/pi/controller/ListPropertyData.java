@@ -134,9 +134,9 @@ public class ListPropertyData extends HttpServlet {
 			}
 		} catch (NumberFormatException e) {
 			logger.info("parameter id is not a number");
-
-			// TODO: Redirect to ListOrderServlet.
-			response.sendRedirect("LisCategoriesServlet.do");
+			request.setAttribute("error", "Error al listar los datos de la propiedad.");
+			RequestDispatcher view = request.getRequestDispatcher("WEB-INF/Error.jsp");
+			view.forward(request, response);
 
 		}
 
@@ -210,12 +210,20 @@ public class ListPropertyData extends HttpServlet {
 				} else {
 					session.setAttribute("cart", null);
 				}
+				response.sendRedirect("AddCartServlet.do");
+			} else {
+				response.sendRedirect("ListCategoriesServlet.do");
 			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
+			request.setAttribute("error", "Error al añadir la reserva al carrito.");
+			RequestDispatcher view = request.getRequestDispatcher("WEB-INF/Error.jsp");
+			view.forward(request, response);
+			
 		}
 
-		response.sendRedirect("AddCartServlet.do");
+
 	}
 
 }

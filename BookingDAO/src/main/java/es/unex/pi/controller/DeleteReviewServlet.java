@@ -1,5 +1,6 @@
 package es.unex.pi.controller;
 
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -89,6 +90,9 @@ public class DeleteReviewServlet extends HttpServlet {
 		}catch(Exception e) {
             e.printStackTrace();
 			logger.info("Error al borrar la review");
+			request.setAttribute("error", "Error al borrar la review. Por favor, inténtelo de nuevo.");
+			RequestDispatcher view = request.getRequestDispatcher("WEB-INF/Error.jsp");
+			view.forward(request, response);
         }
 	
 	}

@@ -59,6 +59,8 @@ public class EditAccommodationServlet extends HttpServlet {
 			Accommodation a = accommodationDao.get(aid);
 
 			if (a != null) {
+				logger.info("Accommodation is not null");
+				
 				PropertyDAO propertyDao = new JDBCPropertyDAOImpl();
 				propertyDao.setConnection(conn);
 				Property p = propertyDao.get(a.getIdp());
@@ -74,17 +76,20 @@ public class EditAccommodationServlet extends HttpServlet {
 					}
 
 				}
-
+				request.setAttribute("tipoInformacion", "Editar");
+				RequestDispatcher rq = request.getRequestDispatcher("/WEB-INF/NewAccommodation.jsp");
+				rq.forward(request, response);
 			} else {
-				response.sendRedirect("ListCategoriesServlet.do");
+				logger.info("Accommodation is null");
+				request.setAttribute("error", "Error la propiedad que está tratando de editar, no existe.");
+				RequestDispatcher view = request.getRequestDispatcher("WEB-INF/Error.jsp");
+				view.forward(request, response);
 			}
-
-			request.setAttribute("tipoInformacion", "Editar");
-			RequestDispatcher rq = request.getRequestDispatcher("/WEB-INF/NewAccommodation.jsp");
-			rq.forward(request, response);
-
 		} catch (Exception e) {
 			e.printStackTrace();
+			request.setAttribute("error", "Error la propiedad que está tratando de editar, no existe.");
+			RequestDispatcher view = request.getRequestDispatcher("WEB-INF/Error.jsp");
+			view.forward(request, response);
 		}
 
 	}
@@ -139,6 +144,9 @@ public class EditAccommodationServlet extends HttpServlet {
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			request.setAttribute("error", "Error al editar la propiedad. Por favor, inténtelo de nuevo.");
+			RequestDispatcher view = request.getRequestDispatcher("WEB-INF/Error.jsp");
+			view.forward(request, response);
 		}
 	}
 
