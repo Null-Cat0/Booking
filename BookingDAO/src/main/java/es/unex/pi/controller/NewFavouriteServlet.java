@@ -56,26 +56,31 @@ public class NewFavouriteServlet extends HttpServlet {
 		User user = (User) session.getAttribute("user");
 
 		try {
-			String id = request.getParameter("propertyId"); // id of the favourite to add
-			Long idp = Long.parseLong(id);
+			//En este servlet no es obligatorio estar logueado, pero si se quiere añadir un favorito hay que estarlo
+			if (user == null) {
+				logger.info("Usuario no logueado");
+				response.sendRedirect("LoginServlet.do");
+				return;
+			} else {
+				String id = request.getParameter("propertyId"); // id of the favourite to add
+				Long idp = Long.parseLong(id);
 
-			logger.info("User: " + user.getId() + " Property: " + idp);
+				logger.info("User: " + user.getId() + " Property: " + idp);
 
-			Favourite fav = new Favourite(user.getId(), idp);
-			FavouriteDAO fdao = new JDBCFavouriteDAOImpl();
-			fdao.setConnection(conn);
+				Favourite fav = new Favourite(user.getId(), idp);
+				FavouriteDAO fdao = new JDBCFavouriteDAOImpl();
+				fdao.setConnection(conn);
 
-			fdao.add(fav);
-			response.sendRedirect("ListFavouritesServlet.do");
+				fdao.add(fav);
+				response.sendRedirect("ListFavouritesServlet.do");
+			}
 		} catch (Exception e) {
 			logger.info("Error: " + e.getMessage());
 			request.setAttribute("error", "Error al añadir favorito");
 			RequestDispatcher view = request.getRequestDispatcher("WEB-INF/Error.jsp");
 			view.forward(request, response);
-			
-		}
-		
 
+		}
 
 	}
 

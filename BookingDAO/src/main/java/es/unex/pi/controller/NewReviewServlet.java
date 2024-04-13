@@ -74,31 +74,35 @@ public class NewReviewServlet extends HttpServlet {
 			Property p = pdao.get(propertyId);
 
 			if (p != null) {
+				if (p.getIdu() != user.getId()) {
+					if (request.getParameter("puntuacion") != null) {
 
-				if (request.getParameter("puntuacion") != null) {
-
-					int grade = Integer.parseInt(request.getParameter("puntuacion"));
-					String review = request.getParameter("valoracion");
-					Review r = new Review(propertyId, user.getId(), review, grade);
-					rdao.add(r);
-				}
-
-				// Una vez la propiedad tiene la review, es necesario calcular la media de las
-				// reviews y actualizar la propiedad
-
-				List<Review> reviews = rdao.getAllByProperty(propertyId);
-				if (reviews != null && !reviews.isEmpty()) {
-					int acum = 0;
-					for (Review r : reviews) {
-						acum += r.getGrade();
+						Review rev = rdao.get(propertyId, user.getId());
+						if (rev == null) {
+							int grade = Integer.parseInt(request.getParameter("puntuacion"));
+							String review = request.getParameter("valoracion");
+							Review r = new Review(propertyId, user.getId(), review, grade);
+							rdao.add(r);
+						}
 					}
-					double media = (double) acum / reviews.size();
-					p.setGradesAverage(media);
-				}
-				if (!pdao.update(p)) {
-                    logger.info("Error saving property in NewReviewServlet");
-				}
 
+					// Una vez la propiedad tiene la review, es necesario calcular la media de las
+					// reviews y actualizar la propiedad
+
+					List<Review> reviews = rdao.getAllByProperty(propertyId);
+					if (reviews != null & !reviews.isEmpty()) {
+						int acum = 0;
+						for (Review r : reviews) {
+							acum += r.getGrade();
+						}
+						double media = (double) acum / reviews.size();
+						p.setGradesAverage(media);
+					}
+					if (!pdao.update(p)) {
+						logger.info("Error saving property in NewReviewServlet");
+					}
+
+				}
 			}
 			response.sendRedirect("ListPropertyData.do?id=" + propertyId);
 

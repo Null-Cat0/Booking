@@ -10,14 +10,19 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import es.unex.pi.dao.JDBCUserDAOImpl;
 import es.unex.pi.dao.UserDAO;
+import es.unex.pi.model.Accommodation;
+import es.unex.pi.model.Property;
 import es.unex.pi.model.User;
+import es.unex.pi.util.Entry;
 import es.unex.pi.util.Validador;
 
 /**
@@ -102,6 +107,14 @@ public class CreateAccountServlet extends HttpServlet {
 					// Añadir el usuario a la sesión
 					user.setId(id);
 					HttpSession session = request.getSession();
+					// Añadir la lista historica de las reservas a la sesión.
+					List<Property> historico = new ArrayList<Property>();
+					session.setAttribute("listProp", historico);
+					
+					// Añadir el carro a la sesión.
+					Map<Property,List<Entry<Accommodation,Integer>>> reservas = new HashMap<Property,List<Entry<Accommodation,Integer>>>();
+					session.setAttribute("cart", reservas);
+					
 					session.setAttribute("user", user);
 
 					response.sendRedirect("ListCategoriesServlet.do");
