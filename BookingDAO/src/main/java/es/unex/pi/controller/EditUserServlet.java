@@ -10,12 +10,17 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import es.unex.pi.dao.JDBCUserDAOImpl;
 import es.unex.pi.dao.UserDAO;
+import es.unex.pi.model.Message;
 import es.unex.pi.model.User;
+import es.unex.pi.dao.*;
 
 /**
  * Servlet implementation class ListUserDataServlet
@@ -45,6 +50,61 @@ public class EditUserServlet extends HttpServlet {
 		// Recuperar la sesión y cargar los datos del usuario de la sesion en la request
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
+
+		Connection conn = (Connection) getServletContext().getAttribute("dbConn");
+		// Mensajes enviados
+		MessageDAO messageDAO = new JDBCMessageDAOImpl();
+		messageDAO.setConnection(conn);
+
+		// Hay que hacer un mapa con los mensajes enviados y el email del receptor
+		Map<String, List<Message>> mapMensajesEnviados = new LinkedHashMap<String, List<Message>>();
+		List<Message> mEnviados = messageDAO.getBySender(user.getId());
+		if (mEnviados == null) {
+			logger.info("No hay mensajes enviados");
+		} else {
+			for (Message m : mEnviados) {
+				UserDAO userDAO = new JDBCUserDAOImpl();
+				userDAO.setConnection(conn);
+				User u = userDAO.get(m.getIdr());
+				String email = u.getEmail();
+				if (mapMensajesEnviados.containsKey(email)) {
+					mapMensajesEnviados.get(email).add(m);
+				} else {
+					List<Message> mensajes = new java.util.ArrayList<Message>();
+					mensajes.add(m);
+					mapMensajesEnviados.put(email, mensajes);
+				}
+
+			}
+			request.setAttribute("mEnviados", mapMensajesEnviados);
+		}
+
+		// Mensajes recibidos
+
+		Map<String, List<Message>> mapMensajesRecibidos = new LinkedHashMap<String, List<Message>>();
+		List<Message> mRecibidos = messageDAO.getByR(user.getId());
+		if (mRecibidos == null) {
+			logger.info("No hay mensajes enviados");
+		} else {
+			for (Message m : mRecibidos) {
+				UserDAO userDAO = new JDBCUserDAOImpl();
+				userDAO.setConnection(conn);
+				User u = userDAO.get(m.getIds());
+				String email = u.getEmail();
+				if (mapMensajesRecibidos.containsKey(email)) {
+					logger.info("Ya existe el email");
+					logger.info("Email: " + email);
+					logger.info("Mensaje: " + m.getTexto());
+					mapMensajesRecibidos.get(email).add(m);
+				} else {
+					List<Message> mensajes = new java.util.ArrayList<Message>();
+					mensajes.add(m);
+					mapMensajesRecibidos.put(email, mensajes);
+				}
+			}
+			request.setAttribute("mRecibidos", mapMensajesRecibidos);
+		}
+
 		request.setAttribute("user", user);
 		request.setAttribute("tipoInformacion", "Editar");
 
