@@ -11,8 +11,9 @@
 			<a href="ListCategoriesServlet.do"> <img src="img/booking-logo.png"
 				class="nav-logo" alt="booking_logo"></a>
 			<div class="container d-flex justify-content-end">
-				<a href="AddCartServlet.do" class="btn btn-custom me-2">Cesta</a>
+				
 				<c:if test="${sessionScope.user != null}">
+					<a href="AddCartServlet.do" class="btn btn-custom me-2">Cesta</a>
 					<div class="dropdown">
 						<button class="btn btn-custom dropdown-toggle" type="button"
 							id="dropdownMenuButton" data-toggle="dropdown"

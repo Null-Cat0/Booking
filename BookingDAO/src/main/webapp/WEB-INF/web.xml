@@ -173,6 +173,22 @@
     <filter-name>LoginFilter</filter-name>
     <servlet-name>NewReviewServlet</servlet-name>
   </filter-mapping>
+  <filter-mapping>
+    <filter-name>LoginFilter</filter-name>
+    <servlet-name>NewMessageServlet</servlet-name>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>LoginFilter</filter-name>
+    <servlet-name>NewFavouriteServlet</servlet-name>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>LoginFilter</filter-name>
+    <servlet-name>DeleteFavouriteServlet</servlet-name>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>LoginFilter</filter-name>
+    <servlet-name>ListFavouritesServlet</servlet-name>
+  </filter-mapping>
   <servlet>
     <description></description>
     <display-name>NewAccommodationServlet</display-name>
@@ -293,4 +309,13 @@
     <servlet-name>NewMessageServlet</servlet-name>
     <url-pattern>/NewMessageServlet.do</url-pattern>
   </servlet-mapping>
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>Entire Application</web-resource-name>
+      <url-pattern>/*</url-pattern>
+    </web-resource-collection>
+    <user-data-constraint>
+      <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+    </user-data-constraint>
+  </security-constraint>
 </web-app>

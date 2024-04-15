@@ -35,7 +35,7 @@ public class ServletContextListener implements jakarta.servlet.ServletContextLis
 		try {
             Class.forName("org.sqlite.JDBC");
             
-            String dbURL = "jdbc:sqlite:file:"+System.getProperty("user.home")+"/sqlite_dbs/Booking.db";
+            String dbURL = "jdbc:sqlite:file:"+System.getProperty("user.home")+"/sqlite_dbs/SM.db";
             //Borrado en cascada 
             SQLiteConfig config = new SQLiteConfig();
             config.enforceForeignKeys(true);

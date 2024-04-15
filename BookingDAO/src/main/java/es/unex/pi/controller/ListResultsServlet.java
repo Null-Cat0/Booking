@@ -78,9 +78,11 @@ public class ListResultsServlet extends HttpServlet {
 			// Obtener la lista de propiedades que cumplan los requisitos
 			List<Property> listPropertiesName = propertyDao.getAllBySearchName(search);
 			List<Property> listPropertiesCity = propertyDao.getAllBySearchCity(search);
+			List<Property> listPropertiesDescription = propertyDao.getAllBySearchDescription(search);
 			
 			// Unir las dos listas
 			listPropertiesName.addAll(listPropertiesCity);
+			listPropertiesName.addAll(listPropertiesDescription);
 
 			//Ordenar la lista de propiedades
 			if (valores != null && valores.length > 0) {
