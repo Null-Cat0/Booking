@@ -1,0 +1,24 @@
+.bookingcolor {
+	background-color: rgb(0, 59, 149);
+	/* box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2); */
+}
+
+.nav-logo {
+	width: 200px;
+}
+
+.btn-custom {
+	background-color: #007bff !important;
+	color: white !important;
+}
+.imagenTendencia {
+	border-radius: 5%;
+	width: 90%;
+	box-shadow: black 0px 0px 10px;
+}
+.botonesCategorias{
+	background-color: #f2f7fe !important;
+	color: #6897ec !important;
+	border: 100px !important;
+	border-color: #6897ec !important;
+}

@@ -1,0 +1,28 @@
+.bookingcolor
+{
+    background-color: rgb(0, 59, 149);
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+}
+.nav-logo
+{
+    width: 200px;
+}
+.form-control.custom-submit {
+    background-color:rgb(0, 108, 228) !important;
+    color: #fff !important; /* Color del texto */
+    border-color: rgb(0, 108, 228) !important;
+}
+
+.form-control.custom-submit:hover {
+    background-color: rgb(0, 59, 149) !important;
+    color: #fff !important; /* Color del texto */
+    border-color: rgb(0, 59, 149) !important;
+}
+.btn-custom {
+    background-color: #007bff !important;
+    color: white !important;
+}
+.btn-custom-del {
+	background-color: #dc3545 !important;
+	color: white !important;
+}

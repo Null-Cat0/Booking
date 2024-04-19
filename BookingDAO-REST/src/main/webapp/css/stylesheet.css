@@ -1,0 +1,116 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+
+table {
+    width: 80%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+td {
+	font-size: 14px;
+}
+
+@media (max-width: 600px) {
+	table {
+        width: 100%;
+    }
+    table th, table td {
+        min-width: auto;
+        width: auto;
+    }
+}
+
+header,footer {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+	text-align: center;
+	width: 100%;
+}
+
+
+div.sections{
+    display:flex;
+    flex-wrap: wrap;
+    padding: 20px;
+    justify-content:space-around;
+}
+
+.shadow {
+    margin: 15px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.centered{
+    text-align:center;
+}
+
+footer {
+    padding: 2px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.accommodation {
+	width: 300px;
+}
+
+.accommodation img {
+    width: 100%;
+    border-radius: 4px;
+}	
+
+.accommodation h2 {
+    margin-top: 10px;
+    font-size: 18px;
+}
+
+.accommodation p {
+    color: #666;
+    font-size: 14px;
+}
+
+.accommodation button {
+    background-color: #000103;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+	background-color: #9b9b9b;
+    cursor:pointer;
+}
+
+
+
+
+
+
+
+

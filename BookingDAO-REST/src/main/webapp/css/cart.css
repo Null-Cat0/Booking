@@ -1,0 +1,21 @@
+.bookingcolor {
+    background-color: rgb(0, 59, 149);
+    /* box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2); */
+}
+
+.nav-logo {
+    width: 200px;
+}
+.btn-custom {
+    background-color: #007bff !important;
+    color: white !important;
+}
+.linkResultado
+{
+    color:rgb(0, 108, 228);
+    text-decoration: none;
+}
+.bold
+{
+    font-weight: bold;
+}
