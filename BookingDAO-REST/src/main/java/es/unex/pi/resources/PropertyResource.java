@@ -26,9 +26,9 @@ import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
 
 @Path("/properties")
-public class PropertiesResource {
+public class PropertyResource {
 
-	Logger logger = Logger.getLogger(PropertiesResource.class.getName());
+	Logger logger = Logger.getLogger(PropertyResource.class.getName());
 
 	@Context
 	ServletContext sc;
