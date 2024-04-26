@@ -37,42 +37,19 @@ public class UserResource {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<User> getUsersJSON(@Context HttpServletRequest request) {
+	public User getUsersJSON(@Context HttpServletRequest request) {
 		logger.info("getUsersJSON");
 
-		List<User> users = null;
-		Connection conn = (Connection) sc.getAttribute("dbConn");
-
-		// UserDAO
-		UserDAO uDao = new JDBCUserDAOImpl();
-		uDao.setConnection(conn);
-
-		users = uDao.getAll();
-		return users;
-	}
-
-	@GET
-	@Path("/{userid: [0-9]+}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public User getUserJSON(@PathParam("userid") long userId, @Context HttpServletRequest request) {
-		logger.info("getUserJSON: " + userId);
-		Connection conn = (Connection) sc.getAttribute("dbConn");
-
-		UserDAO uDao = new JDBCUserDAOImpl();
-		uDao.setConnection(conn);
-
-		User user = uDao.get(userId);
-
 		HttpSession session = request.getSession();
-		User userSession = (User) session.getAttribute("user");
-
-		if (userSession.getId() == userId) {
+		User user = (User) session.getAttribute("user");
+		if(user != null){
+			logger.info("Returning user's session");
 			return user;
-		} else {
-			throw new CustomNotFoundException("User (" + userId + ") not found");
+		}else {
+			throw new CustomNotFoundException("User not found in session");
 		}
-
 	}
+
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -126,22 +103,44 @@ public class UserResource {
 
 
 	@PUT
-	@Path("/{userid: [0-9]+}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response put(User user, @PathParam("userid") long userId, @Context HttpServletRequest request) {
+	public Response put(User user, @Context HttpServletRequest request) {
 		logger.info("updateUser: " + user.toString());
 		Connection conn = (Connection) sc.getAttribute("dbConn");
 
 		UserDAO uDao = new JDBCUserDAOImpl();
 		uDao.setConnection(conn);
 
-		User userSession = (User) request.getSession().getAttribute("user");
-		if (userSession.getId() == userId) {
+		HttpSession session = request.getSession();
+		User userSession = (User) session.getAttribute("user");
+		if (userSession.getId() == user.getId()) {
 			uDao.update(user);
+			session.removeAttribute("user");
+			session.setAttribute("user", user);
 			String message = "User updated";
 			return Response.status(Response.Status.NO_CONTENT).entity(message).build();
 		} else {
-			throw new CustomNotFoundException("User (" + userId + ") not found");
+			throw new CustomNotFoundException("User (" + user.getId() + ") not found");
+		}
+	}
+	
+	@DELETE
+	public Response delete(@Context HttpServletRequest request) {
+		logger.info("deleteUser");
+		Connection conn = (Connection) sc.getAttribute("dbConn");
+
+		UserDAO uDao = new JDBCUserDAOImpl();
+		uDao.setConnection(conn);
+
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
+		if (user != null) {
+			uDao.delete(user.getId());
+			session.removeAttribute("user");
+			String message = "User deleted";
+			return Response.status(Response.Status.NO_CONTENT).entity(message).build();
+		} else {
+			throw new CustomNotFoundException("User not found in session");
 		}
 	}
 }

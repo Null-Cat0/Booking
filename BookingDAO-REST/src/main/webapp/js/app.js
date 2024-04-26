@@ -2,12 +2,17 @@ angular.module('app', ['ngRoute'])
 	.config(function($routeProvider) {
 		$routeProvider
 		.when('/', {
-			templateUrl: 'search.html',
+			templateUrl: 'searchTemplate.html',
 			controller: 'searchCtrl',
 			controllerAs: 'searchVM'
 		})
+		.when('/profile', {
+			templateUrl: 'profileHandlerTemplate.html',
+			controller: 'profileCtrl',
+			controllerAs:'profileVM'
+		})
 		.when('/search', {
-			templateUrl: 'results.html',
+			templateUrl: 'resultsTemplate.html',
 			controller: 'resultCtrl',
 			controllerAs:'resultVM'
 		})
