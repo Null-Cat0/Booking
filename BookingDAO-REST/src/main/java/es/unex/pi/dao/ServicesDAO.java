@@ -35,6 +35,8 @@ public interface ServicesDAO {
 	public Service get(String name);
 
 	public List<Service> getAllNotInProperty(long idp);
+	public List<Service> getAllInProperty(long idp);
+	
 	
 	/**
 	 * Gets all the Service from the database.

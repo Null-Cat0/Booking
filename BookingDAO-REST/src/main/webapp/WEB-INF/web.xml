@@ -38,16 +38,6 @@
   </servlet-mapping>
   <servlet>
     <description></description>
-    <display-name>NewAccountServlet</display-name>
-    <servlet-name>NewAccountServlet</servlet-name>
-    <servlet-class>es.unex.pi.controller.NewAccountServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>NewAccountServlet</servlet-name>
-    <url-pattern>/NewAccountServlet.do</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
     <display-name>LogOutServlet</display-name>
     <servlet-name>LogOutServlet</servlet-name>
     <servlet-class>es.unex.pi.controller.LogOutServlet</servlet-class>

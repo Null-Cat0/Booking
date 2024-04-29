@@ -1,53 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Resultados de la búsqueda</title>
-<link rel="icon" type="image/png" href="img/booking_icono.png">
-
-<!-- Css -->
-<link rel="stylesheet" href="../css/search_results.css">
-<!-- Bootstrap -->
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-	crossorigin="anonymous">
-
-<!-- Bootstrap JavaScript (requiere jQuery) -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-<script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<!-- Font Awesome -->
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-</head>
-
 <body>
 		<!-- Extensión del color de booking -->
 		<div class="container-fluid extColor">
 			<div class="container p-3"></div>
 		</div>
-	
-
-
 		<!-- Container con la barra de búsqueda -->
 		<div class="container">
-			<div class="d-flex row bg-warning busquedaAlojamiento rounded">
-				<form class="d-flex" action="ListResultsServlet.do" method="GET">
-					<div class="pe-2 pt-2 col-11 form-group">
-						<input class="form-control" type="text" id="search" name="search"
-							placeholder="¿Adónde vas?" value="" required>
-					</div>
-					<div class="p-2 col-1 form-group">
-						<input class="form-control" type="submit" value="Buscar">
-					</div>
-				</form>
-			</div>
+		    <div class="d-flex row bg-warning busquedaAlojamiento rounded">
+		        <form class="d-flex" data-ng-submit="searchVM.submitSearch()">
+		            <div class="pe-2 pt-2 col-11 form-group">
+		                <input class="form-control" type="text" id="search" name="search" data-ng-model="searchVM.searchText" placeholder="¿Adónde vas?" required>
+		            </div>
+		            <div class="p-2 col-1 form-group">
+		                <input class="form-control" type="submit" value="Buscar">
+		            </div>
+		        </form>
+		    </div>
 		</div>
 	
 		
@@ -98,84 +65,43 @@
 		        </div>
 		
 		        <!-- Resultados de la búsqueda -->
-		        <div class="col">
-		            <div class="card-deck">
-		                <c:forEach var="entry" items="${mapaResultados}">
-		                    <div class="card mb-3">
-		                        <div class="row g-0">
-		                            <div class="col-md-4">
-		                                <!-- Aquí iría la imagen de la propiedad -->
-		                            </div>
-		                            <div class="col-md-8">
-		                                <div class="card-body">
-		                                    <h5 class="card-title">${entry.key.name}</h5>
-		                                    <div class="stars">
-		                                        <%-- Determinar el número de estrellas --%>
-		                                        <c:set var="numStars" value="${entry.key.gradesAverage}" />
-		                                        <%-- Redondear al entero más cercano --%>
-		                                        <c:choose>
-		                                            <c:when test="${numStars >= 0.5}">
-		                                                <c:set var="numStars" value="${numStars + 0.5}" />
-		                                            </c:when>
-		                                            <c:otherwise>
-		                                                <c:set var="numStars" value="${numStars - 0.5}" />
-		                                            </c:otherwise>
-		                                        </c:choose>
-		                                        <%-- Imprimir las estrellas --%>
-		                                        <c:forEach begin="1" end="${numStars}" var="star">
-		                                            <i class="fa-solid fa-star"></i>
-		                                        </c:forEach>
-		                                    </div>
-		                                    <p class="card-text">${entry.key.city} a ${entry.key.centerDistance * 1000} m del centro</p>
-		                                    <p class="card-text">${entry.key.address}</p>
-											<div class="position-absolute top-0 end-0 mt-3 me-3">
-											    <div class="d-flex flex-colum">
-											        <div class="bg-primary text-white rounded p-2 flex-grow-1 text-center">${entry.key.gradesAverage}</div>
-											    </div>
-											    <div>
-											         <p>${entry.value.key} valoraciones</p>
-											    </div>
-											</div>
-		                                    <!-- Botón de añadir o eliminar favoritos -->
-		                                    <c:if test="${fn:contains(listProp, entry.key)}">
-		                                        <form action="DeleteFavouriteServlet.do" method="post">
-		                                            <input type="hidden" name="propertyId" value="${entry.key.id}">
-		                                            <button type="submit" class="btn btn-outline-danger mt-3">
-		                                                <i class="far fa-heart"></i> Eliminar de favoritos
-		                                            </button>
-		                                        </form>
-		                                    </c:if>
-		                                    <c:if test="${!fn:contains(listProp, entry.key)}">
-		                                        <form action="NewFavouriteServlet.do" method="post">
-		                                            <input type="hidden" name="propertyId" value="${entry.key.id}">
-		                                            <button type="submit" class="btn btn-outline-danger mt-3">
-		                                                <i class="far fa-heart"></i> Añadir a favoritos
-		                                            </button>
-		                                        </form>
-		                                    </c:if>
-		
-		                                </div>
-		                            </div>
-		                        </div>
-		                        <div class="card-footer">
-		                            <c:choose>
-		                                <c:when test='${entry.value.value == 0}'>
-		                                    <h3>¡Reserva ahora!</h3>
-		                                    <h3>Precio no disponible</h3>
-		                                    <p>Consulta disponibilidad</p>
-		                                </c:when>
-		                                <c:otherwise>
-		                                    <h3>¡Reserva ahora!</h3>
-		                                    <h3>€${entry.value.value}</h3>
-		                                    <p>Incluye impuestos y cargos</p>
-		                                </c:otherwise>
-		                            </c:choose>
-		                            <a href="ListPropertyData.do?id=${entry.key.id}" class="btn btn-primary">Ver disponibilidad</a>
-		                        </div>
-		                    </div>
-		                </c:forEach>
-		            </div>
-		        </div>
+				<div class="col">
+				    <div  data-ng-repeat="property in searchVM.properties">
+				        <div class="card-deck">
+				            <div class="card mb-3">
+				                <div class="row g-0">
+				                    <div class="col-md-4">
+				                        <!-- Aquí iría la imagen de la propiedad -->
+				                    </div>
+				                    <div class="col-md-8">
+				                        <div class="card-body">
+				                            <h5 class="card-title">{{property.name}}</h5>
+				                            <div class="stars">
+				                                <!-- Aquí iría la lógica para determinar el número de estrellas -->
+				                                <!-- No está claro si esta parte de la plantilla está completa -->
+				                            </div>
+				                            <p class="card-text">{{property.city}} a {{property.centerDistance * 1000}} m del centro</p>
+				                            <p class="card-text">{{property.address}}</p>
+				                            <div class="position-absolute top-0 end-0 mt-3 me-3">
+				                                <div class="d-flex flex-column">
+				                                    <div class="bg-primary text-white rounded p-2 flex-grow-1 text-center">{{property.gradesAverage}}</div>
+				                                </div>
+				                                <div>
+				                                    <p>{{property.valoraciones}} valoraciones</p>
+				                                </div>
+				                            </div>
+				                        </div>
+				                    </div>
+				                </div>
+				                <div class="card-footer">
+				                    <!-- Aquí iría la lógica para mostrar el precio o la disponibilidad -->
+				                    <a href="ListPropertyData.do?id={{property.id}}" class="btn btn-primary">Ver disponibilidad</a>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+			    
 		    </div>
 		</div>
 	<!-- Footer -->

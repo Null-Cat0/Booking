@@ -35,21 +35,21 @@ public class PropertyResource {
 	@Context
 	UriInfo uriInfo;
 
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public List<Property> getPropertiesJSON(@Context HttpServletRequest request) {
-		logger.info("getPropertiesJSON");
-
-		List<Property> properties = null;
-		Connection conn = (Connection) sc.getAttribute("dbConn");
-
-		// PropertyDAO
-		PropertyDAO pDao = new JDBCPropertyDAOImpl();
-		pDao.setConnection(conn);
-
-		properties = pDao.getAll();
-		return properties;
-	}
+//	@GET
+//	@Produces(MediaType.APPLICATION_JSON)
+//	public List<Property> getPropertiesJSON(@Context HttpServletRequest request) {
+//		logger.info("getPropertiesJSON");
+//
+//		List<Property> properties = null;
+//		Connection conn = (Connection) sc.getAttribute("dbConn");
+//
+//		// PropertyDAO
+//		PropertyDAO pDao = new JDBCPropertyDAOImpl();
+//		pDao.setConnection(conn);
+//
+//		properties = pDao.getAll();
+//		return properties;
+//	}
 
 	@GET
 	@Path("/{propertyid: [0-9]+}")
@@ -67,14 +67,51 @@ public class PropertyResource {
 		if (p != null) {
 			logger.info("Property is not null:" + p);
 		} else {
-			System.out.println("Order with id " + propertyid + " not found");
+			System.out.println("Property with id " + propertyid + " not found");
 
-			throw new CustomNotFoundException("Order with id " + propertyid + " not found");
+			throw new CustomNotFoundException("Property with id " + propertyid + " not found");
 		}
 		return p;
 
 	}
+	@GET
+	@Path("/{search: [a-zA-z]+}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Property> getPropertyBySearchJSON(@PathParam("search") String search, @Context HttpServletRequest request) {
 
+		logger.info("getPropertyBySearchJSON: " + search);
+		PropertyDAO pDao = new JDBCPropertyDAOImpl();
+		Connection conn = (Connection) sc.getAttribute("dbConn");
+		pDao.setConnection(conn);
+		List<Property> properties = null;
+		properties = pDao.getAllBySearchName(search);
+		properties.addAll(pDao.getAllBySearchCity(search));
+		properties.addAll(pDao.getAllBySearchDescription(search));
+		return properties;
+		
+
+	}
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Property> getPropertyByUserJSON( @Context HttpServletRequest request) {
+
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
+		logger.info("getPropertyByUserJSON: " + user.getId());
+		List<Property> properties = null;
+		
+		Connection conn = (Connection) sc.getAttribute("dbConn");
+		PropertyDAO pDao = new JDBCPropertyDAOImpl();
+		pDao.setConnection(conn);
+		
+		properties = pDao.getAllByUser(user.getId());
+		if (properties == null) {
+			throw new CustomNotFoundException("User with id " + user.getId() + " not found");
+		}
+		return properties;
+		
+
+	}
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response post(Property newProperty, @Context HttpServletRequest request) {

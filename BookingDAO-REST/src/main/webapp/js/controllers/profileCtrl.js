@@ -11,6 +11,7 @@ angular.module('app')
 					.then(function(response) {
 						profileHandlerViewModel.user = response;
 						console.log("Getting user on profileCtrl with id: ", profileHandlerViewModel.user.id, " Response: ", response);
+						
 					},
 						function(response) {
 							console.log("Error reading user on profileCtrl, Response: ", response);
@@ -21,16 +22,20 @@ angular.module('app')
 				userFactory.putUser(profileHandlerViewModel.user)
 					.then(function(response) {
 						console.log("Updated user on profileCtrl, Response:", response);
+						$location.path('/');
 					})
 			},
 			deleteUser: function() {
 				console.log("Deleting user with id: ", profileHandlerViewModel.user.id);
 				userFactory.deleteUser()
-					.then(function(response) { 
-						console.log("User deleted, response: ",response);
+					.then(function(response) {
+						console.log("User deleted, response: ", response);
+						window.location.pathname = '/BookingDAO-REST/LogOutServlet.do';
+						
 					});
 			}
 
 		}
 		profileHandlerViewModel.functions.readUser();
+		
 	}]);
