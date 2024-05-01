@@ -64,12 +64,33 @@ public class AccommodationResource {
 		Accommodation accommodation = aDao.get(accommodationId);
 
 		if (accommodation != null) {
-
+			logger.info("getAccommodationJSON: " + accommodation);
 		} else {
 			throw new CustomNotFoundException("Accommodations with id " + accommodationId + " not found");
 		}
 
 		return accommodation;
+	}
+	@GET	
+	@Path("/property/{propertyid: [0-9]+}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Accommodation> getAccommodationsByPropertyJSON(@PathParam("propertyid") int propertyId,
+			@Context HttpServletRequest request) {
+		logger.info("getAccommodationsByPropertyJSON: " + propertyId);
+		Connection conn = (Connection) sc.getAttribute("dbConn");
+
+		AccommodationDAO aDao = new JDBCAccommodationDAOImpl();
+		aDao.setConnection(conn);
+
+		List<Accommodation> accommodations = aDao.getAllByProperty(propertyId);
+
+		if (accommodations != null) {
+
+		} else {
+			throw new CustomNotFoundException("Accommodations with property id " + propertyId + " not found");
+		}
+
+		return accommodations;
 	}
 
 	@POST

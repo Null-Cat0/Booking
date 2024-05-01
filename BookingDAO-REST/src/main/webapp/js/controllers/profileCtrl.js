@@ -11,7 +11,7 @@ angular.module('app')
 					.then(function(response) {
 						profileHandlerViewModel.user = response;
 						console.log("Getting user on profileCtrl with id: ", profileHandlerViewModel.user.id, " Response: ", response);
-						
+
 					},
 						function(response) {
 							console.log("Error reading user on profileCtrl, Response: ", response);
@@ -31,11 +31,23 @@ angular.module('app')
 					.then(function(response) {
 						console.log("User deleted, response: ", response);
 						window.location.pathname = '/BookingDAO-REST/LogOutServlet.do';
-						
+
+					});
+			},
+			insertUser: function() {
+				console.log("Inserting user: ", profileHandlerViewModel.user);
+				userFactory.postUser(profileHandlerViewModel.user)
+					.then(function(response) {
+						console.log("User inserted, response: ", response);
+						$location.path('/');
 					});
 			}
 
 		}
-		profileHandlerViewModel.functions.readUser();
-		
+
+		if ($location.path() == '/profile') {
+			profileHandlerViewModel.functions.readUser();
+		} else if ($location.path() == '/insertUser') {
+			profileHandlerViewModel.functions.insertUser();
+		}
 	}]);

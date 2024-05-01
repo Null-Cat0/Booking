@@ -74,10 +74,12 @@ public class PropertyResource {
 		return p;
 
 	}
+
 	@GET
 	@Path("/{search: [a-zA-z]+}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Property> getPropertyBySearchJSON(@PathParam("search") String search, @Context HttpServletRequest request) {
+	public List<Property> getPropertyBySearchJSON(@PathParam("search") String search,
+			@Context HttpServletRequest request) {
 
 		logger.info("getPropertyBySearchJSON: " + search);
 		PropertyDAO pDao = new JDBCPropertyDAOImpl();
@@ -88,30 +90,30 @@ public class PropertyResource {
 		properties.addAll(pDao.getAllBySearchCity(search));
 		properties.addAll(pDao.getAllBySearchDescription(search));
 		return properties;
-		
 
 	}
+
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Property> getPropertyByUserJSON( @Context HttpServletRequest request) {
+	public List<Property> getPropertyByUserJSON(@Context HttpServletRequest request) {
 
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
 		logger.info("getPropertyByUserJSON: " + user.getId());
 		List<Property> properties = null;
-		
+
 		Connection conn = (Connection) sc.getAttribute("dbConn");
 		PropertyDAO pDao = new JDBCPropertyDAOImpl();
 		pDao.setConnection(conn);
-		
+
 		properties = pDao.getAllByUser(user.getId());
 		if (properties == null) {
 			throw new CustomNotFoundException("User with id " + user.getId() + " not found");
 		}
 		return properties;
-		
 
 	}
+
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response post(Property newProperty, @Context HttpServletRequest request) {
@@ -128,15 +130,16 @@ public class PropertyResource {
 		User user = (User) session.getAttribute("user");
 
 		if (user != null) {
-			if (user.getId() == newProperty.getIdu()) {
-				long id = pDao.add(newProperty);
-				newProperty.setId(id);
-				String message = "Property added";
-				res = Response.status(Response.Status.CREATED).entity(message)
-						.contentLocation(uriInfo.getAbsolutePathBuilder().path(Long.toString(id)).build()).build();
-			} else {
-				throw new CustomBadRequestException("User not allowed to add property");
-			}
+
+			newProperty.setIdu((int) user.getId());
+			long id = pDao.add(newProperty);
+			newProperty.setId(id);
+			String message = "Property added";
+			res = Response.status(Response.Status.CREATED).entity("{\"status\" : \"200\", \"message\" : \"" + message + "\"}")
+					.contentLocation(uriInfo.getAbsolutePathBuilder().path(Long.toString(id)).build()).build();
+
+		} else {
+			throw new CustomBadRequestException("User not allowed to add property");
 		}
 
 		return res;
@@ -182,7 +185,7 @@ public class PropertyResource {
 	@PUT
 	@Path("/{propertyid: [0-9]+}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response put(Property property, @PathParam("propertyid") long propertyid,
+	public Response put(@PathParam("propertyid") long propertyid, Property property,
 			@Context HttpServletRequest request) {
 		Response res = null;
 		Connection conn = (Connection) sc.getAttribute("dbConn");
@@ -194,11 +197,13 @@ public class PropertyResource {
 
 		User user = (User) session.getAttribute("user");
 
+		System.out.println("Actualizando");
 		if (user != null) {
 			if (user.getId() == property.getIdu()) {
 				pDao.update(property);
 				String message = "Property updated";
-				res = Response.status(Response.Status.OK).entity(message)
+				res = Response.status(Response.Status.OK)
+						.entity("{\"status\" : \"200\", \"message\" : \"" + message + "\"}")
 						.contentLocation(uriInfo.getAbsolutePathBuilder().path(Long.toString(propertyid)).build())
 						.build();
 			} else {

@@ -1,1 +1,1 @@
-- [ ] Hacer el filtro para que se compruebe que el usuario que va a modificar la propiedad/habitación es el usuario propietario.
+- [ ] Preguntar a chema como se hace para que el carrito perdure toda la sesión.

@@ -23,35 +23,35 @@
 	                                <a href="#!/editProperty/{{property.id}}" class="btn btn-outline-primary me-2">
 	                                    Editar Propiedad
 	                                </a>
-	                                <a href="<c:url value='DeletePropertyServlet.do?id=${entry.key.id}'/>" class="btn btn-outline-danger me-2">
+	                                <a href="#!/deleteProperty/{{property.id}}" class="btn btn-outline-danger me-2">
 	                                    Eliminar Propiedad
 	                                </a>
 	                                <a href="<c:url value='NewAccommodationServlet.do?id=${entry.key.id}'/>" class="btn btn-outline-secondary">
 	                                    Añadir Habitación
 	                                </a>
 	                            </div>
-	                            <button class="btn btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample${entry.key.id}" aria-expanded="false" aria-controls="collapseExample${entry.key.id}">
-	                                Habitaciones
-	                            </button>
-	                        </div>
+								<button class="btn btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample{{property.id}}" aria-expanded="false" aria-controls="collapseExample{{property.id}}">
+								    Habitaciones
+								</button>
+				             </div>
+
 	
-	                        <div class="collapse mt-3" id="collapseExample${entry.key.id}">
+	                        <div class="collapse mt-3" id="collapseExample{{property.id}}">
 	                            <div class="card mb-3">
-	                                <div class="card-body">
-	                                    <c:forEach var="a" items="${entry.value}">
-	                                        <p>Nombre: ${a.name}</p>
-	                                        <p>Descripción: ${a.description}</p>
-	                                        <p>Precio por noche: ${a.price} €</p>
-	                                        <p>Habitaciones disponibles: ${a.numAccommodations}</p>
+	                                <div class="card-body" data-ng-repeat="a in property.accommodations">
+	                                    
+	                                        <p>Nombre: {{a.name}}</p>
+	                                        <p>Descripción: {{a.description}}</p>
+	                                        <p>Precio por noche: {{a.price}} €</p>
+	                                        <p>Habitaciones disponibles: {{a.numAccommodations}}</p>
 	                                        <div class="d-flex justify-content-end">
-	                                            <a href="<c:url value='EditAccommodationServlet.do?id=${a.id}'/>" class="btn btn-outline-primary me-2">
+	                                            <a href="#!/editAccommodation/{{a.id}}" class="btn btn-outline-primary me-2">
 	                                                Editar
 	                                            </a>
-	                                            <a href="<c:url value='DeleteAccommodationServlet.do?id=${a.id}'/>" class="btn btn-outline-danger">
+	                                            <a href="#!/deleteAccommodation/{{a.id}}" class="btn btn-outline-danger">
 	                                                Eliminar
 	                                            </a>
 	                                        </div>
-	                                    </c:forEach>
 	                                </div>
 	                            </div>
 	                        </div>

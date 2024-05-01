@@ -1,0 +1,24 @@
+<body>
+	<!-- Container con el formulario para editar alojamiento-->
+	<div class="container">
+		<h1 class="text-center mt-5">{{accommodationVM.type}} Habitación</h1>
+		<div class="row ">
+			<div class="d-flex justify-content-center">
+
+				<form action="?" method="post" class="col-6 ">
+					<label for="name" class="form-label"> Nombre</label>
+					<input type="text" class="form-control" placeholder="Suite" name="name" value="{{accommodationVM.accommodation.name}}" id="name" data-ng-model="accommodationVM.accommodation.name" data-ng-readonly="accommodationVM.functions.where('/deleteAccommodation/'+accommodationVM.accommodation.id)" required>
+					<label for="price" class="form-label"> Precio por habitación:</label>
+					<input type="number" class="form-control" placeholder="50$" name="price" value="{{accommodationVM.accommodation.price}}" id="price"	data-ng-model="accommodationVM.accommodation.price" data-ng-readonly="accommodationVM.functions.where('/deleteAccommodation/'+accommodationVM.accommodation.id)" required>
+					<label for="descripcion" class="form-label"> Descripcion:</label>
+					<input type="text" class="form-control" placeholder="Habitación bonita" value="{{accommodationVM.accommodation.description}}" name="description" id="descripcion" data-ng-model="accommodationVM.accommodation.description"data-ng-readonly="accommodationVM.functions.where('/deleteAccommodation/'+accommodationVM.accommodation.id)"  required>
+					<label for="nAccommodations" class="form-label"> Número de habitaciones disponibles:</label>
+					<input type="number" class="form-control" placeholder="15" value="{{accommodationVM.accommodation.numAccommodations}}" name="nAccommodations" id="nAccommodations" data-ng-model="accommodationVM.accommodation.numAccommodations"  data-ng-readonly="accommodationVM.functions.where('/deleteAccommodation/'+accommodationVM.accommodation.id)" required>
+					<div class="form-group d-flex justify-content-center">
+						<input type="submit" class="btn btn-primary mt-3 mx-auto" value="{{accommodationVM.type}} habitación">
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>

@@ -11,6 +11,11 @@ angular.module('app', ['ngRoute'])
 				controller: "profileCtrl",
 				controllerAs: "profileVM"
 			})
+			.when("/insertUser", {
+				templateUrl: "profileHandlerTemplate.html",
+				controller: "profileCtrl",
+				controllerAs: "profileVM"
+			})
 			.when("/search/:searchText", {
 				templateUrl: "resultsTemplate.html",
 				controller: "searchCtrl",
@@ -25,6 +30,26 @@ angular.module('app', ['ngRoute'])
 				templateUrl: "propertyHandlerTemplate.html",
 				controller: "propertyCtrl",
 				controllerAs: "propertyVM",
+			})
+			.when("/deleteProperty/:propertyid", {
+				templateUrl: "propertyHandlerTemplate.html",
+				controller: "propertyCtrl",
+				controllerAs: "propertyVM",
+			})
+			.when("/insertProperty", {
+				templateUrl: "propertyHandlerTemplate.html",
+				controller: "propertyCtrl",
+				controllerAs: "propertyVM",
+			})
+			.when("/editAccommodation/:accommodationid", {
+				templateUrl: "accommodationHandlerTemplate.html",
+				controller: "accommodationCtrl",
+				controllerAs: "accommodationVM",
+			})
+			.when("/deleteAccommodation/:accommodationid", {
+				templateUrl: "accommodationHandlerTemplate.html",
+				controller: "accommodationCtrl",
+				controllerAs: "accommodationVM",
 			})
 	}
 	)

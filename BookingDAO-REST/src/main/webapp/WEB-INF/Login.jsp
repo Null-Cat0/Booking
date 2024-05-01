@@ -51,7 +51,7 @@
 				</form>
 					<p>
 					    ¿No tienes una cuenta? 
-					    <a href="<c:url value='CreateAccountServlet.do'/>">Crea una cuenta</a>
+					    <a href="#!/insertUser">Crea una cuenta</a>
 					</p>
 
 			</div>

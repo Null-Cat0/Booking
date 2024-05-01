@@ -1,5 +1,5 @@
 angular.module('app')
-	.controller('searchCtrl', ['$location', '$routeParams', 'propertyFactory', function($location, $routeParams, propertyFactory) {
+	.controller('searchCtrl', ['$location', '$routeParams', 'propertyFactory', 'accommodationFactory', function($location, $routeParams, propertyFactory,accommodationFactory) {
 		var searchVM = this;
 		searchVM.properties = []; // Inicializa la lista de propiedades
 		searchVM.searchText = ''; // Inicializa el texto de búsqueda  
@@ -24,17 +24,33 @@ angular.module('app')
 				$location.path('/search/' + searchText);
 
 			},
-			getUserProperties : function(){
+			getUserProperties: function() {
 				console.log("Obteniendo propiedades del usuario");
 				propertyFactory.getPropertiesByUser()
 					.then(function(response) {
 						searchVM.properties = response;
-						console.log("Propiedades del usuario:", response);
+						var promises = [];
+						searchVM.properties.forEach(function(property) {
+							var promise = accommodationFactory.getPropertyAccommodations(property.id)
+								.then(function(response) {
+									property.accommodations = response;
+									console.log("Habitaciones del alojamiento:", response);
+								})
+								.catch(function(error) {
+									console.log("Error al obtener las habitaciones del alojamiento:", error);
+								});
+							promises.push(promise);
+						});
+						return Promise.all(promises);
+					})
+					.then(function() {
+						console.log("Propiedades del usuario:", searchVM.properties);
 					})
 					.catch(function(error) {
 						console.log("Error al obtener las propiedades del usuario:", error);
 					});
 			}
+
 		};
 		searchVM.searchText = $routeParams.searchText;
 		if (searchVM.functions.where('/search/' + searchVM.searchText)) {

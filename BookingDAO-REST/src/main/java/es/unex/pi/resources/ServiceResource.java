@@ -21,7 +21,7 @@ import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
 import es.unex.pi.model.*;
 import es.unex.pi.resources.exceptions.CustomBadRequestException;
-import es.unex.pi.dao.*;
+import es.unex.pi.dao.*;;
 
 @Path("/services")
 public class ServiceResource {
@@ -62,4 +62,37 @@ public class ServiceResource {
 		services = sDao.getAllInProperty(propertyId);
 		return services;
 	}
+	
+//	@POST
+//	@Consumes(MediaType.APPLICATION_JSON)
+//	public Response post(Property p,Service service, @Context HttpServletRequest request) {
+//		logger.info("post: " + service.toString());
+//
+//		Connection conn = (Connection) sc.getAttribute("dbConn");
+//		PropertiesServicesDAO psDao = new JDBCPropertiesServicesDAOImpl();
+//		psDao.setConnection(conn);
+//		ServicesDAO sDao = new JDBCServicesDAOImpl();
+//		sDao.setConnection(conn);
+//		PropertyDAO pDao = new JDBCPropertyDAOImpl();
+//		pDao.setConnection(conn);
+//		
+//		Property property = pDao.get(p.getId());
+//		
+//		if (property == null) {
+//			throw new CustomBadRequestException("Property id not found");
+//		} else {
+//			PropertiesServices ps = new PropertiesServices();
+//			ps.setIdp(property.getId());
+//			ps.setIds(service.getId());
+//			psDao.add(ps);
+//			
+//		}
+//		
+//
+//		String message = "Property service added";
+//		return Response.status(Response.Status.OK)
+//				.entity("{\"status\" : \"200\", \"message\" : \"" + message + "\"}")
+//				.contentLocation(uriInfo.getAbsolutePathBuilder().path(Long.toString(service.getId())).build())
+//				.build();
+//	}
 }
