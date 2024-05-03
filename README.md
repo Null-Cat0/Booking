@@ -1,4 +1,8 @@
 ![imagen](https://github.com/Null-Cat0/Xmonad_Dotfiles/assets/91385511/d9e85853-ae4e-43ab-bb15-1c0a01f8ce89)
+
+![image](https://github.com/Null-Cat0/Booking/assets/91385511/6e119caa-5fe6-4f64-9138-a35727d31a0b)
+
+
 # Booking
 Proyecto de la asignatura de Programación en Internet
 ## Entrega 1
@@ -158,9 +162,10 @@ que no aceptan reservas). De este modo la aplicación contará con tres apartado
 - Sin disponibilidad: solo los alojamientos que no aceptan reservas.
 
 
+## Entrega 3
 
-
-
+REQUISITOS FUNCIONALES (implementados mediante REST + AngularJS):
+Mismos requisitos que los especificados para la Actividad 2 del proyecto.
 
 
 
