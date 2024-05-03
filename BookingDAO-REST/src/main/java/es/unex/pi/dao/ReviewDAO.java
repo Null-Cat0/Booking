@@ -56,7 +56,7 @@ public interface ReviewDAO {
 	 * @return Review with that idr and idu.
 	 */
 	
-	public Review get(long idr,long idu);
+	public Review get(long id);
 
 	/**
 	 * Adds an Review to the database.
@@ -67,7 +67,7 @@ public interface ReviewDAO {
 	 * @return property identifier or -1 in case the operation failed.
 	 */
 	
-	public boolean add(Review Review);
+	public long add(Review Review);
 
 	/**
 	 * Updates an existing Review in the database.
@@ -92,5 +92,5 @@ public interface ReviewDAO {
 	 * @return True if the operation was made and False if the operation failed.
 	 */
 	
-	public boolean delete(long idr, long idu);
+	public boolean delete(long id);
 }

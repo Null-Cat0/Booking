@@ -21,25 +21,35 @@ angular.module('app', ['ngRoute'])
 				controller: "searchCtrl",
 				controllerAs: "searchVM",
 			})
+			.when("/infoProperties/:propertyid", {
+				templateUrl: "propertyInfoTemplate.html",
+				controller: "resultCtrl",
+				controllerAs: "resultVM",
+			})
 			.when("/properties", {
 				templateUrl: "listPropertiesTemplate.html",
 				controller: "searchCtrl",
 				controllerAs: "searchVM",
 			})
-			.when("/editProperty/:propertyid", {
+			.when("/editProperties/:propertyid", {
 				templateUrl: "propertyHandlerTemplate.html",
 				controller: "propertyCtrl",
 				controllerAs: "propertyVM",
 			})
-			.when("/deleteProperty/:propertyid", {
+			.when("/deleteProperties/:propertyid", {
 				templateUrl: "propertyHandlerTemplate.html",
 				controller: "propertyCtrl",
 				controllerAs: "propertyVM",
 			})
-			.when("/insertProperty", {
+			.when("/insertProperties", {
 				templateUrl: "propertyHandlerTemplate.html",
 				controller: "propertyCtrl",
 				controllerAs: "propertyVM",
+			})
+			.when("/insertAccommodation/:propertyid", {
+				templateUrl: "accommodationHandlerTemplate.html",
+				controller: "accommodationCtrl",
+				controllerAs: "accommodationVM",
 			})
 			.when("/editAccommodation/:accommodationid", {
 				templateUrl: "accommodationHandlerTemplate.html",

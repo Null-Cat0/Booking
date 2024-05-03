@@ -90,14 +90,14 @@ public class JDBCReviewDAOImpl implements ReviewDAO {
 	
 	
 	@Override
-	public Review get(long idp,long idu) {
+	public Review get(long id) {
 		if (conn == null) return null;
 		
 		Review review = null;		
 		
 		try {
 			Statement stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM Reviews WHERE Idp="+idp+" AND idu="+idu);			 
+			ResultSet rs = stmt.executeQuery("SELECT * FROM Reviews WHERE id="+id);			 
 			if (!rs.next()) return null;
 			review= new Review();
 			fromRsToeviewObject(rs,review);
@@ -113,28 +113,38 @@ public class JDBCReviewDAOImpl implements ReviewDAO {
 	
 
 	@Override
-	public boolean add(Review review) {
-		boolean done = false;
-		if (conn != null){
-			
-			Statement stmt;
-			try {
-				stmt = conn.createStatement();
-				stmt.executeUpdate("INSERT INTO Reviews (idp,idu,review,grade) VALUES("+
-									review.getIdp()+","+
-									review.getIdu()+",'"+
-									review.getReview()+"',"+
-									review.getGrade()+")");
-						
-				logger.info("creating Review:("+review.getIdp()+" "+review.getIdu());
-				done= true;
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		return done;
-	}
+    public long add(Review review) {
+		long id=-1;
+        if (conn != null) {
+            logger.info("CREATING review for property id " + review.getIdp());
+            Statement stmt = null;
+            ResultSet rs = null;
+            
+            try {
+                stmt = conn.createStatement();
+                stmt.executeUpdate("INSERT INTO reviews (idp, idu, review, grade) VALUES (" +
+                        review.getIdp() + ", " +
+                        review.getIdu() + ", '" +
+                        review.getReview() + "', " +
+                        review.getGrade() + ")");
+                
+                rs = stmt.executeQuery("SELECT last_insert_rowid()");
+                if (rs.next()) {
+                    id = rs.getLong(1);
+                }
+            } catch (SQLException e) {
+                logger.severe("Error adding review: " + e.getMessage());
+            } finally {
+                try {
+                    if (rs != null) rs.close();
+                    if (stmt != null) stmt.close();
+                } catch (SQLException e) {
+                    logger.severe("Error closing resources: " + e.getMessage());
+                }
+            }
+        }
+        return id;
+    }
 
 	@Override
 	public boolean update(Review review) {
@@ -162,15 +172,15 @@ public class JDBCReviewDAOImpl implements ReviewDAO {
 	}
 
 	@Override
-	public boolean delete(long idp, long idu) {
+	public boolean delete(long id) {
 		boolean done = false;
 		if (conn != null){
 
 			Statement stmt;
 			try {
 				stmt = conn.createStatement();
-				stmt.executeUpdate("DELETE FROM Reviews WHERE idp ="+idp+" AND idu="+idu);
-				logger.info("deleting Review: "+idp+" , idu="+idu);
+				stmt.executeUpdate("DELETE FROM Reviews WHERE id="+id);
+				logger.info("deleting Review: "+id);
 				done= true;
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -180,6 +190,7 @@ public class JDBCReviewDAOImpl implements ReviewDAO {
 	}
 
 	public void fromRsToeviewObject(ResultSet rs,Review review) throws SQLException{
+		review.setId(rs.getInt("id"));
 		review.setIdp(rs.getInt("idp"));
 		review.setIdu(rs.getInt("idu"));
 		review.setReview(rs.getString("review"));

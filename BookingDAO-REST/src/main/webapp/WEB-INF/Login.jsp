@@ -51,7 +51,7 @@
 				</form>
 					<p>
 					    ¿No tienes una cuenta? 
-					    <a href="#!/insertUser">Crea una cuenta</a>
+					    <a href="https://localhost:8443/BookingDAO-REST/pages/index.html#!/insertUser">Crea una cuenta</a>
 					</p>
 
 			</div>

@@ -1,38 +1,38 @@
 <body>
 	<div class="container">
-	    <h1 class="text-center">Añadir Alojamiento</h1>
+	    <h1 class="text-center">{{propertyVM.type}} Alojamiento</h1>
 	    <div class="row justify-content-center">
 	        <form  class="col-lg-6 col-md-8 col-sm-10" data-ng-submit="propertyVM.functions.propertyHandlerSwitcher()">
 	            
 	            
 	            <div class="mb-3">
 	                <label for="nombre" class="form-label">Nombre del Alojamiento</label>
-	                <input type="text" class="form-control" id="nombre" name="nombreAlojamiento" placeholder="Hotel Ritz Madrid" data-ng-model=" propertyVM.property.name"data-ng-readonly="propertyVM.functions.where('/deleteProperty/'+propertyVM.property.id)"   ><!-- -->
+	                <input type="text" class="form-control" id="nombre" name="nombreAlojamiento" placeholder="Hotel Ritz Madrid" data-ng-model=" propertyVM.property.name"data-ng-readonly="propertyVM.functions.where('/deleteProperties/'+propertyVM.property.id)"   ><!-- -->
 	            </div>
 	            
 	            <div class="mb-3">
 	                <label for="direccion" class="form-label">Dirección</label>
-	                <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Plaza de la Lealtad, 5"data-ng-model="propertyVM.property.address" data-ng-readonly="propertyVM.functions.where('/deleteProperty/'+propertyVM.property.id)" >
+	                <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Plaza de la Lealtad, 5"data-ng-model="propertyVM.property.address" data-ng-readonly="propertyVM.functions.where('/deleteProperties/'+propertyVM.property.id)" >
 	            </div>
 	            
 	            <div class="mb-3">
 	                <label for="tel" class="form-label">Teléfono</label>
-	                <input type="tel" class="form-control" id="tel" name="tel" placeholder="915 21 87 00"data-ng-model="propertyVM.property.telephone" data-ng-readonly="propertyVM.functions.where('/deleteProperty/'+propertyVM.property.id)" >
+	                <input type="tel" class="form-control" id="tel" name="tel" placeholder="915 21 87 00"data-ng-model="propertyVM.property.telephone" data-ng-readonly="propertyVM.functions.where('/deleteProperties/'+propertyVM.property.id)" >
 	            </div>
 	            
 	            <div class="mb-3">
 	                <label for="ciudad" class="form-label">Ciudad</label>
-	                <input type="text" class="form-control" id="ciudad" name="ciudad" placeholder="Caceres"data-ng-model="propertyVM.property.city" data-ng-readonly="propertyVM.functions.where('/deleteProperty/'+propertyVM.property.id)" >
+	                <input type="text" class="form-control" id="ciudad" name="ciudad" placeholder="Caceres"data-ng-model="propertyVM.property.city" data-ng-readonly="propertyVM.functions.where('/deleteProperties/'+propertyVM.property.id)" >
 	            </div>
 	            
 	            <div class="mb-3">
 	                <label for="distancia" class="form-label">Distancia al Centro (en kilómetros)</label>
-	                <input type="text" class="form-control" id="distancia" name="distanciaCentro" placeholder="1000" data-ng-model="propertyVM.property.centerDistance" data-ng-readonly="propertyVM.functions.where('/deleteProperty/'+propertyVM.property.id)" >
+	                <input type="text" class="form-control" id="distancia" name="distanciaCentro" placeholder="1000" data-ng-model="propertyVM.property.centerDistance" data-ng-readonly="propertyVM.functions.where('/deleteProperties/'+propertyVM.property.id)" >
 	            </div>
 	            
 	            <div class="mb-3">
 	                <label for="descripcion" class="form-label">Descripción</label>
-	                <input type="text" class="form-control" id="descripcion" name="descripcion" data-ng-model="propertyVM.property.description" data-ng-readonly="propertyVM.functions.where('/deleteProperty/'+propertyVM.property.id)" >
+	                <input type="text" class="form-control" id="descripcion" name="descripcion" data-ng-model="propertyVM.property.description" data-ng-readonly="propertyVM.functions.where('/deleteProperties/'+propertyVM.property.id)" >
 	            </div>
 	            
 				<p>Servicios Ofrecidos</p>
@@ -68,7 +68,7 @@
 	                </div>
 	            </div>
 	            <div class="text-center">
-	                <input type="submit" class="btn btn-primary" value="Añadir Alojamiento">
+	                <input type="submit" class="btn btn-primary" value="{{propertyVM.type}} Alojamiento">
 	            </div>
 	        </form>
 	    </div>

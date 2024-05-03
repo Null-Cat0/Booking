@@ -8,6 +8,7 @@ import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
@@ -71,7 +72,8 @@ public class AccommodationResource {
 
 		return accommodation;
 	}
-	@GET	
+
+	@GET
 	@Path("/property/{propertyid: [0-9]+}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Accommodation> getAccommodationsByPropertyJSON(@PathParam("propertyid") int propertyId,
@@ -94,8 +96,10 @@ public class AccommodationResource {
 	}
 
 	@POST
+	@Path("/property/{propertyid: [0-9]+}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response post(Accommodation newAccommodation, @Context HttpServletRequest request) {
+	public Response post(Accommodation newAccommodation, @PathParam("propertyid") long propertyid,
+			@Context HttpServletRequest request) {
 
 		logger.info("post: " + newAccommodation);
 
@@ -106,24 +110,21 @@ public class AccommodationResource {
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
 
-		// Property
+		// Comprobación de que la propeidad existe
 		PropertyDAO pDao = new JDBCPropertyDAOImpl();
 		pDao.setConnection(conn);
-
-		Property property = pDao.get(newAccommodation.getIdp());
 		long id;
-		if (user.getId() == property.getIdu()) {
-			if ((id = aDao.add(newAccommodation)) == -1) {
-				logger.info("Accommodation " + newAccommodation + " not added");
-			}
-
-		} else {
-			throw new CustomBadRequestException("Accommodation not valid");
+		if (pDao.get(propertyid) == null) {
+			throw new CustomNotFoundException("Property with id " + propertyid + " not found");
 		}
+		newAccommodation.setIdp(propertyid);
 
+		if ((id = aDao.add(newAccommodation)) == -1) {
+			logger.info("Accommodation " + newAccommodation + " not added");
+		}
 		String message = "Accommodations created";
 
-		return Response.status(Response.Status.CREATED).entity(message)
+		return Response.status(Response.Status.CREATED).entity("{\"status\" : \"200\", \"message\" : \"" + message + "\"}")
 				.contentLocation(uriInfo.getAbsolutePathBuilder().path(Long.toString(id)).build()).build();
 	}
 
@@ -156,8 +157,7 @@ public class AccommodationResource {
 		}
 
 		String message = "Accommodation created";
-		return Response.status(Response.Status.CREATED)
-				.entity(message)
+		return Response.status(Response.Status.CREATED).entity(message)
 				.contentLocation(uriInfo.getAbsolutePathBuilder().path(Long.toString(id)).build()).build();
 	}
 
@@ -167,13 +167,13 @@ public class AccommodationResource {
 	public Response put(Accommodation accommodationUpdate, @PathParam("accommodationid") long accommodationId,
 			@Context HttpServletRequest request) {
 		logger.info("put: " + accommodationUpdate);
-		
+
 		Response res = null;
 		Connection conn = (Connection) sc.getAttribute("dbConn");
-		
+
 		PropertyDAO pDao = new JDBCPropertyDAOImpl();
 		pDao.setConnection(conn);
-		
+
 		AccommodationDAO aDao = new JDBCAccommodationDAOImpl();
 		aDao.setConnection(conn);
 
@@ -195,6 +195,36 @@ public class AccommodationResource {
 		}
 
 		return res;
+	}
+	@DELETE
+	@Path("/{accommodationid: [0-9]+}")
+	public Response delete(@PathParam("accommodationid") long accommodationId, @Context HttpServletRequest request) {
+		logger.info("delete accommodation: " + accommodationId);
+
+		Connection conn = (Connection) sc.getAttribute("dbConn");
+
+		AccommodationDAO aDao = new JDBCAccommodationDAOImpl();
+		aDao.setConnection(conn);
+
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
+
+		Accommodation accommodation = aDao.get(accommodationId);
+
+		if (accommodation != null) {
+			PropertyDAO pDao = new JDBCPropertyDAOImpl();
+			pDao.setConnection(conn);
+			Property property = pDao.get(accommodation.getIdp());
+			if (user.getId() == property.getIdu()) {
+				aDao.delete(accommodationId);
+			} else {
+				throw new CustomBadRequestException("Accommodation not valid");
+			}
+		} else {
+			throw new CustomNotFoundException("Accommodation not found");
+		}
+
+		return Response.noContent().build();
 	}
 
 }

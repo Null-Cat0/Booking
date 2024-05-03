@@ -2,6 +2,7 @@ package es.unex.pi.model;
 
 public class Review {
 
+	private long id;
 	private long idp;
 	private long idu;
 	private String review;
@@ -44,7 +45,15 @@ public class Review {
 	}
 	
 	public String toString() {
-		return "Review [idp=" + idp + ", idu=" + idu + ", review=" + review + ", grade=" + grade + "]";
+		return "Review [id="+id +", idp=" + idp + ", idu=" + idu + ", review=" + review + ", grade=" + grade + "]";
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 	
 	

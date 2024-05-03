@@ -2,12 +2,11 @@ angular.module('app')
 	.controller('propertyCtrl', ['$routeParams', '$location', 'propertyFactory', function($routeParams, $location, propertyFactory) {
 		var propertyHandlerViewModel = this;
 		propertyHandlerViewModel.property = undefined;
+		propertyHandlerViewModel.type = ' ';
 		propertyHandlerViewModel.allServices = [];
 		propertyHandlerViewModel.propertyServices = [];
 		propertyHandlerViewModel.functions = {
 			where: function(route) {
-				console.log("Ruta: ", $location.path());
-				console.log("Ruta a comparar: ", route);
 				return $location.path() === route;
 
 			},
@@ -134,16 +133,16 @@ angular.module('app')
 				return selectedServices;
 			},
 			propertyHandlerSwitcher: function() {
-				if (propertyHandlerViewModel.functions.where('/insertProperty')) {
+				if (propertyHandlerViewModel.functions.where('/insertProperties')) {
 					propertyHandlerViewModel.functions.insertProperty();
 					propertyHandlerViewModel.functions.updateServices();
 					console.log($location.path());
-				} else if (propertyHandlerViewModel.functions.where('/editProperty/' + propertyHandlerViewModel.property.id)) {
+				} else if (propertyHandlerViewModel.functions.where('/editProperties/' + propertyHandlerViewModel.property.id)) {
 					console.log($location.path());
 					propertyHandlerViewModel.functions.updateProperty();
 					propertyHandlerViewModel.functions.updateServices();
 
-				} else if (propertyHandlerViewModel.functions.where('/deleteProperty/' + propertyHandlerViewModel.property.id)) {
+				} else if (propertyHandlerViewModel.functions.where('/deleteProperties/' + propertyHandlerViewModel.property.id)) {
 					propertyHandlerViewModel.functions.deleteProperty();
 					console.log($location.path());
 				} else {
@@ -157,13 +156,18 @@ angular.module('app')
 		if ($routeParams.propertyid == undefined) {
 			console.log("There is no property id, creating new property");
 			propertyHandlerViewModel.functions.getAllServices();
+			propertyHandlerViewModel.type = 'Añadir';
 			
 		}
 		else {
-
+			if (propertyHandlerViewModel.functions.where('/editProperties/' + $routeParams.propertyid)) {
+				propertyHandlerViewModel.type = 'Editar';
+			}
+			else if (propertyHandlerViewModel.functions.where('/deleteProperties/' + $routeParams.propertyid)) {
+				propertyHandlerViewModel.type = 'Eliminar';
+			}
 			propertyHandlerViewModel.functions.getProperty($routeParams.propertyid);
 			propertyHandlerViewModel.functions.getAllServicesAssociates($routeParams.propertyid);
 			propertyHandlerViewModel.functions.getAllServices();
-
 		}
 	}]);

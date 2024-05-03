@@ -3,9 +3,9 @@
 	<div class="container">
 		<h1 class="text-center mt-5">{{accommodationVM.type}} Habitación</h1>
 		<div class="row ">
-			<div class="d-flex justify-content-center">
+			<div class="d-flex justify-content-center" >
 
-				<form action="?" method="post" class="col-6 ">
+				<form class="col-6 " data-ng-submit="accommodationVM.functions.accommodationHandlerSwitcher()">
 					<label for="name" class="form-label"> Nombre</label>
 					<input type="text" class="form-control" placeholder="Suite" name="name" value="{{accommodationVM.accommodation.name}}" id="name" data-ng-model="accommodationVM.accommodation.name" data-ng-readonly="accommodationVM.functions.where('/deleteAccommodation/'+accommodationVM.accommodation.id)" required>
 					<label for="price" class="form-label"> Precio por habitación:</label>
