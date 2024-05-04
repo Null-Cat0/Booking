@@ -1,5 +1,5 @@
 angular.module('app')
-	.controller('resultCtrl', ['$routeParams', '$location', 'propertyFactory', 'accommodationFactory', 'reviewFactory', 'userFactory', function($routeParams, $location, propertyFactory, accommodationFactory, reviewFactory, userFactory) {
+	.controller('resultCtrl', ['$routeParams','$scope', '$location', 'propertyFactory', 'accommodationFactory', 'reviewFactory', 'userFactory', function($routeParams,$scope, $location, propertyFactory, accommodationFactory, reviewFactory, userFactory) {
 		var resutlViewModel = this;
 
 		resutlViewModel.property = {};
@@ -9,6 +9,7 @@ angular.module('app')
 		resutlViewModel.user = undefined;
 		resutlViewModel.reviewDone = false;
 		resutlViewModel.review = undefined;
+		resutlViewModel.selectedRooms = {};
 		resutlViewModel.functions = {
 			where: function(scope) {
 				return $location.path() == scope;
@@ -115,6 +116,12 @@ angular.module('app')
 						console.log("Error al eliminar el comentario: ", error);
 					})
 			},
+			bookingHandler: function() {
+			    console.log("Reservas",resutlViewModel.selectedRooms);
+			    localStorage.setItem("selectedRooms", JSON.stringify(resutlViewModel.selectedRooms));
+			    $location.path('/cart/');
+			}
+
 
 		};
 

@@ -1,0 +1,47 @@
+<body>
+
+	<!-- Container con toda la información -->
+<div class="container">
+    <h1 class="text-center mt-5">Mis reservas</h1>
+
+    <div class="row mt-5">
+        <div class="col-12" data-ng-repeat="bookingRecord in bookingVM.bookings">
+            <div class="card shadow mb-4">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-md-4">
+                            <img class="img-fluid rounded" src="../img/ilunion_suites_madrid.jpg" alt="Ilunion suites madrid">
+                        </div>
+                        <div class="col-md-8">
+                            <h3 class="mt-3">{{bookingRecord.booking.city}}</h3> <!-- Acceder a la ciudad de la reserva -->
+                            <div data-ng-repeat="accommodation in bookingRecord.accommodations">
+                                <h4>{{accommodation.accommodation.name}}</h4> <!-- Acceder al nombre del alojamiento -->
+                                <p>{{accommodation.qty}} habitaciones</p> <!-- Cantidad de habitaciones reservadas -->
+                                <p>{{accommodation.price}} precio</p> <!-- Precio de la reserva -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+	<!-- Footer -->
+	<footer class="text-center text-white mt-5"
+		style="background-color: #f1f1f1;">
+		<div class="container pt-4">
+			<section class="mb-4">
+				<a class="btn btn-link btn-floating btn-lg text-dark m-1"
+					href="https://github.com/Null-Cat0" role="button"
+					data-mdb-ripple-color="dark"><i class="fa-brands fa-github"></i>
+				</a>
+			</section>
+		</div>
+		<div class="text-center text-dark p-3"
+			style="background-color: rgba(0, 0, 0, 0.2);">© 2024 Asier
+			Serrano Martín - Programación en Internet - Universidad de
+			Extremadura</div>
+	</footer>
+</body>

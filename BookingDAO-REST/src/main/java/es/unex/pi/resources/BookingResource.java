@@ -1,6 +1,7 @@
 package es.unex.pi.resources;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -23,6 +24,7 @@ import jakarta.ws.rs.core.UriInfo;
 import es.unex.pi.dao.*;
 import es.unex.pi.model.*;
 import es.unex.pi.resources.exceptions.CustomNotFoundException;
+
 @Path("/bookings")
 public class BookingResource {
 	Logger logger = Logger.getLogger(BookingResource.class.getName());
@@ -31,7 +33,7 @@ public class BookingResource {
 	ServletContext sc;
 	@Context
 	UriInfo uriInfo;
-	
+
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Booking> getBookingsJSON(@Context HttpServletRequest request) {
@@ -48,80 +50,83 @@ public class BookingResource {
 		User user = (User) session.getAttribute("user");
 
 		if (user != null) {
-			bookings = bDao.getAllByUser((int)user.getId());
+			bookings = bDao.getAllByUser((int) user.getId());
 		} else {
 			logger.info("No user in session");
 		}
 
 		return bookings;
 	}
-	
+
 	@GET
 	@Path("/{bookingId: [0-9]+}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Booking getBookingJSON (@PathParam("bookingId")long bookingId, @Context HttpServletRequest request) 
-	{
+	public Booking getBookingJSON(@PathParam("bookingId") long bookingId, @Context HttpServletRequest request) {
 		logger.info("getBookingJSON");
-		
+
 		Connection conn = (Connection) sc.getAttribute("dbConn");
 		BookingDAO bDao = new JDBCBookingDAOImpl();
 		bDao.setConnection(conn);
-		
+
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
-		
+
 		Booking b = bDao.get(bookingId);
 		if (b.getIdu() == user.getId()) {
 			return b;
-		} 
-		else {
+		} else {
 			logger.info("Booking not found");
 			throw new CustomNotFoundException("Booking not found");
 		}
-	
+
 	}
-	
+
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response post (Booking newBooking, @Context HttpServletRequest request) 
-	{
+	public Response post(Booking newBooking, @Context HttpServletRequest request) {
 		logger.info("post: " + newBooking);
-		
+
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
-		
-		if (newBooking.getIdu() == user.getId()) {
-			Connection conn = (Connection) sc.getAttribute("dbConn");
-			BookingDAO bDao = new JDBCBookingDAOImpl();
-			bDao.setConnection(conn);
 
-			long id =bDao.add(newBooking);		
-			String message = "Object created";
-			return Response.status(Response.Status.CREATED) // 201
-					.entity(message) // return the id of the new order
-					.contentLocation(uriInfo.getAbsolutePathBuilder().path(Long.toString(id)).build()) 																	
+		if (user == null) {
+			return Response.status(Response.Status.UNAUTHORIZED).entity("{\"error\": \"No se ha iniciado sesión\"}")
 					.build();
-		} else {
-			logger.info("User not allowed to add booking");
-			throw new CustomNotFoundException("User not allowed to add booking");
 		}
 
+		newBooking.setIdu(user.getId());
 
+		Connection conn = (Connection) sc.getAttribute("dbConn");
+		BookingDAO bDao = new JDBCBookingDAOImpl();
+		bDao.setConnection(conn);
+
+		long id = bDao.add(newBooking);
+
+		if (id == -1) {
+			// Si la inserción falla, devolver un mensaje de error
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+					.entity("{\"error\": \"Error al crear la reserva\"}").build();
+		}
+
+		// Si la inserción tiene éxito, devolver el ID de la reserva y un mensaje de
+		// éxito
+		return Response.status(Response.Status.CREATED)
+				.entity("{\"id\": " + id + ", \"message\": \"Reserva creada correctamente\"}")
+				.contentLocation(uriInfo.getAbsolutePathBuilder().path(Long.toString(id)).build()).build();
 	}
+
 	@POST
 	@Consumes("application/x-www-form-urlencoded")
-	public Response post (MultivaluedMap<String, String> formParams, @Context HttpServletRequest request) 
-	{
+	public Response post(MultivaluedMap<String, String> formParams, @Context HttpServletRequest request) {
 		logger.info("post: " + formParams);
-		
+
 		Connection conn = (Connection) sc.getAttribute("dbConn");
-		BookingDAO  bDao = new JDBCBookingDAOImpl();
+		BookingDAO bDao = new JDBCBookingDAOImpl();
 		bDao.setConnection(conn);
-		
-				
+
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
-		
+
 		Booking b = new Booking();
 		b.setIdu(user.getId());
 		b.setTotalPrice(Integer.parseInt(formParams.getFirst("totalPrice")));
@@ -129,15 +134,15 @@ public class BookingResource {
 		long id = bDao.add(b);
 		b.setId(id);
 		String message = "Booking added";
-		return Response.status(Response.Status.CREATED).entity(message)
+		return Response.status(Response.Status.CREATED)
+				.entity("{\"status\" : \"200\", \"message\" : \"" + message + "\"}")
 				.contentLocation(uriInfo.getAbsolutePathBuilder().path(Long.toString(id)).build()).build();
-	
+
 	}
-	
-	
+
 	@PUT
-    @Path("/{bookingId: [0-9]+}")
-    @Consumes(MediaType.APPLICATION_JSON)
+	@Path("/{bookingId: [0-9]+}")
+	@Consumes(MediaType.APPLICATION_JSON)
 	public Response put(Booking booking, @PathParam("bookingId") long bookingId, @Context HttpServletRequest request) {
 		logger.info("put: " + booking);
 
@@ -153,15 +158,14 @@ public class BookingResource {
 		if (b.getIdu() == user.getId()) {
 			String message = "Object updated";
 			bDao.update(booking);
-			return  Response.status(Response.Status.OK).entity(message)
-					.contentLocation(uriInfo.getAbsolutePathBuilder().path(Long.toString(bookingId)).build())
-					.build();
+			return Response.status(Response.Status.OK).entity(message)
+					.contentLocation(uriInfo.getAbsolutePathBuilder().path(Long.toString(bookingId)).build()).build();
 		} else {
 			logger.info("User not allowed to update booking");
 			throw new CustomNotFoundException("User not allowed to update booking");
 		}
 	}
-	
+
 	@DELETE
 	@Path("/{bookingId: [0-9]+}")
 	public Response delete(@PathParam("bookingId") long bookingId, @Context HttpServletRequest request) {
@@ -185,6 +189,5 @@ public class BookingResource {
 			throw new CustomNotFoundException("User not allowed to delete booking");
 		}
 	}
-	
-	
+
 }

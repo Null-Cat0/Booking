@@ -13,43 +13,39 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="lib" path="C:/Users/asier/Documents/apache-tomcat-10.1.20/lib/annotations-api.jar"/>
-	<classpathentry kind="lib" path="C:/Users/asier/Documents/apache-tomcat-10.1.20/lib/catalina.jar"/>
-	<classpathentry kind="lib" path="C:/Users/asier/Documents/apache-tomcat-10.1.20/lib/catalina-ant.jar"/>
-	<classpathentry kind="lib" path="C:/Users/asier/Documents/apache-tomcat-10.1.20/lib/catalina-ha.jar"/>
-	<classpathentry kind="lib" path="C:/Users/asier/Documents/apache-tomcat-10.1.20/lib/catalina-ssi.jar"/>
-	<classpathentry kind="lib" path="C:/Users/asier/Documents/apache-tomcat-10.1.20/lib/catalina-storeconfig.jar"/>
-	<classpathentry kind="lib" path="C:/Users/asier/Documents/apache-tomcat-10.1.20/lib/catalina-tribes.jar"/>
-	<classpathentry kind="lib" path="C:/Users/asier/Documents/apache-tomcat-10.1.20/lib/ecj-4.27.jar"/>
-	<classpathentry kind="lib" path="C:/Users/asier/Documents/apache-tomcat-10.1.20/lib/el-api.jar"/>
-	<classpathentry kind="lib" path="C:/Users/asier/Documents/apache-tomcat-10.1.20/lib/jakartaee-migration-1.0.8-shaded.jar"/>
-	<classpathentry kind="lib" path="C:/Users/asier/Documents/apache-tomcat-10.1.20/lib/jasper.jar"/>
-	<classpathentry kind="lib" path="C:/Users/asier/Documents/apache-tomcat-10.1.20/lib/jasper-el.jar"/>
-	<classpathentry kind="lib" path="C:/Users/asier/Documents/apache-tomcat-10.1.20/lib/jaspic-api.jar"/>
-	<classpathentry kind="lib" path="C:/Users/asier/Documents/apache-tomcat-10.1.20/lib/jsp-api.jar"/>
-	<classpathentry kind="lib" path="C:/Users/asier/Documents/apache-tomcat-10.1.20/lib/servlet-api.jar" sourcepath="/BookingDAO/src/main/webapp/WEB-INF/lib">
-		<attributes>
-			<attribute name="javadoc_location" value="https://jakarta.ee/specifications/servlet/6.0/apidocs/"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/asier/Documents/apache-tomcat-10.1.20/lib/tomcat-api.jar"/>
-	<classpathentry kind="lib" path="C:/Users/asier/Documents/apache-tomcat-10.1.20/lib/tomcat-coyote.jar"/>
-	<classpathentry kind="lib" path="C:/Users/asier/Documents/apache-tomcat-10.1.20/lib/tomcat-dbcp.jar"/>
-	<classpathentry kind="lib" path="C:/Users/asier/Documents/apache-tomcat-10.1.20/lib/tomcat-i18n-cs.jar"/>
-	<classpathentry kind="lib" path="C:/Users/asier/Documents/apache-tomcat-10.1.20/lib/tomcat-i18n-de.jar"/>
-	<classpathentry kind="lib" path="C:/Users/asier/Documents/apache-tomcat-10.1.20/lib/tomcat-i18n-es.jar"/>
-	<classpathentry kind="lib" path="C:/Users/asier/Documents/apache-tomcat-10.1.20/lib/tomcat-i18n-fr.jar"/>
-	<classpathentry kind="lib" path="C:/Users/asier/Documents/apache-tomcat-10.1.20/lib/tomcat-i18n-ja.jar"/>
-	<classpathentry kind="lib" path="C:/Users/asier/Documents/apache-tomcat-10.1.20/lib/tomcat-i18n-ko.jar"/>
-	<classpathentry kind="lib" path="C:/Users/asier/Documents/apache-tomcat-10.1.20/lib/tomcat-i18n-pt-BR.jar"/>
-	<classpathentry kind="lib" path="C:/Users/asier/Documents/apache-tomcat-10.1.20/lib/tomcat-i18n-ru.jar"/>
-	<classpathentry kind="lib" path="C:/Users/asier/Documents/apache-tomcat-10.1.20/lib/tomcat-i18n-zh-CN.jar"/>
-	<classpathentry kind="lib" path="C:/Users/asier/Documents/apache-tomcat-10.1.20/lib/tomcat-jdbc.jar"/>
-	<classpathentry kind="lib" path="C:/Users/asier/Documents/apache-tomcat-10.1.20/lib/tomcat-jni.jar"/>
-	<classpathentry kind="lib" path="C:/Users/asier/Documents/apache-tomcat-10.1.20/lib/tomcat-util.jar"/>
-	<classpathentry kind="lib" path="C:/Users/asier/Documents/apache-tomcat-10.1.20/lib/tomcat-util-scan.jar"/>
-	<classpathentry kind="lib" path="C:/Users/asier/Documents/apache-tomcat-10.1.20/lib/tomcat-websocket.jar"/>
-	<classpathentry kind="lib" path="C:/Users/asier/Documents/apache-tomcat-10.1.20/lib/websocket-api.jar"/>
-	<classpathentry kind="lib" path="C:/Users/asier/Documents/apache-tomcat-10.1.20/lib/websocket-client-api.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/aopalliance-repackaged-3.0.3.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/hk2-api-3.0.3.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/hk2-locator-3.0.3.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/hk2-utils-3.0.3.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jakarta.activation-api-2.1.0.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jakarta.annotation-api-2.1.1.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jakarta.el-api-4.0.0.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jakarta.inject-api-2.0.1.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jakarta.json.bind-api-3.0.0.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jakarta.json-api-2.1.1.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jakarta.persistence-api-3.1.0.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jakarta.servlet.jsp.jstl-2.0.0.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jakarta.servlet.jsp.jstl-api-2.0.0.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jakarta.servlet-api-6.0.0.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jakarta.validation-api-3.0.2.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jakarta.ws.rs-api-3.1.0.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jakarta.ws.rs-api-3.1.0-sources.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jakarta.xml.bind-api-4.0.0.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/javassist-3.29.0-GA.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jersey-client.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jersey-common.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jersey-container-servlet.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jersey-container-servlet-core.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jersey-hk2.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jersey-media-jaxb.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jersey-media-json-binding.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jersey-media-sse.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jersey-server.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/org.osgi.core-6.0.0.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/osgi-resource-locator-1.0.3.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/parsson-1.1.1.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/sqlite-jdbc-3.21.0.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/taglibs-standard-impl-1.2.5.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/yasson-3.0.2.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

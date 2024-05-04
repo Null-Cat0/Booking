@@ -1,0 +1,102 @@
+<body>
+
+	<!-- Container con la información de la reserva -->
+	<div class="container">
+
+		<div class="alert alert-warning" role="alert" data-ng-if="">No
+			hay reservas en el carrito.</div>
+
+		<div class="row justify-content-center">
+			<div class="col-md-8">
+				<h1 class="text-center mb-4">Carrito de la compra</h1>
+
+				<div class="row mb-3" data-ng-if="cartVM.property == undefined">
+					<h4> No hay elementos en el carrito</h4>
+				</div>
+
+				<div class="row mb-3" data-ng-if="cartVM.property != undefined">
+					<div class="col-md-6">
+						<div class="card">
+							<div class="card-body">
+								<div class="card-title">
+									<h4>{{cartVM.property.name}}</h4>
+								</div>
+								<p class="card-text">{{cartVM.property.city}}a
+									{{cartVM.property.centerDistance * 1000}} m del centro</p>
+								<p class="card-text ecofriendly bold">
+									<i class="bi bi-check"></i> Cancelación Gratis
+								</p>
+								<p class="card-text ecofriendly bold">
+									<i class="bi bi-check"></i> Sin pago por adelantado
+								</p>
+								<h4 class="mb-3">Habitaciones de la reserva:</h4>
+								<div class="row">
+
+									<div class="col-md-6 mb-3"
+										data-ng-repeat="room in cartVM.rooms">
+										<div class="card">
+											<div class="card-body">
+												<h5 class="card-title">{{room.name}}</h5>
+												<p class="card-text">Habitaciones: {{}}</p>
+												<div class="text-center">
+													<button class="btn btn-danger"
+														data-ng-click="cartVM.functions.removeRoom(room)">Eliminar</button>
+												</div>
+											</div>
+										</div>
+									</div>
+
+
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+
+				<div class="card mt-3">
+					<div class="card-body">
+						<h4>Desglose del precio</h4>
+						<h1 class="text-end bold">Total {{cartVM.totalPrice}}€</h1>
+						<p class="text-end">Incluye impuestos y cargos</p>
+						<p>
+							<span class="bold">Información sobre el precio</span> <br> <i
+								class="bi bi-cash"></i> Incluye ${totalPrice * 0.1}€ de
+							Impuestos y cargos <br> 10% IVA
+						</p>
+					</div>
+				</div>
+
+
+
+				<div class="text-center">
+
+					<form data-ng-submit="cartVM.functions.booking()">
+						<input type="submit" class="btn btn-primary mt-3" value="Pagar">
+					</form>
+
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<!-- Footer -->
+	<footer class="text-center text-white mt-5"
+		style="background-color: #f1f1f1;">
+		<div class="container pt-4">
+			<section class="mb-4">
+				<a class="btn btn-link btn-floating btn-lg text-dark m-1"
+					href="https://github.com/Null-Cat0" role="button"
+					data-mdb-ripple-color="dark"> <i class="bi bi-github"></i>
+				</a>
+			</section>
+		</div>
+
+		<div class="text-center text-dark p-3"
+			style="background-color: rgba(0, 0, 0, 0.2);">© 2024 Asier
+			Serrano Martín - Programación en Internet - Universidad de
+			Extremadura</div>
+	</footer>
+</body>

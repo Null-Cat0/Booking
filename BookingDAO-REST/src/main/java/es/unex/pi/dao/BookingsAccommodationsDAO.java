@@ -96,4 +96,8 @@ public interface BookingsAccommodationsDAO {
 	 */
 	
 	public boolean delete(long idb, long idacc);
+
+
+
+	List<BookingsAccommodations> getAllByUser(long idu);
 }

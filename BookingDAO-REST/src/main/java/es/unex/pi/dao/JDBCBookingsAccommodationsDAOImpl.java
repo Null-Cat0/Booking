@@ -178,7 +178,34 @@ public class JDBCBookingsAccommodationsDAOImpl implements BookingsAccommodations
 		}
 		return done;
 	}
+	@Override
+	//SELECT *	FROM bookings 	INNER JOIN bookingsAccommodations ON bookings.id = bookingsAccommodations.idb	WHERE idu = 1;
+	public List<BookingsAccommodations> getAllByUser(long idu) {
+		if (conn == null)
+			return null;
 
+		ArrayList<BookingsAccommodations> BookingsAccommodationsList = new ArrayList<BookingsAccommodations>();
+		try {
+			Statement stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(
+					"SELECT * FROM bookings INNER JOIN bookingsAccommodations ON bookings.id = bookingsAccommodations.idb WHERE idu = "
+							+ idu);
+
+			while (rs.next()) {
+				BookingsAccommodations bookingsAccommodations = new BookingsAccommodations();
+				fromRsToBookingsAccommodationsObject(rs, bookingsAccommodations);
+				BookingsAccommodationsList.add(bookingsAccommodations);
+				logger.info("fetching all BookingsAccommodations by idu: " + bookingsAccommodations.getIdb() + "->"
+						+ bookingsAccommodations.getIdacc());
+			}
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+
+		return BookingsAccommodationsList;
+	}
 	public void fromRsToBookingsAccommodationsObject(ResultSet rs,BookingsAccommodations bookingsAccommodations) throws SQLException {
 		bookingsAccommodations.setIdb(rs.getInt("idb"));
 		bookingsAccommodations.setIdacc(rs.getInt("idacc"));

@@ -61,5 +61,15 @@ angular.module('app', ['ngRoute'])
 				controller: "accommodationCtrl",
 				controllerAs: "accommodationVM",
 			})
+			.when("/cart/", {
+				templateUrl: "cart.html",
+				controller: "cartCtrl",
+				controllerAs: "cartVM",
+			})
+			.when("/bookingsRecord", {
+				templateUrl: "bookingRecordTemplate.html",
+				controller: "bookingCtrl",
+				controllerAs: "bookingVM",
+			})
 	}
 	)

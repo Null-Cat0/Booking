@@ -14,11 +14,15 @@
     <script src="../js/controllers/profileCtrl.js"></script>
     <script src="../js/controllers/propertyCtrl.js"></script>
     <script src="../js/controllers/accommodationCtrl.js"></script>
+    <script src="../js/controllers/cartCtrl.js"></script>
+    <script src="../js/controllers/bookingCtrl.js"></script>
     
      <script src="../js/factories/userFactory.js"></script>
      <script src="../js/factories/propertyFactory.js"></script>
      <script src="../js/factories/accommodationFactory.js"></script>
      <script src="../js/factories/reviewFactory.js"></script>
+     <script src="../js/factories/bookingFactory.js"></script>
+     <script src="../js/factories/bookingaccommodationFactory.js"></script>
 
 	<!-- Bootstrap -->
 	<link
@@ -58,13 +62,13 @@
                 <a href="#!/"> <img src="../img/booking-logo.png" class="nav-logo"
                         alt="booking_logo"></a>
                 <div class="container d-flex justify-content-end">
-                    <a href="AddCartServlet.do" class="btn btn-custom me-2">Cesta</a>
+                    <a href="#!/cart" class="btn btn-custom me-2">Cesta</a>
                     <div class="dropdown">
                         <button class="btn btn-custom dropdown-toggle" type="button" id="dropdownMenuButton"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Hola
                             {{headerVM.user.name}}</button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a href="ListBookingsRecordServlet.do" class="dropdown-item">Mis
+                            <a href="#!/bookingsRecord" class="dropdown-item">Mis
                                 reservas</a>
                             <a href="#!/properties" class="dropdown-item">Mis
                                 alojamiento</a>
