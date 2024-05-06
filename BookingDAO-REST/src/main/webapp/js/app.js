@@ -4,7 +4,17 @@ angular.module('app', ['ngRoute'])
 			.when("/", {
 				templateUrl: "searchTemplate.html",
 				controller: "searchCtrl",
-				controllerAs: "searchVM"
+				controllerAs: "searchVM",
+				resolve: {
+					// produce 500 miliseconds (0,5 seconds) of delay that should be enough to allow the server
+					//does any requested update before reading the orders.
+					// Extracted from script.js used as example on https://docs.angularjs.org/api/ngRoute/service/$route
+					delay: function($q, $timeout) {
+						var delay = $q.defer();
+						$timeout(delay.resolve, 500);
+						return delay.promise;
+					}
+				}
 			})
 			.when("/profile", {
 				templateUrl: "profileHandlerTemplate.html",
@@ -70,6 +80,11 @@ angular.module('app', ['ngRoute'])
 				templateUrl: "bookingRecordTemplate.html",
 				controller: "bookingCtrl",
 				controllerAs: "bookingVM",
+			})
+			.when("/favourites", {
+				templateUrl: "listFavouritesTemplate.html",
+				controller: "searchCtrl",
+				controllerAs: "searchVM",
 			})
 	}
 	)

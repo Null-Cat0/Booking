@@ -8,7 +8,6 @@ angular.module('app')
 		propertyHandlerViewModel.functions = {
 			where: function(route) {
 				return $location.path() === route;
-
 			},
 
 			isServiceAssociated: function(service) {

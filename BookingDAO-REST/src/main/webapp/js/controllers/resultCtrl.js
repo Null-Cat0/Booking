@@ -1,5 +1,5 @@
 angular.module('app')
-	.controller('resultCtrl', ['$routeParams','$scope', '$location', 'propertyFactory', 'accommodationFactory', 'reviewFactory', 'userFactory', function($routeParams,$scope, $location, propertyFactory, accommodationFactory, reviewFactory, userFactory) {
+	.controller('resultCtrl', ['$routeParams', '$scope', '$location', 'propertyFactory', 'accommodationFactory', 'reviewFactory', 'userFactory', function($routeParams, $scope, $location, propertyFactory, accommodationFactory, reviewFactory, userFactory) {
 		var resutlViewModel = this;
 
 		resutlViewModel.property = {};
@@ -10,6 +10,7 @@ angular.module('app')
 		resutlViewModel.reviewDone = false;
 		resutlViewModel.review = undefined;
 		resutlViewModel.selectedRooms = {};
+
 		resutlViewModel.functions = {
 			where: function(scope) {
 				return $location.path() == scope;
@@ -103,7 +104,7 @@ angular.module('app')
 						console.log("Error al agregar el comentario: ", error);
 					})
 			},
-			deleteReview : function(){
+			deleteReview: function() {
 				console.log("Eliminando comentario", resutlViewModel.review.id);
 				reviewFactory.deleteReview(resutlViewModel.review.id)
 					.then(function(response) {
@@ -117,10 +118,11 @@ angular.module('app')
 					})
 			},
 			bookingHandler: function() {
-			    console.log("Reservas",resutlViewModel.selectedRooms);
-			    localStorage.setItem("selectedRooms", JSON.stringify(resutlViewModel.selectedRooms));
-			    $location.path('/cart/');
-			}
+				console.log("Reservas", resutlViewModel.selectedRooms);
+				localStorage.setItem("selectedRooms", JSON.stringify(resutlViewModel.selectedRooms));
+				$location.path('/cart/');
+			},
+
 
 
 		};
@@ -133,7 +135,7 @@ angular.module('app')
 			resutlViewModel.functions.getAllServicesAssociates($routeParams.propertyid);
 			resutlViewModel.functions.getAccommodations($routeParams.propertyid);
 			resutlViewModel.functions.getReviews($routeParams.propertyid);
-			
+
 
 		}
 	}

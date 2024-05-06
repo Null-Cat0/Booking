@@ -39,15 +39,15 @@ angular.module('app')
 				userFactory.postUser(profileHandlerViewModel.user)
 					.then(function(response) {
 						console.log("User inserted, response: ", response);
+
+						profileHandlerViewModel.user.id = response.id;
 						$location.path('/');
 					});
 			}
 
 		}
 
-		if ($location.path() == '/profile') {
+		if (profileHandlerViewModel.functions.where('/profile')) {
 			profileHandlerViewModel.functions.readUser();
-		} else if ($location.path() == '/insertUser') {
-			profileHandlerViewModel.functions.insertUser();
 		}
 	}]);

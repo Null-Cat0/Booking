@@ -35,21 +35,6 @@ public class PropertyResource {
 	@Context
 	UriInfo uriInfo;
 
-//	@GET
-//	@Produces(MediaType.APPLICATION_JSON)
-//	public List<Property> getPropertiesJSON(@Context HttpServletRequest request) {
-//		logger.info("getPropertiesJSON");
-//
-//		List<Property> properties = null;
-//		Connection conn = (Connection) sc.getAttribute("dbConn");
-//
-//		// PropertyDAO
-//		PropertyDAO pDao = new JDBCPropertyDAOImpl();
-//		pDao.setConnection(conn);
-//
-//		properties = pDao.getAll();
-//		return properties;
-//	}
 
 	@GET
 	@Path("/{propertyid: [0-9]+}")

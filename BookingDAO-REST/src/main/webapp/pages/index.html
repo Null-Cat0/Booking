@@ -23,6 +23,8 @@
      <script src="../js/factories/reviewFactory.js"></script>
      <script src="../js/factories/bookingFactory.js"></script>
      <script src="../js/factories/bookingaccommodationFactory.js"></script>
+     <script src="../js/factories/favouriteFactory.js"></script>
+     
 
 	<!-- Bootstrap -->
 	<link
@@ -57,13 +59,14 @@
 
 <body>
     <div data-ng-controller="headerCtrl as headerVM">
+        
         <nav class="navbar navbar-light bookingcolor">
             <div class="container-fluid">
                 <a href="#!/"> <img src="../img/booking-logo.png" class="nav-logo"
                         alt="booking_logo"></a>
                 <div class="container d-flex justify-content-end">
-                    <a href="#!/cart" class="btn btn-custom me-2">Cesta</a>
-                    <div class="dropdown">
+                    <a href="#!/cart" data-ng-show="headerVM.user !== null" class="btn btn-custom me-2">Cesta</a>
+                    <div class="dropdown" data-ng-show="headerVM.user !== null">
                         <button class="btn btn-custom dropdown-toggle" type="button" id="dropdownMenuButton"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Hola
                             {{headerVM.user.name}}</button>
@@ -72,16 +75,16 @@
                                 reservas</a>
                             <a href="#!/properties" class="dropdown-item">Mis
                                 alojamiento</a>
-                            <a href="ListFavouritesServlet.do" class="dropdown-item">Mis
+                            <a href="#!/favourites" class="dropdown-item">Mis
                                 favoritos</a>
                             <a data-ng-href="#!/profile" class="dropdown-item">Perfil</a>
-                            <a href="LogOutServlet.do" class="dropdown-item">Cerrar sesión</a>
+                            <a href="../LogOutServlet.do" class="dropdown-item">Cerrar sesión</a>
                         </div>
                     </div>
-                    <!-- 					<a href="CreateAccountServlet.do" class="btn btn-custom me-2">Hazte
+                    <a href="#!/insertUser" class="btn btn-custom me-2" data-ng-show="headerVM.user === null">Hazte
 							una cuenta</a>
-						<a href="LoginServlet.do" class="btn btn-custom me-2">Iniciar
-							sesión</a> -->
+						<a href="../LoginServlet.do" class="btn btn-custom me-2" data-ng-show="headerVM.user === null">Iniciar
+							sesión</a> 
                 </div>
             </div>
         </nav>

@@ -65,9 +65,13 @@ public class UserResource {
 		if (id == -1)
 			throw new CustomNotFoundException("User (" + user.toString() + ") not added");
 		else {
+			
+			HttpSession session = request.getSession();
+			session.setAttribute("user", user);
+			
 			String message = "User added";
 
-			return Response.status(Response.Status.CREATED).entity(message)
+			return Response.status(Response.Status.CREATED).entity("{\"status\" : \"200\", \"message\" : \"" + message + "\" , \"id\" : \"" + id + "\"}")
 					.contentLocation(uriInfo.getAbsolutePathBuilder().path(Long.toString(user.getId())).build())
 					.build();
 		}
@@ -95,7 +99,7 @@ public class UserResource {
 		} else {
 			String message = "User added";
 
-			return Response.status(Response.Status.CREATED).entity(message)
+			return Response.status(Response.Status.CREATED).entity("{\"status\" : \"200\", \"message\" : \"" + message + "\" , \"id\" : \"" + id + "\"}")
 					.contentLocation(uriInfo.getAbsolutePathBuilder().path(Long.toString(user.getId())).build())
 					.build();
 		}
@@ -118,7 +122,7 @@ public class UserResource {
 			session.removeAttribute("user");
 			session.setAttribute("user", user);
 			String message = "User updated";
-			return Response.status(Response.Status.NO_CONTENT).entity(message).build();
+			return Response.status(Response.Status.NO_CONTENT).entity("{\"status\" : \"200\", \"message\" : \"" + message + "\"}").build();
 		} else {
 			throw new CustomNotFoundException("User (" + user.getId() + ") not found");
 		}

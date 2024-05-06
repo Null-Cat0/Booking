@@ -33,6 +33,7 @@ public class JDBCFavouriteDAOImpl implements FavouriteDAO{
 			ResultSet rs;
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery("SELECT * FROM Favourites WHERE idu="+idu+" AND idp="+idp);
+			favourite = new Favourite();
 			while ( rs.next() ) {
 				
 				fromRsToCategoryObject(rs,favourite);
@@ -103,7 +104,7 @@ public class JDBCFavouriteDAOImpl implements FavouriteDAO{
 			Statement stmt;
 			try {
 				stmt = conn.createStatement();
-				stmt.executeUpdate("INSERT INTO Favourites (idu,idp) VALUES(" + Favourite.getIdu() +", " + Favourite.getIdp()+ ")");
+				stmt.executeUpdate("INSERT INTO favourites (idu,idp) VALUES(" + Favourite.getIdu() +", " + Favourite.getIdp()+ ")");
 				result = true;
 				logger.info("CREATING Favourites: ");
 			} catch (SQLException e) {

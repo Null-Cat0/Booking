@@ -29,4 +29,8 @@ public class Favourite {
 	public void setIdp(long idp) {
 		this.idp = idp;
 	}
+
+	public String toString() {
+		return "Favourite [idu=" + idu + ", idp=" + idp + "]";
+	}
 }

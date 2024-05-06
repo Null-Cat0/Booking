@@ -39,7 +39,6 @@ public class FavouriteResource {
 		List<Favourite> favourites = null;
 		Connection conn = (Connection) sc.getAttribute("dbConn");
 
-		// PropertyDAO
 		FavouriteDAO fDao = new JDBCFavouriteDAOImpl();
 		fDao.setConnection(conn);
 		
@@ -52,48 +51,16 @@ public class FavouriteResource {
 		}
 		else {
 			logger.info("No user in session");
+			throw new CustomBadRequestException("No user in session");
 		}
 		
 		return favourites;
 	}
-	
-	@GET
-	@Path("/{favouriteid: [0-9]+}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Favourite getPropertyJSON(@PathParam("propertyId") long propertyid,@Context HttpServletRequest request) {
-		logger.info("getPropertyJSON");
-		
-		Connection conn = (Connection) sc.getAttribute("dbConn");
-		FavouriteDAO fDao = new JDBCFavouriteDAOImpl();
-        fDao.setConnection(conn);
-        
-        List<Favourite> favourites = null;
-        HttpSession session = request.getSession();
-        
-        Favourite favourite = null;
-        User user = (User) session.getAttribute("user");
-        
-		if (user != null) {
-			favourites = fDao.getAllByUser(user.getId());
-			for (Favourite f : favourites) {
-				if (f.getIdp() == propertyid && f.getIdu() == user.getId()) {
-					favourite = f;
-					break;
-				}
-			}
-		} else {
-			logger.info("No user in session");
-		}
-       return favourite;
-        
-	}
-	
-	
-	
+
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response post(Favourite newFavourite, @Context HttpServletRequest request) {
-		logger.info("post: " + newFavourite);
+		logger.info("post: " + newFavourite.toString());
 		Response res = null;
 		Connection conn = (Connection) sc.getAttribute("dbConn");
 
@@ -105,15 +72,16 @@ public class FavouriteResource {
 		User user = (User) session.getAttribute("user");
 
 		if (user != null) {
-			if (user.getId() == newFavourite.getIdu()) {
-				fDao.add(newFavourite);
-				String message = "Favourite added";
-				res = Response.status(Response.Status.CREATED).entity(message)
-						.contentLocation(uriInfo.getAbsolutePathBuilder().path(Long.toString(newFavourite.getIdp())).build()).build();
-			} else {
-				logger.info("User not allowed to add favourite");
-				throw new CustomBadRequestException("User not allowed to add favourite");
+			newFavourite.setIdu(user.getId());
+			
+			if (!fDao.add(newFavourite)) {
+				logger.info("Favourite already exists");
+				throw new CustomBadRequestException("Favourite already exists");
 			}
+			String message = "Favourite added";
+			res = Response.status(Response.Status.CREATED).entity("{\"status\" : \"200\", \"message\" : \"" + message + "\"}")
+					.contentLocation(uriInfo.getAbsolutePathBuilder().path(Long.toString(newFavourite.getIdp())).build())
+					.build();
 		} else {
 			logger.info("No user in session");
 			throw new CustomBadRequestException("No user in session");
@@ -122,9 +90,9 @@ public class FavouriteResource {
 	}
 	
 	@DELETE
-	@Path("/{favouriteid: [0-9]+}")
+	@Path("/{propertyId: [0-9]+}")
 	public Response deleteFavourite(@PathParam("propertyId") long propertyid, @Context HttpServletRequest request) {
-		logger.info("deleteFavourite");
+		logger.info("deleteFavourite: " + propertyid );
 		Response res = null;
 		Connection conn = (Connection) sc.getAttribute("dbConn");
 
@@ -136,16 +104,18 @@ public class FavouriteResource {
 		User user = (User) session.getAttribute("user");
 
 		if (user != null) {
-			Favourite f = fDao.get(user.getId(),propertyid);
-			if (f.getIdu() == user.getId()) {
-				fDao.delete(f);
+			Favourite favourite = fDao.get(user.getId(), propertyid);
+			if (favourite != null) {
+				if (!fDao.delete(favourite)) {
+					logger.info("Favourite not found");
+					throw new CustomBadRequestException("Favourite not found");
+				}
 				String message = "Favourite deleted";
-				res = Response.status(Response.Status.OK).entity(message)
-						.contentLocation(uriInfo.getAbsolutePathBuilder().path(Long.toString(propertyid)).build())
-						.build();
+				res = Response.status(Response.Status.OK)
+						.entity("{\"status\" : \"200\", \"message\" : \"" + message + "\"}").build();
 			} else {
-				logger.info("User not allowed to delete favourite");
-				throw new CustomBadRequestException("User not allowed to delete favourite");
+				logger.info("Favourite not found");
+				throw new CustomBadRequestException("Favourite not found");
 			}
 		} else {
 			logger.info("No user in session");

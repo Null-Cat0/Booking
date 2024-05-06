@@ -22,6 +22,13 @@ angular.module('app')
 						return response.status;
 					}
 				);
+			},
+			postUser: function(user) {
+				return $http.post(url, user).then(
+					function(response) {
+						return response.data;
+					}
+				);
 			}
 		}
 		return userInterface;
