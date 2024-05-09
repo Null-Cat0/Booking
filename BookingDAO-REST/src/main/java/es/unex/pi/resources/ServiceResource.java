@@ -1,6 +1,5 @@
 package es.unex.pi.resources;
 
-
 import java.sql.Connection;
 import java.util.List;
 import java.util.logging.Logger;
@@ -32,7 +31,7 @@ public class ServiceResource {
 	ServletContext sc;
 	@Context
 	UriInfo uriInfo;
-	
+
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Service> getServicesJSON(@Context HttpServletRequest request) {
@@ -47,10 +46,12 @@ public class ServiceResource {
 		services = sDao.getAll();
 		return services;
 	}
+
 	@GET
 	@Path("/{propertyId: [0-9]+}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Service> getServicesJSON(@PathParam("propertyId") long propertyId, @Context HttpServletRequest request) {
+	public List<Service> getServicesJSON(@PathParam("propertyId") long propertyId,
+			@Context HttpServletRequest request) {
 		logger.info("getServicesJSON");
 
 		List<Service> services = null;
@@ -62,37 +63,43 @@ public class ServiceResource {
 		services = sDao.getAllInProperty(propertyId);
 		return services;
 	}
-	
-//	@POST
-//	@Consumes(MediaType.APPLICATION_JSON)
-//	public Response post(Property p,Service service, @Context HttpServletRequest request) {
-//		logger.info("post: " + service.toString());
-//
-//		Connection conn = (Connection) sc.getAttribute("dbConn");
-//		PropertiesServicesDAO psDao = new JDBCPropertiesServicesDAOImpl();
-//		psDao.setConnection(conn);
-//		ServicesDAO sDao = new JDBCServicesDAOImpl();
-//		sDao.setConnection(conn);
-//		PropertyDAO pDao = new JDBCPropertyDAOImpl();
-//		pDao.setConnection(conn);
-//		
-//		Property property = pDao.get(p.getId());
-//		
-//		if (property == null) {
-//			throw new CustomBadRequestException("Property id not found");
-//		} else {
-//			PropertiesServices ps = new PropertiesServices();
-//			ps.setIdp(property.getId());
-//			ps.setIds(service.getId());
-//			psDao.add(ps);
-//			
-//		}
-//		
-//
-//		String message = "Property service added";
-//		return Response.status(Response.Status.OK)
-//				.entity("{\"status\" : \"200\", \"message\" : \"" + message + "\"}")
-//				.contentLocation(uriInfo.getAbsolutePathBuilder().path(Long.toString(service.getId())).build())
-//				.build();
-//	}
+
+	@POST
+	@Path("/{serviceId: [0-9]+}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response post(Property p, @PathParam("serviceId") long serviceid, @Context HttpServletRequest request) {
+		logger.info("post: " + serviceid + " to property " + p.getId());
+
+		Connection conn = (Connection) sc.getAttribute("dbConn");
+		PropertiesServicesDAO psDao = new JDBCPropertiesServicesDAOImpl();
+		psDao.setConnection(conn);
+		ServicesDAO sDao = new JDBCServicesDAOImpl();
+		sDao.setConnection(conn);
+		PropertyDAO pDao = new JDBCPropertyDAOImpl();
+		pDao.setConnection(conn);
+
+		Property property = pDao.get(p.getId());
+		Service service = sDao.get(serviceid);
+		String message = "Property service exist";
+		if (service == null) {
+			throw new CustomBadRequestException("Service id not found");
+		} else if (property == null) {
+			throw new CustomBadRequestException("Property id not found");
+		} else {
+
+			if (psDao.get(serviceid, p.getId()) == null) {
+				message = "Property service added";
+				PropertiesServices ps = new PropertiesServices();
+				ps.setIdp(property.getId());
+				ps.setIds(service.getId());
+				if (!psDao.add(ps))
+					throw new CustomBadRequestException("Service already added");
+			}
+
+		}
+
+		
+		return Response.status(Response.Status.OK).entity("{\"status\" : \"200\", \"message\" : \"" + message + "\"}")
+				.contentLocation(uriInfo.getAbsolutePathBuilder().path(Long.toString(service.getId())).build()).build();
+	}
 }

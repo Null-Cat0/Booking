@@ -46,13 +46,13 @@ angular.module('app')
 				propertyHandlerViewModel.allServices.forEach(function(service) {
 					if (service.isChecked) {
 						if (!propertyHandlerViewModel.functions.isServiceAssociated(service)) {
-							/*propertyFactory.postPropertyServices(propertyHandlerViewModel.property, service)
+							propertyFactory.postPropertyServices(propertyHandlerViewModel.property, service)
 								.then(function(response) {
 									console.log("Servicio agregado: ", response);
 								})
 								.catch(function(error) {
 									console.log("Error al agregar el servicio: ", error);
-								})*/
+								})
 							console.log("Agregando servicio: ", service);
 						} else {
 							console.log("El servicio ya esta asociado: ", service);
@@ -73,18 +73,19 @@ angular.module('app')
 					}
 				});
 			},
-			insertProperty: function() { 
+			insertProperty: function() {
 				propertyFactory.postProperty(propertyHandlerViewModel.property)
 					.then(function(response) {
-						console.log("Propiedad insertada: ", response);
+						console.log("Propiedad insertada: ", response.data);
+						propertyHandlerViewModel.property.id = response.data.id;
+						propertyHandlerViewModel.functions.updateServices();
 					})
 					.catch(function(error) {
 						console.log("Error al insertar la propiedad: ", error);
 					})
 				console.log("Insertando propiedad: ", propertyHandlerViewModel.property);
 			},
-			deleteProperty: function()
-			{
+			deleteProperty: function() {
 				propertyFactory.deleteProperty(propertyHandlerViewModel.property.id)
 					.then(function(response) {
 						console.log("Propiedad eliminada: ", response);
@@ -134,7 +135,7 @@ angular.module('app')
 			propertyHandlerSwitcher: function() {
 				if (propertyHandlerViewModel.functions.where('/insertProperties')) {
 					propertyHandlerViewModel.functions.insertProperty();
-					propertyHandlerViewModel.functions.updateServices();
+					
 					console.log($location.path());
 				} else if (propertyHandlerViewModel.functions.where('/editProperties/' + propertyHandlerViewModel.property.id)) {
 					console.log($location.path());
@@ -156,7 +157,7 @@ angular.module('app')
 			console.log("There is no property id, creating new property");
 			propertyHandlerViewModel.functions.getAllServices();
 			propertyHandlerViewModel.type = 'Añadir';
-			
+
 		}
 		else {
 			if (propertyHandlerViewModel.functions.where('/editProperties/' + $routeParams.propertyid)) {

@@ -61,7 +61,7 @@ public class PropertyResource {
 	}
 
 	@GET
-	@Path("/{search: [a-zA-z]+}")
+	@Path("/{search: [a-zA-z\s%20]+}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Property> getPropertyBySearchJSON(@PathParam("search") String search,
 			@Context HttpServletRequest request) {
@@ -120,7 +120,7 @@ public class PropertyResource {
 			long id = pDao.add(newProperty);
 			newProperty.setId(id);
 			String message = "Property added";
-			res = Response.status(Response.Status.CREATED).entity("{\"status\" : \"200\", \"message\" : \"" + message + "\"}")
+			res = Response.status(Response.Status.CREATED).entity("{\"status\" : \"200\", \"message\" : \"" + message +"\", \"id\" : \""+ id + "\"}")
 					.contentLocation(uriInfo.getAbsolutePathBuilder().path(Long.toString(id)).build()).build();
 
 		} else {

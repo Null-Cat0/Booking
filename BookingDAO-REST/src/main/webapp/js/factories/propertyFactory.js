@@ -5,6 +5,7 @@ angular.module('app')
 		
 		var propertyInterface = {
 			getProperty: function(id) {
+				console.log("get property id: " + id);
 				var urlid = url + id;
 				return $http.get(urlid).then(
 					function(response) {
@@ -31,7 +32,7 @@ angular.module('app')
 			postProperty: function(property) {
 				return $http.post(url, property).then(
 					function(response) {
-						return response.status;
+						return response;
 					}
 				);
 			},
@@ -67,8 +68,8 @@ angular.module('app')
 				);
 			},
 			postPropertyServices: function(property, service) {
-				var urlid = services;
-				return $http.post(urlid, property, service).then(
+				var urlid = services + service.id;
+				return $http.post(urlid,property).then(
 					function(response) {
 						return response.status;
 					}

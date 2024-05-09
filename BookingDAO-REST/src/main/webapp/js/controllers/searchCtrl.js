@@ -1,10 +1,11 @@
 angular.module('app')
-	.controller('searchCtrl', ['$location', '$routeParams', 'propertyFactory', 'accommodationFactory', 'favouriteFactory','$scope', function($location, $routeParams, propertyFactory, accommodationFactory, favouriteFactory, $scope) {
+	.controller('searchCtrl', ['$location', '$routeParams', 'propertyFactory', 'accommodationFactory', 'favouriteFactory', '$scope', function($location, $routeParams, propertyFactory, accommodationFactory, favouriteFactory, $scope) {
 		var searchVM = this;
 		searchVM.properties = []; // Inicializa la lista de propiedades
 		searchVM.searchText = ''; // Inicializa el texto de búsqueda  
 		searchVM.favourites = [];
 		searchVM.propertiesFavourites = [];
+		searchVM.listoriginal = [];
 		$scope.searchVM = {
 			filterOption: 'all' // Valor predeterminado para el filtro
 		};
@@ -20,6 +21,7 @@ angular.module('app')
 				propertyFactory.getPropertySearch(searchText)
 					.then(function(response) {
 						searchVM.properties = response;
+						searchVM.listoriginal = response;
 						console.log("Propiedades encontradas:", response);
 					})
 					.catch(function(error) {
@@ -100,6 +102,7 @@ angular.module('app')
 			getPropertyFavourites: function() {
 				console.log("Obteniendo favoritos");
 				searchVM.favourites.forEach(function(favourite) {
+					console.log("Favorito:", favourite);
 					propertyFactory.getProperty(favourite.idp)
 						.then(function(response) {
 							searchVM.propertiesFavourites.push(response);
@@ -109,7 +112,7 @@ angular.module('app')
 							console.log("Error al obtener los favoritos de la propiedad:", error);
 						});
 				});
-				console.log("Favoritos de la propiedad:", searchVM.propertiesFavorites);
+				console.log("Propiedades favoritas:", searchVM.propertiesFavourites);
 			},
 			orderarListaPorValoracionMedia: function() {
 				searchVM.properties.sort(function(a, b) {
@@ -121,22 +124,21 @@ angular.module('app')
 				// Accede al valor seleccionado del filtro
 				var selectedOption = $scope.searchVM.filterOption;
 				console.log("Opción seleccionada:", selectedOption);
-				if(selectedOption == 'available')
-				{
+				if (selectedOption == 'available') {
 					//Only select the properties that have the status available
-					searchVM.properties = searchVM.properties.filter(function(property) {
+					searchVM.properties = searchVM.listoriginal.filter(function(property) {
 						return property.available == 1;
 					});
 				} else if (selectedOption == 'notAvailable') {
 					//Only select the properties that have the status not available
-					searchVM.properties = searchVM.properties.filter(function(property) {
+					searchVM.properties = searchVM.listoriginal.filter(function(property) {
 						return property.available == 0;
 					});
-				}else if (selectedOption == 'all') {
+				} else if (selectedOption == 'all') {
 					//Obtain all the properties
-					searchVM.functions.submitSearch();
+					searchVM.properties = searchVM.listoriginal;
 				}
-				
+
 			}
 
 		};
