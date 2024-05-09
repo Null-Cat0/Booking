@@ -102,4 +102,37 @@ public class ServiceResource {
 		return Response.status(Response.Status.OK).entity("{\"status\" : \"200\", \"message\" : \"" + message + "\"}")
 				.contentLocation(uriInfo.getAbsolutePathBuilder().path(Long.toString(service.getId())).build()).build();
 	}
+	
+    @DELETE
+    @Path("/{serviceId: [0-9]+}/{propertyId: [0-9]+}")
+	public Response delete(@PathParam("serviceId") long serviceid,@PathParam("propertyId") long propertyid ,@Context HttpServletRequest request) {
+		logger.info("delete: " + serviceid + " from property " + propertyid);
+
+		Connection conn = (Connection) sc.getAttribute("dbConn");
+		PropertiesServicesDAO psDao = new JDBCPropertiesServicesDAOImpl();
+		psDao.setConnection(conn);
+		ServicesDAO sDao = new JDBCServicesDAOImpl();
+		sDao.setConnection(conn);
+		PropertyDAO pDao = new JDBCPropertyDAOImpl();
+		pDao.setConnection(conn);
+
+		Property property = pDao.get(propertyid);
+		Service service = sDao.get(serviceid);
+		String message = "Property service not exist";
+		if (service == null) {
+			throw new CustomBadRequestException("Service id not found");
+		} else if (property == null) {
+			throw new CustomBadRequestException("Property id not found");
+		} else {
+			PropertiesServices ps = psDao.get(propertyid,serviceid);
+			if (ps != null) {
+				message = "Property service deleted";
+				if (!psDao.delete(propertyid,serviceid))
+					throw new CustomBadRequestException("Service not deleted");
+			}
+		}
+
+		return Response.status(Response.Status.OK).entity("{\"status\" : \"200\", \"message\" : \"" + message + "\"}")
+				.contentLocation(uriInfo.getAbsolutePathBuilder().path(Long.toString(service.getId())).build()).build();
+	}
 }

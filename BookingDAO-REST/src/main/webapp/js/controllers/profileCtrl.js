@@ -2,6 +2,7 @@ angular.module('app')
 	.controller('profileCtrl', ['$location', 'userFactory', function($location, userFactory) {
 		var profileHandlerViewModel = this;
 		profileHandlerViewModel.user = {};
+		profileHandlerViewModel.errormsg= " "
 		profileHandlerViewModel.functions = {
 			where: function(route) {
 				return $location.path() == route;
@@ -39,11 +40,16 @@ angular.module('app')
 				userFactory.postUser(profileHandlerViewModel.user)
 					.then(function(response) {
 						console.log("User inserted, response: ", response);
-
 						profileHandlerViewModel.user.id = response.id;
 						$location.path('/');
+					})
+					.catch(function(error) {
+						console.log("Error inserting user: ", error);
+						profileHandlerViewModel.errormsg = "Error inserando el usuario";
+						profileHandlerViewModel.user = undefined;
 					});
 			}
+
 
 		}
 

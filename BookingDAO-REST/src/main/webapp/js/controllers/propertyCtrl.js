@@ -1,6 +1,7 @@
 angular.module('app')
-	.controller('propertyCtrl', ['$routeParams', '$location', 'propertyFactory', function($routeParams, $location, propertyFactory) {
+	.controller('propertyCtrl', ['$routeParams', '$location', 'propertyFactory', 'userFactory', function($routeParams, $location, propertyFactory, userFactory) {
 		var propertyHandlerViewModel = this;
+		propertyHandlerViewModel.user = undefined;
 		propertyHandlerViewModel.property = undefined;
 		propertyHandlerViewModel.type = ' ';
 		propertyHandlerViewModel.allServices = [];
@@ -9,7 +10,13 @@ angular.module('app')
 			where: function(route) {
 				return $location.path() === route;
 			},
-
+			getUser: function() {
+				userFactory.getUser().then(function(response) {
+					propertyHandlerViewModel.user = response;
+				}
+				);
+			}
+			,
 			isServiceAssociated: function(service) {
 				return propertyHandlerViewModel.propertyServices.some(function(item) {
 					return item.id === service.id && item.name === service.name;
@@ -21,22 +28,25 @@ angular.module('app')
 					.then(function(response) {
 						console.log("Obteniendo la propiedad: ", response);
 						propertyHandlerViewModel.property = response;
+						console.log("Usuario: ", propertyHandlerViewModel.user);
+						console.log("Propiedad: ", propertyHandlerViewModel.property);
+						if (propertyHandlerViewModel.property.idu != propertyHandlerViewModel.user.id) {
+							$location.path('/');
+						}
 					})
 					.catch(function(error) {
 						console.log("Error al obtener la propiedad: ", error);
 					})
 			},
 			updateProperty: function() {
-
 				propertyFactory.updateProperty(propertyHandlerViewModel.property)
 					.then(function(response) {
 						console.log("Propiedad actualizada: ", response);
-						propertyHandlerViewModel.property = response;
+						propertyHandlerViewModel.functions.updateServices();
 					})
 					.catch(function(error) {
 						console.log("Error al actualizar la propiedad: ", error);
 					})
-				console.log("Actualizando propiedad: ", propertyHandlerViewModel.property);
 			},
 			updateCheckService: function(service) {
 				service.isChecked = !service.isChecked;
@@ -59,13 +69,14 @@ angular.module('app')
 						}
 					} else {
 						if (propertyHandlerViewModel.functions.isServiceAssociated(service)) {
-							/*	propertyFactory.removeServiceFromProperty(propertyHandlerViewModel.property.id, service.id)
-									.then(function(response) {
-										console.log("Servicio eliminado: ", response);
-									})
-									.catch(function(error) {
-										console.log("Error al eliminar el servicio: ", error);
-									})*/
+							console.log("Propiedad", propertyHandlerViewModel.property)
+							propertyFactory.deletePropertyServices(propertyHandlerViewModel.property.id, service.id)
+								.then(function(response) {
+									console.log("Servicio eliminado: ", response);
+								})
+								.catch(function(error) {
+									console.log("Error al eliminar el servicio: ", error);
+								})
 							console.log("Eliminando servicio: ", service);
 						} else {
 							console.log("El servicio no esta asociado: ", service);
@@ -78,7 +89,8 @@ angular.module('app')
 					.then(function(response) {
 						console.log("Propiedad insertada: ", response.data);
 						propertyHandlerViewModel.property.id = response.data.id;
-						propertyHandlerViewModel.functions.updateServices();
+						if (propertyHandlerViewModel.property.id !== "-1")
+							propertyHandlerViewModel.functions.updateServices();
 					})
 					.catch(function(error) {
 						console.log("Error al insertar la propiedad: ", error);
@@ -135,12 +147,12 @@ angular.module('app')
 			propertyHandlerSwitcher: function() {
 				if (propertyHandlerViewModel.functions.where('/insertProperties')) {
 					propertyHandlerViewModel.functions.insertProperty();
-					
+
 					console.log($location.path());
 				} else if (propertyHandlerViewModel.functions.where('/editProperties/' + propertyHandlerViewModel.property.id)) {
 					console.log($location.path());
 					propertyHandlerViewModel.functions.updateProperty();
-					propertyHandlerViewModel.functions.updateServices();
+
 
 				} else if (propertyHandlerViewModel.functions.where('/deleteProperties/' + propertyHandlerViewModel.property.id)) {
 					propertyHandlerViewModel.functions.deleteProperty();
@@ -160,6 +172,9 @@ angular.module('app')
 
 		}
 		else {
+			
+			propertyHandlerViewModel.functions.getUser();
+			
 			if (propertyHandlerViewModel.functions.where('/editProperties/' + $routeParams.propertyid)) {
 				propertyHandlerViewModel.type = 'Editar';
 			}

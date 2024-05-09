@@ -152,7 +152,8 @@ public class PropertyResource {
 			p.setDescription(formParams.getFirst("description"));
 			p.setAddress(formParams.getFirst("address"));
 			p.setCity(formParams.getFirst("city"));
-
+			
+			System.out.println("Añadiendo propiedad");
 			id = pDao.add(p);
 			if (id == -1)
 				logger.info("Property not added");

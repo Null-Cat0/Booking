@@ -37,7 +37,7 @@
 										<div class="card">
 											<div class="card-body">
 												<h5 class="card-title">{{room.name}}</h5>
-												<p class="card-text">Habitaciones: {{}}</p>
+												<p class="card-text">Habitaciones: {{room.qty}}</p>
 												<div class="text-center">
 													<button class="btn btn-danger"
 														data-ng-click="cartVM.functions.removeRoom(room)">Eliminar</button>
@@ -72,7 +72,7 @@
 
 				<div class="text-center">
 
-					<form data-ng-submit="cartVM.functions.booking()">
+					<form data-ng-submit="cartVM.functions.booking()" data-ng-show="cartVM.totalPrice >0">
 						<input type="submit" class="btn btn-primary mt-3" value="Pagar">
 					</form>
 

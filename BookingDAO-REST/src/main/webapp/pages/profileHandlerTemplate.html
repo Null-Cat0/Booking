@@ -8,22 +8,23 @@
         <div class="col-md-6 col-lg-4 mt-5">
             <div class="card p-4">
                 <h1 class="text-center mb-4">Crear Cuenta</h1>
+                <p class="text-danger">{{profileVM.errormsg}}</p>
                 <form >
                     <div class="mb-3">
                         <label class="form-label" for="name">Nombre:</label>
-                        <input class="form-control" type="text" id="name" name="name" placeholder="Indica tu nombre" data-ng-model="profileVM.user.name">
+                        <input class="form-control" type="text" id="name" name="name" placeholder="Indica tu nombre" data-ng-model="profileVM.user.name" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label" for="secondname">Apellidos:</label>
-                        <input class="form-control" type="text" id="secondname" name="secondname" placeholder="Indica tus apellidos" data-ng-model="profileVM.user.surname">
+                        <input class="form-control" type="text" id="secondname" name="secondname" placeholder="Indica tus apellidos" data-ng-model="profileVM.user.surname"required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label" for="email">E-mail:</label>
-                        <input class="form-control" type="email" id="email" name="email" placeholder="Indica tu dirección de email" data-ng-model="profileVM.user.email"> 
+                        <input class="form-control" type="email" id="email" name="email" placeholder="Indica tu dirección de email" data-ng-model="profileVM.user.email"required> 
                     </div>
                     <div class="mb-3">
                         <label class="form-label" for="password">Contraseña:</label>
-                        <input class="form-control" type="password" id="password" name="password" placeholder="Indica tu contraseña" minlength="8" data-ng-model="profileVM.user.password">
+                        <input class="form-control" type="password" id="password" name="password" placeholder="Indica tu contraseña" minlength="8" data-ng-model="profileVM.user.password"required>
                     </div>
                     <div class="mb-3">
                         <input class="btn btn-primary form-control" type="submit" value="Editar cuenta" data-ng-show="profileVM.functions.where('/profile')" data-ng-click="profileVM.functions.updateUser()">

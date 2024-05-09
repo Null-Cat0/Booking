@@ -127,7 +127,7 @@
 
 	<!-- Sección de valoraciones -->
 	<div class="container">
-		<div class="row mb-4" data-ng-if="resultVM.reviewDone===false">
+		<div class="row mb-4" data-ng-if="resultVM.reviewDone===false && resultVM.property.idu != resultVM.user.id">
 			<div class="col">
 				<div class="card">
 					<div class="card-body">

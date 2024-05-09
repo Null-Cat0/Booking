@@ -1,6 +1,6 @@
 
 angular.module('app')
-	.controller('headerCtrl', ['userFactory','$location','$window', function(userFactory, $location, $window) {
+	.controller('headerCtrl', ['userFactory', '$location', '$window', function(userFactory, $location, $window) {
 		var headerViewModel = this;
 
 		headerViewModel.user = null;
@@ -13,10 +13,11 @@ angular.module('app')
 					.then(function(response) {
 						headerViewModel.user = response;
 						console.log("Getting user with id: ", headerViewModel.user.id, " Response: ", response);
-					}, function(response) {
-						console.log("Error reading user on headerCtrl, Response: ", response);
-					})
+					}).catch(function(error) {
+						console.log("Error reading user on headerCtrl, Response: ", error);
+					});
 			}
 		}
-		headerViewModel.functions.readUser();
+		if (!headerViewModel.functions.where('/insertUser'))
+			headerViewModel.functions.readUser();
 	}]);

@@ -42,14 +42,13 @@ public class UserResource {
 
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
-		if(user != null){
+		if (user != null) {
 			logger.info("Returning user's session");
 			return user;
-		}else {
+		} else {
 			throw new CustomNotFoundException("User not found in session");
 		}
 	}
-
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -59,19 +58,26 @@ public class UserResource {
 
 		UserDAO uDao = new JDBCUserDAOImpl();
 		uDao.setConnection(conn);
+		
+		
+		
+		if (uDao.getUserByEmail(user.getEmail()) != null) {
+			throw new CustomNotFoundException("User (" + user.toString() + ") already exists");
+		}
 
 		long id = uDao.add(user);
 
 		if (id == -1)
 			throw new CustomNotFoundException("User (" + user.toString() + ") not added");
 		else {
-			
+
 			HttpSession session = request.getSession();
 			session.setAttribute("user", user);
-			
+
 			String message = "User added";
 
-			return Response.status(Response.Status.CREATED).entity("{\"status\" : \"200\", \"message\" : \"" + message + "\" , \"id\" : \"" + id + "\"}")
+			return Response.status(Response.Status.CREATED)
+					.entity("{\"status\" : \"200\", \"message\" : \"" + message + "\" , \"id\" : \"" + id + "\"}")
 					.contentLocation(uriInfo.getAbsolutePathBuilder().path(Long.toString(user.getId())).build())
 					.build();
 		}
@@ -90,8 +96,11 @@ public class UserResource {
 		user.setName(formParams.getFirst("name"));
 
 		UserDAO uDao = new JDBCUserDAOImpl();
-		uDao.setConnection(conn);
 
+		uDao.setConnection(conn);
+		if (uDao.getUserByEmail(user.getEmail()) != null) {
+			throw new CustomNotFoundException("User (" + user.toString() + ") already exists");
+		}else {
 		long id = uDao.add(user);
 
 		if (id == -1) {
@@ -99,12 +108,12 @@ public class UserResource {
 		} else {
 			String message = "User added";
 
-			return Response.status(Response.Status.CREATED).entity("{\"status\" : \"200\", \"message\" : \"" + message + "\" , \"id\" : \"" + id + "\"}")
+			return Response.status(Response.Status.CREATED)
+					.entity("{\"status\" : \"200\", \"message\" : \"" + message + "\" , \"id\" : \"" + id + "\"}")
 					.contentLocation(uriInfo.getAbsolutePathBuilder().path(Long.toString(user.getId())).build())
 					.build();
 		}
-	}
-
+	}}
 
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -117,17 +126,22 @@ public class UserResource {
 
 		HttpSession session = request.getSession();
 		User userSession = (User) session.getAttribute("user");
+		if (userSession == null) {
+			throw new CustomNotFoundException("User not found in session");
+		}
+		
 		if (userSession.getId() == user.getId()) {
 			uDao.update(user);
 			session.removeAttribute("user");
 			session.setAttribute("user", user);
 			String message = "User updated";
-			return Response.status(Response.Status.NO_CONTENT).entity("{\"status\" : \"200\", \"message\" : \"" + message + "\"}").build();
+			return Response.status(Response.Status.NO_CONTENT)
+					.entity("{\"status\" : \"200\", \"message\" : \"" + message + "\"}").build();
 		} else {
 			throw new CustomNotFoundException("User (" + user.getId() + ") not found");
 		}
 	}
-	
+
 	@DELETE
 	public Response delete(@Context HttpServletRequest request) {
 		logger.info("deleteUser");

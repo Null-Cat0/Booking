@@ -109,7 +109,8 @@ public class AccommodationResource {
 
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
-
+		if (user == null)
+			throw new CustomBadRequestException("User not valid");
 		// Comprobación de que la propeidad existe
 		PropertyDAO pDao = new JDBCPropertyDAOImpl();
 		pDao.setConnection(conn);
@@ -124,7 +125,8 @@ public class AccommodationResource {
 		}
 		String message = "Accommodations created";
 
-		return Response.status(Response.Status.CREATED).entity("{\"status\" : \"200\", \"message\" : \"" + message + "\"}")
+		return Response.status(Response.Status.CREATED)
+				.entity("{\"status\" : \"200\", \"message\" : \"" + message + "\"}")
 				.contentLocation(uriInfo.getAbsolutePathBuilder().path(Long.toString(id)).build()).build();
 	}
 
@@ -181,7 +183,8 @@ public class AccommodationResource {
 		User user = (User) session.getAttribute("user");
 
 		Accommodation accommodation = aDao.get(accommodationId);
-
+		if (user == null)
+			throw new CustomBadRequestException("User not valid");
 		if (accommodation != null) {
 			Property property = pDao.get(accommodation.getIdp());
 			if (user.getId() == property.getIdu()) {
@@ -196,6 +199,7 @@ public class AccommodationResource {
 
 		return res;
 	}
+
 	@DELETE
 	@Path("/{accommodationid: [0-9]+}")
 	public Response delete(@PathParam("accommodationid") long accommodationId, @Context HttpServletRequest request) {
@@ -210,7 +214,8 @@ public class AccommodationResource {
 		User user = (User) session.getAttribute("user");
 
 		Accommodation accommodation = aDao.get(accommodationId);
-
+		if(user==null)
+            throw new CustomBadRequestException("User not valid");
 		if (accommodation != null) {
 			PropertyDAO pDao = new JDBCPropertyDAOImpl();
 			pDao.setConnection(conn);

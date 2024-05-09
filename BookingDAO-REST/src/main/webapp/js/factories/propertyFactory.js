@@ -2,7 +2,7 @@ angular.module('app')
 	.factory('propertyFactory', ['$http', function($http) {
 		var url = 'https://localhost:8443/BookingDAO-REST/rest/properties/';
 		var services = 'https://localhost:8443/BookingDAO-REST/rest/services/';
-		
+
 		var propertyInterface = {
 			getProperty: function(id) {
 				console.log("get property id: " + id);
@@ -69,12 +69,22 @@ angular.module('app')
 			},
 			postPropertyServices: function(property, service) {
 				var urlid = services + service.id;
-				return $http.post(urlid,property).then(
+				return $http.post(urlid, property).then(
 					function(response) {
 						return response.status;
 					}
 				);
 			},
+			deletePropertyServices: function(propertyId, serviceId) {
+				console.log("deletePropertyServices:", propertyId, serviceId);
+				var urlid = services + serviceId + '/' + propertyId;
+				return $http.delete(urlid).then(
+					function(response) {
+						return response;
+					}
+				);
+			}
+
 
 
 		}

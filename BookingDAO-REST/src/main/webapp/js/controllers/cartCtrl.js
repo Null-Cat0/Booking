@@ -48,9 +48,14 @@ angular.module('app')
 						}
 					}
 				}
+				cartViewModel.totalPrice = cartViewModel.totalPrice - (r.qty * r.price);//Actualizar el precio total
+				// Si no hay habitaciones en el carrito, eliminar la propiedad
 				console.log(cartViewModel.rooms.length)
 				if (cartViewModel.rooms.length == 0)
 					cartViewModel.property = undefined;
+					
+				// Actualizar el carrito
+				localStorage.setItem('selectedRooms', JSON.stringify(cartViewModel.rooms));
 			},
 			booking: function() {
 				for (var room of cartViewModel.rooms) {

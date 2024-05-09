@@ -52,7 +52,7 @@ public class BookingResource {
 		if (user != null) {
 			bookings = bDao.getAllByUser((int) user.getId());
 		} else {
-			logger.info("No user in session");
+			throw new CustomNotFoundException("User not found");
 		}
 
 		return bookings;
@@ -71,6 +71,11 @@ public class BookingResource {
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
 
+		if (user == null) {
+			logger.info("User not found");
+			throw new CustomNotFoundException("User not found");
+		}
+		
 		Booking b = bDao.get(bookingId);
 		if (b.getIdu() == user.getId()) {
 			return b;
@@ -127,6 +132,12 @@ public class BookingResource {
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
 
+		if (user == null) {
+			return Response.status(Response.Status.UNAUTHORIZED).entity("{\"error\": \"No se ha iniciado sesión\"}")
+					.build();
+		}
+		
+		
 		Booking b = new Booking();
 		b.setIdu(user.getId());
 		b.setTotalPrice(Integer.parseInt(formParams.getFirst("totalPrice")));
