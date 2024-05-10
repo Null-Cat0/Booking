@@ -1,5 +1,5 @@
-- [ ] Corregir que el usuario propietario de la property no puede poner reseñas en su propia property
+- [X] Corregir que el usuario propietario de la property no puede poner reseñas en su propia property
 - [X] Poner el numero de habitaciones en el carrito
-- [ ] Corregir las reservas (si reservo 2 habitaciones del mismo hotel, se van a mostrar dos filas con las dos habitaciones)
+- [X] Corregir las reservas (si reservo 2 habitaciones del mismo hotel, se van a mostrar dos filas con las dos habitaciones)
 - [X] Comprobar que no se puedan crear dos usuarios con el mismo correo
 - [X] Comprobar que no se puedan editar y borrar otras propiedades (indebidas)

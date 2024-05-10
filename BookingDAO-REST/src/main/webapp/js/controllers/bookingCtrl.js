@@ -1,68 +1,27 @@
 angular.module('app')
-	.controller('bookingCtrl', ['bookingFactory', 'bookingaccommodationFactory', 'accommodationFactory', function(bookingFactory, bookingAccommodation, accommodationFactory) {
+	.controller('bookingCtrl', ['propertyFactory', 'bookingaccommodationFactory', 'accommodationFactory', function(propertyFactory, bookingaccommodationFactory, accommodationFactory) {
 		var bookingViewModel = this;
-		bookingViewModel.bookings = [];
+		bookingViewModel.bookingsRecord = [];
 
 		bookingViewModel.functions = {
 			getBookingRecord: function() {
-				bookingFactory.getUserBookings()
-					.then(function(response) {
-						console.log(response);
-						var bookingPromises = [];
-
-						// Procesar cada reserva
-						response.forEach(function(booking) {
-							var bookingRecord = {
-								booking: booking,
-								accommodations: []
-							};
-
-							// Obtener las habitaciones reservadas para esta reserva
-							var accommodationPromise = bookingAccommodation.getUserBookingsAccommodation(booking.id)
-								.then(function(response) {
-									console.log(response);
-
-									// Procesar cada habitación reservada
-									response.forEach(function(accommodation) {
-										accommodationFactory.getAccommodation(accommodation.idacc)
-											.then(function(response) {
-												console.log(response);
-
-												// Agregar información de la habitación a la reserva
-												var accommodationInfo = {
-													accommodation: response,
-													qty: accommodation.qty,
-													price: booking.totalPrice
-												};
-
-												bookingRecord.accommodations.push(accommodationInfo);
-											});
-									});
-								});
-
-							bookingPromises.push(accommodationPromise);
-							bookingViewModel.bookings.push(bookingRecord);
-						});
-
-						// Esperar a que todas las solicitudes de alojamiento se completen antes de continuar
-						Promise.all(bookingPromises)
-							.then(function() {
-								console.log(bookingViewModel.bookings);
-							})
-							.catch(function(error) {
-								console.error("Error al obtener alojamientos:", error);
+				bookingaccommodationFactory.getUserBookingsAccommodation().then(function(response) {
+					console.log(response);
+					response.forEach(function(bookingAccommodation) {
+						accommodationFactory.getAccommodation(bookingAccommodation.idacc).then(function(response) {
+							console.log(response);
+							var record = response;
+							//Busqueda de propiedad
+							propertyFactory.getProperty(record.idp).then(function(response) {
+								record.propertyName = response.name;
 							});
-					})
-					.catch(function(error) {
-						console.error("Error al obtener reservas:", error);
+							record.numrooms = bookingAccommodation.numAccommodations;
+							bookingViewModel.bookingsRecord.push(record);
+
+						});
 					});
-			}
-		};
-
-
+				});
+			},
+		}
 		bookingViewModel.functions.getBookingRecord();
-
-
-
-	}
-	]);
+	}]);

@@ -72,6 +72,7 @@ public class UserResource {
 		else {
 
 			HttpSession session = request.getSession();
+			user.setId(id);
 			session.setAttribute("user", user);
 
 			String message = "User added";
