@@ -7,7 +7,7 @@
     <!-- Container con la barra de búsqueda -->
     <div class="container">
         <div class="d-flex row bg-warning busquedaAlojamiento rounded">
-            <form class="d-flex" data-ng-submit="searchVM.submitSearch()">
+            <form class="d-flex" data-ng-submit="searchVM.functions.submitSearch()">
                 <div class="pe-2 pt-2 col-11 form-group">
                     <input class="form-control" type="text" id="search" name="search" data-ng-model="searchVM.searchText" placeholder="¿Adónde vas?" required>
                 </div>

@@ -27,7 +27,8 @@ angular.module('app')
 					.catch(function(error) {
 						console.log("Error al obtener las propiedades:", error);
 					});
-				$location.path('/search/' + searchText);
+				if(!searchVM.functions.where('/search/' + searchText))
+					$location.path('/search/' + searchText);
 
 			},
 			getUserProperties: function() {

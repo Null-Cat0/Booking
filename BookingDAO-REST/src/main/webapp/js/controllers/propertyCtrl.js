@@ -13,6 +13,13 @@ angular.module('app')
 			getUser: function() {
 				userFactory.getUser().then(function(response) {
 					propertyHandlerViewModel.user = response;
+					if (propertyHandlerViewModel.user == undefined) {
+						$location.path('/insertUser');
+					}
+				}
+				, function(response) {
+					console.log("Error al obtener el usuario: ", response);
+					$location.path('/');
 				}
 				);
 			}
@@ -170,10 +177,11 @@ angular.module('app')
 			propertyHandlerViewModel.functions.getAllServices();
 			propertyHandlerViewModel.type = 'Añadir';
 
-		}
-		else {
+		}else {
 			
 			propertyHandlerViewModel.functions.getUser();
+			
+			
 			
 			if (propertyHandlerViewModel.functions.where('/editProperties/' + $routeParams.propertyid)) {
 				propertyHandlerViewModel.type = 'Editar';

@@ -1,7 +1,7 @@
 angular.module('app')
 	.controller('profileCtrl', ['$location', 'userFactory', function($location, userFactory) {
 		var profileHandlerViewModel = this;
-		profileHandlerViewModel.user = {};
+		profileHandlerViewModel.user = undefined;
 		profileHandlerViewModel.errormsg= " "
 		profileHandlerViewModel.functions = {
 			where: function(route) {
@@ -11,6 +11,10 @@ angular.module('app')
 				userFactory.getUser()
 					.then(function(response) {
 						profileHandlerViewModel.user = response;
+						if(profileHandlerViewModel.user == undefined)
+						{
+							$location.path('/insertUser');
+						}
 						console.log("Getting user on profileCtrl with id: ", profileHandlerViewModel.user.id, " Response: ", response);
 
 					},

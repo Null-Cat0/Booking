@@ -34,40 +34,37 @@ public class BookingsAccommodationsResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response addBookingAccommodation(BookingsAccommodations bookingAccommodation,
 			@Context HttpServletRequest request) {
-        
+
 		logger.info("addBookingAccommodation");
-		
-        
-        Connection conn = (Connection) sc.getAttribute("dbConn");
-		
-        AccommodationDAO aDao = new JDBCAccommodationDAOImpl();
-                aDao.setConnection(conn);
-        Accommodation a = aDao.get(bookingAccommodation.getIdacc());
+
+		Connection conn = (Connection) sc.getAttribute("dbConn");
+
+		AccommodationDAO aDao = new JDBCAccommodationDAOImpl();
+		aDao.setConnection(conn);
+		Accommodation a = aDao.get(bookingAccommodation.getIdacc());
 		if (a == null)
 			throw new CustomBadRequestException("Accommodation not found");
-		else if (a.getNumAccommodations()< bookingAccommodation.getNumAccommodations())
+		else if (a.getNumAccommodations() < bookingAccommodation.getNumAccommodations())
 			bookingAccommodation.setNumAccommodations(a.getNumAccommodations());
-		
-		
-		a.setNumAccommodations(a.getNumAccommodations()-(int)bookingAccommodation.getNumAccommodations());
-		if (!aDao.update(a))
-			throw new CustomBadRequestException("Error in POST");
-		
+
 		BookingsAccommodationsDAO baDao = new JDBCBookingsAccommodationsDAOImpl();
 		baDao.setConnection(conn);
-		
+
 		if (!baDao.add(bookingAccommodation))
 			throw new CustomBadRequestException("Error in POST");
 		
+		a.setNumAccommodations(a.getNumAccommodations() - (int) bookingAccommodation.getNumAccommodations());
+		if (!aDao.update(a))
+			throw new CustomBadRequestException("Error in POST");
 		String message = "BookingAccommodation  added";
-		
+
 		return Response.status(Response.Status.CREATED)
 				.entity("{\"status\" : \"200\", \"message\" : \"" + message + "\"}")
 				.contentLocation(
 						uriInfo.getAbsolutePathBuilder().path(Long.toString(bookingAccommodation.getIdb())).build())
 				.build();
 	}
-	
+
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<BookingsAccommodations> getBookingsAccommodationsJSON(@Context HttpServletRequest request) {
@@ -91,5 +88,5 @@ public class BookingsAccommodationsResource {
 
 		return bookingsAccommodations;
 	}
-	
+
 }
